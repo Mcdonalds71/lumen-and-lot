@@ -1,0 +1,46 @@
+@layer base {
+  html {
+    color-scheme: light;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: var(--focus-width) solid var(--color-clay);
+    outline-offset: var(--focus-offset);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0s !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
