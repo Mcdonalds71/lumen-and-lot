@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { contrastRatio, relativeLuminance } from "@/lib/contrast";
+import {
+  contrastLevel,
+  contrastRatio,
+  relativeLuminance,
+} from "@/lib/contrast";
 
 describe("relativeLuminance", () => {
   it("runs from 0 for black to 1 for white", () => {
@@ -28,5 +32,17 @@ describe("contrastRatio", () => {
 
   it("matches the published ratio for #767676 on white", () => {
     expect(contrastRatio("#767676", "#ffffff")).toBeCloseTo(4.54, 2);
+  });
+});
+
+describe("contrastLevel", () => {
+  it.each([
+    [21, "text"],
+    [4.5, "text"],
+    [4.49, "large-text"],
+    [3, "large-text"],
+    [2.99, "decorative"],
+  ])("rates %f:1 as %s", (ratio, level) => {
+    expect(contrastLevel(ratio)).toBe(level);
   });
 });

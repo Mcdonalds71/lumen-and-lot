@@ -1,10 +1,15 @@
 @layer base {
   html {
     color-scheme: light;
+    scrollbar-gutter: stable;
     background-color: var(--color-paper);
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  html:has(dialog:modal) {
+    overflow: hidden;
   }
 
   body {
@@ -29,8 +34,7 @@
   }
 
   :focus-visible {
-    outline: var(--focus-width) solid var(--color-clay);
-    outline-offset: var(--focus-offset);
+    @apply focus-ring;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,35 @@
+@utility link-underline {
+  padding-block-end: 0.125em;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% var(--hairline);
+  transition: background-size var(--duration-base) var(--ease-out);
+
+  @media (hover: hover) {
+    &:hover {
+      background-position: 100% 100%;
+      background-size: 0 var(--hairline);
+    }
+  }
+}
+
+@utility focus-ring {
+  outline: var(--focus-width) solid var(--color-clay);
+  outline-offset: var(--focus-offset);
+}
+
+@utility duration-fast {
+  --tw-duration: var(--duration-fast);
+  transition-duration: var(--duration-fast);
+}
+
+@utility duration-base {
+  --tw-duration: var(--duration-base);
+  transition-duration: var(--duration-base);
+}
+
+@utility duration-slow {
+  --tw-duration: var(--duration-slow);
+  transition-duration: var(--duration-slow);
+}

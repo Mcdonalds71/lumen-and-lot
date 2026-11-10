@@ -23,7 +23,10 @@ export default defineConfig({
     {
       name: "screenshots",
       testMatch: /screenshots\.spec\.ts/,
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        contextOptions: { reducedMotion: "reduce" },
+      },
     },
   ],
   webServer: {

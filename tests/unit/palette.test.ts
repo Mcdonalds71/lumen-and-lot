@@ -1,21 +1,11 @@
-import { readFileSync } from "node:fs";
-
 import { describe, expect, it } from "vitest";
 
 import { contrastRatio, minimumContrast } from "@/lib/contrast";
+import { requireToken } from "@/lib/design-tokens";
 
-const tokens = readFileSync(
-  new URL("../../app/styles/tokens.css", import.meta.url),
-  "utf8",
-);
+import { tokens } from "./support/tokens";
 
-function color(name: string): string {
-  const match = new RegExp(`--color-${name}:\\s*(#[\\da-f]{6});`, "i").exec(
-    tokens,
-  );
-  if (!match?.[1]) throw new Error(`Missing color token --color-${name}`);
-  return match[1];
-}
+const color = (name: string) => requireToken(tokens, `color-${name}`);
 
 describe("palette", () => {
   it.each(["ink", "muted", "moss"])(

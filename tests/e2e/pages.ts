@@ -1,1 +1,4 @@
-export const pages = [{ name: "home", path: "/" }] as const;
+export const pages = [
+  { name: "home", path: "/" },
+  { name: "system", path: "/system" },
+] as const;

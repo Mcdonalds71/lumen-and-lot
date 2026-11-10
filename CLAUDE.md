@@ -102,11 +102,33 @@ Platform
 - MDX through @next/mdx. Articles live in content/journal/*.mdx and export `metadata`, typed as
   unknown and validated with zod.
 - suncalc 2: angles in degrees, azimuth clockwise from north, altitude includes refraction.
-- Playwright runs the app on port 3100 so tests never hit another local server.
+- Next 16 replaced the image `priority` prop with `preload`. Hero images use `preload`.
+- Playwright runs the app on port 3100 so tests never hit another local server. Screenshots run
+  with reduced motion, eager images and the Next dev badge hidden.
 
 Code
 - No code comments. Names and structure carry the meaning.
 - Kebab-case file names, named exports (Next route files excepted), `@/` imports across folders.
+- React hooks live in hooks/. lib/ stays pure and unit tested.
+- Components expose variants and tones as props instead of accepting conflicting class overrides,
+  so there is no class-merging library. `cx` in lib/cx.ts joins class names.
+
+Design system
+- Primitives live in components/ui. Button renders a <button>, ButtonLink renders next/link with a
+  typed Route: links navigate, buttons act.
+- app/styles/utilities.css adds link-underline (the animated text link), focus-ring and
+  duration-fast/base/slow on top of the tokens.
+- lib/motion.ts mirrors the CSS motion tokens for JavaScript, and a unit test keeps them equal.
+- Lenis (components/shell/smooth-scroll.tsx) runs only without reduced motion and pauses itself
+  when a modal dialog sets overflow hidden on the page.
+- Drawer is a native <dialog> with CSS @starting-style transitions. It closes itself when Activity
+  hides its route.
+- RevealImage animates only images that start below the fold, so it never delays LCP.
+- Toggle is native radio inputs in a radiogroup. Marquee pauses on hover, off screen and from its
+  button, and its duplicate copy is aria-hidden and inert.
+- /system reads tokens.css at build time. Every color and type step needs a description there or
+  the build fails.
+- Placeholder images come from `npm run images` (scripts/generate-placeholders.mts, using sharp).
 
 Content and data
 - Copenhagen prices are stored in DKK, and rates.ts includes DKK. Currency toggle: Local (default),

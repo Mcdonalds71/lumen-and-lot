@@ -34,3 +34,11 @@ export function contrastRatio(foreground: string, background: string): number {
   const b = relativeLuminance(background);
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 }
+
+export type ContrastLevel = "text" | "large-text" | "decorative";
+
+export function contrastLevel(ratio: number): ContrastLevel {
+  if (ratio >= minimumContrast.text) return "text";
+  if (ratio >= minimumContrast.largeText) return "large-text";
+  return "decorative";
+}

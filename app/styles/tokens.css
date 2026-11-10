@@ -42,6 +42,8 @@
   --spacing-margin: clamp(1.25rem, 5.5vw, 5rem);
   --spacing-gutter: clamp(1rem, 2.2vw, 2rem);
 
+  --container-page: 110rem;
+
   --radius-*: initial;
   --radius-input: 2px;
 
@@ -60,7 +62,14 @@
   --default-transition-duration: var(--duration-fast);
   --default-transition-timing-function: var(--ease-out);
 
-  --grid-columns: 12;
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    to {
+      translate: -50% 0;
+    }
+  }
+
   --hairline: 1px;
   --focus-width: 2px;
   --focus-offset: 3px;
