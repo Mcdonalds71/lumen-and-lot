@@ -1,3 +1,5 @@
+import { join } from "node:path";
+
 import { expect, type Page, test } from "@playwright/test";
 
 import { pages } from "./pages";
@@ -62,7 +64,7 @@ async function settle(page: Page) {
 
 function capture(page: Page, file: string, { fullPage = false } = {}) {
   return page.screenshot({
-    path: `test-results/screenshots/${file}.png`,
+    path: join(test.info().project.outputDir, `${file}.png`),
     fullPage,
     animations: "disabled",
   });

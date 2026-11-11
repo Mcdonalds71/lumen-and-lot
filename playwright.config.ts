@@ -16,13 +16,22 @@ export default defineConfig({
   },
   projects: [
     {
+      name: "setup",
+      testMatch: /\.setup\.ts$/,
+      outputDir: "test-results/setup",
+    },
+    {
       name: "e2e",
       testIgnore: /screenshots\.spec\.ts/,
+      dependencies: ["setup"],
+      outputDir: "test-results/e2e",
       use: { ...devices["Desktop Chrome"] },
     },
     {
       name: "screenshots",
       testMatch: /screenshots\.spec\.ts/,
+      dependencies: ["setup"],
+      outputDir: "test-results/screenshots",
       use: {
         ...devices["Desktop Chrome"],
         contextOptions: { reducedMotion: "reduce" },

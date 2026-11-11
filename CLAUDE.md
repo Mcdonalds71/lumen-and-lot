@@ -107,6 +107,9 @@ Platform
   with reduced motion, eager images and the Next dev badge hidden, and also capture the open
   residences menu, the open phone menu and the scrolled header.
 - Playwright reuses any server already listening on 3100, so stop a stale next dev before e2e.
+- A setup project requests every page once, in order, before the suites run in parallel, because
+  concurrent first compiles of a dynamic route in next dev can fail with a 500. Each Playwright
+  project writes to its own folder in test-results/, so an e2e run keeps the screenshots.
 - Page transitions use React's <ViewTransition> in app/template.tsx. app/styles/transitions.css
   styles the page-enter and page-exit classes and turns them off for reduced motion.
 - Partial Prefetching wants route params read inside Suspense, so [slug] pages wrap their content
