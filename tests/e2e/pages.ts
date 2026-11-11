@@ -4,7 +4,7 @@ export const pages: readonly Page[] = [
   { name: "home", path: "/", screenshot: true },
   { name: "system", path: "/system", screenshot: true },
   { name: "residences", path: "/residences", screenshot: true },
-  { name: "residence", path: "/residences/harbor-room" },
+  { name: "residence", path: "/residences/harbor-room", screenshot: true },
   { name: "projects", path: "/projects" },
   { name: "project", path: "/projects/stair-house" },
   { name: "interiors", path: "/interiors" },

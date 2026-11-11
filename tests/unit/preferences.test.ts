@@ -47,6 +47,7 @@ describe("preferenceDefaults", () => {
     expect(preferenceDefaults(preferences)).toEqual({
       "data-area": "m2",
       "data-currency": "local",
+      "data-residence-view": "grid",
     });
   });
 });
@@ -57,8 +58,13 @@ describe("preferenceScript", () => {
       runScript({
         "lumen-and-lot:area": "ft2",
         "lumen-and-lot:currency": "EUR",
+        "lumen-and-lot:residence-view": "list",
       }),
-    ).toEqual({ "data-area": "ft2", "data-currency": "EUR" });
+    ).toEqual({
+      "data-area": "ft2",
+      "data-currency": "EUR",
+      "data-residence-view": "list",
+    });
   });
 
   it("ignores values it does not know", () => {

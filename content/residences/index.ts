@@ -25,6 +25,12 @@ export function findResidence(slug: string): Residence | undefined {
   return residences.find((residence) => residence.slug === slug);
 }
 
+export function nextResidence(slug: string): Residence | undefined {
+  const index = residences.findIndex((residence) => residence.slug === slug);
+  if (index === -1) return undefined;
+  return residences[(index + 1) % residences.length];
+}
+
 export function coverImage(residence: Residence): ImageAsset {
   const [cover] = residence.gallery;
   if (!cover) throw new Error(`${residence.name} has no gallery images.`);

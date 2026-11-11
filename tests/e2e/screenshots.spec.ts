@@ -12,13 +12,15 @@ const viewports = {
 
 type State = {
   name: string;
+  path: string;
   viewport: (typeof viewports)[keyof typeof viewports];
   enter: (page: Page) => Promise<void>;
 };
 
-const homeStates: readonly State[] = [
+const states: readonly State[] = [
   {
-    name: "residences-menu",
+    name: "home-residences-menu",
+    path: "/",
     viewport: viewports.desktop,
     async enter(page) {
       const trigger = page.getByRole("button", {
@@ -30,7 +32,8 @@ const homeStates: readonly State[] = [
     },
   },
   {
-    name: "mobile-menu",
+    name: "home-mobile-menu",
+    path: "/",
     viewport: viewports.phone,
     async enter(page) {
       await page.getByRole("button", { name: "Menu" }).click();
@@ -38,7 +41,8 @@ const homeStates: readonly State[] = [
     },
   },
   {
-    name: "scrolled-header",
+    name: "home-scrolled-header",
+    path: "/",
     viewport: viewports.desktop,
     async enter(page) {
       await page.mouse.wheel(0, 1200);
@@ -46,6 +50,20 @@ const homeStates: readonly State[] = [
         "data-over-hero",
         "false",
       );
+    },
+  },
+  {
+    name: "residences-list",
+    path: "/residences",
+    viewport: viewports.phone,
+    async enter(page) {
+      await page
+        .getByRole("radiogroup", { name: "View" })
+        .locator("label", { hasText: "List" })
+        .click();
+      await expect(
+        page.getByRole("table", { name: "Residences" }),
+      ).toBeVisible();
     },
   },
 ];
@@ -81,12 +99,12 @@ for (const { name, path } of pages.filter((page) => page.screenshot)) {
   }
 }
 
-for (const { name, viewport, enter } of homeStates) {
-  test(`home with ${name} at ${viewport.width}`, async ({ page }) => {
+for (const { name, path, viewport, enter } of states) {
+  test(`${name} at ${viewport.width}`, async ({ page }) => {
     await page.setViewportSize(viewport);
-    await page.goto("/");
+    await page.goto(path);
     await settle(page);
     await enter(page);
-    await capture(page, `home-${name}-${viewport.width}`);
+    await capture(page, `${name}-${viewport.width}`);
   });
 }

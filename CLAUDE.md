@@ -114,6 +114,7 @@ Platform
   styles the page-enter and page-exit classes and turns them off for reduced motion.
 - Partial Prefetching wants route params read inside Suspense, so [slug] pages wrap their content
   in Suspense with PageFallback as the instant shell.
+- An e2e suite fails any page that logs a console error, which includes hydration mismatches.
 
 Code
 - No code comments. Names and structure carry the meaning.
@@ -121,8 +122,12 @@ Code
 - React hooks live in hooks/. lib/ stays pure and unit tested.
 - Components expose variants and tones as props instead of accepting conflicting class overrides,
   so there is no class-merging library. `cx` in lib/cx.ts joins class names.
-- Components outside ui/ are grouped by domain: shell/, preferences/, residences/, markets/. Home
-  page sections are private to their route in app/_home/.
+- Components outside ui/ are grouped by domain: shell/, preferences/, residences/, markets/, and
+  features/ for the signature features. Page sections stay private to their route, in app/_home/
+  and app/residences/[slug]/_sections/.
+- Node and the browser can disagree in the last digits of trig results, so SVG coordinates go
+  through svgNumber/svgPoints (lib/svg.ts), rounded to the millimeter, before they render.
+- Source holds no invisible characters. A no-break space is written as   or &nbsp;.
 
 Design system
 - Primitives live in components/ui. Button renders a <button>, ButtonLink renders next/link with a
@@ -140,6 +145,8 @@ Design system
 - Toggle is native radio inputs in a radiogroup, in ink or paper tone, with its label inline or
   stacked. Label has muted, ink and paper tones. Marquee pauses on hover, off screen and from its
   button, and its duplicate copy is aria-hidden and inert.
+- Select wraps a native select and Slider a native range input (the slider utility), so both keep
+  the browser's keyboard and screen reader behavior. Both are on /system.
 - /system reads tokens.css at build time. Every color and type step needs a description there or
   the build fails.
 
@@ -157,10 +164,39 @@ Shell
 - Pages that are not built yet render PageInProgress with their real title, so every link in the
   shell resolves.
 
+Residences
+- The grid or list view is a third preference (data-residence-view) on the same no-flash
+  mechanism: the server renders both views and CSS shows the saved one.
+- Filters (city, minimum bedrooms, status) are client state and stay out of the URL, so the list
+  prerenders. lib/residence-filters.ts holds the matching rule.
+- The compare store is lib/compare.ts with hooks/use-compare-list.ts: up to 3 slugs, comma
+  separated, in localStorage, kept in memory when storage refuses a write. "Add to compare" is on
+  the residence page. The tray and /compare come in Phase 6.
+- The energy card shows each label on its own system's scale. Letter scales are stepped bars, the
+  most efficient first.
+
+Daylight Explorer
+- lib/sun.ts is the model. A day's sunrise and sunset come from suncalc at an instant near local
+  solar noon (12:00 UTC minus longitude ÷ 15 hours), so no time zone math is needed. Times show in
+  the residence's own zone through Intl, with the space before AM or PM normalized.
+- A window's outward normal comes from probing just outside its wall in the room polygon, and
+  bearings map onto the plan through northRotation.
+- A window lets sun in when the sun is up, less than 90° off its outward normal, and not fully
+  shaded by a 30 cm reveal, which darkens depth × tan(angle) of the opening at the end nearest the
+  sun. The same rule drives the drawn patches, "in sun now" and the sun hours.
+- Sun hours sample every 15 minutes from sunrise to sunset and report each room's sunny periods.
+- Dates are the 2026 winter solstice, March equinox and summer solstice, plus today in the
+  residence's zone. The explorer opens on the equinox at the middle of the living room's longest
+  sunny period. Play runs a day in 14 seconds, in hourly steps under reduced motion.
+- The plan is drawn in meters inside a group rotated so north is up, with light clipped to each
+  room. Room names are HTML overlays sized in cqw and shown only where they fit
+  (lib/plan-frame.ts). The sun hours table is the text alternative.
+
 Content and data
 - content/schemas/ holds one zod schema per domain. Every collection parses when its module loads,
   so invalid content fails the build and the unit tests. Collections export their validated list
-  and small finders (findResidence, newestResidence, findProject, nextProject, findLookbook).
+  and small finders (findResidence, newestResidence, nextResidence, findProject, nextProject,
+  findLookbook).
 - Markets (content/markets.ts) carry the city name, country, IANA time zone, currency and energy
   label system. Residences and projects store a market id, and the schema resolves it to the
   market. Prices must be in the market's currency, labels in its system.
@@ -189,7 +225,7 @@ Design and accessibility
 - Daylight patches span sill ÷ tan(altitude) to head ÷ tan(altitude). The page says it shows
   direct sun on an unobstructed site.
 - The marquee has a visible pause button. The newsletter form says that nothing was sent.
-- Home shows journal stubs until Phase 8. The compare store ships with "Add to compare" in Phase 4.
+- Home shows journal stubs until Phase 8.
 - On the home page, text and image sit side by side from lg and stack below it. The project
   collage staggers tiles with grid row spans, never negative margins, so tiles cannot overlap
   whatever their image ratios.

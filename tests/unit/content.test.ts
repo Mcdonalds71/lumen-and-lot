@@ -8,6 +8,7 @@ import { rates } from "@/content/rates";
 import {
   findResidence,
   newestResidence,
+  nextResidence,
   residences,
 } from "@/content/residences";
 import type { MarketId } from "@/content/schemas/market";
@@ -89,6 +90,12 @@ describe("residences", () => {
 
   it("knows the newest listing", () => {
     expect(newestResidence().slug).toBe("high-terrace");
+  });
+
+  it("wraps from the last residence back to the first", () => {
+    expect(nextResidence("harbor-room")?.slug).toBe("courtyard-rooms");
+    expect(nextResidence("high-terrace")?.slug).toBe("garden-floor");
+    expect(nextResidence("missing")).toBeUndefined();
   });
 });
 

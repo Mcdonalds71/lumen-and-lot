@@ -8,6 +8,7 @@ import northLight from "@/public/images/placeholders/north-light.webp";
 
 import { Chapter, type ChapterProps } from "./chapter";
 import { DrawerDemo } from "./drawer-demo";
+import { InputsDemo } from "./inputs-demo";
 import { Plate } from "./plate";
 import { ToggleDemo } from "./toggle-demo";
 
@@ -58,6 +59,14 @@ export function ComponentsChapter({ meta }: ChapterProps) {
 
         <Plate
           number={3}
+          title="Select, slider"
+          caption="A native select and a native range input, styled with hairlines. Both keep the browser's own keyboard and screen reader behavior."
+        >
+          <InputsDemo />
+        </Plate>
+
+        <Plate
+          number={4}
           title="Labels, rules"
           caption="Mono labels in muted and ink, with hairline rules in rule and ink."
         >
@@ -75,7 +84,7 @@ export function ComponentsChapter({ meta }: ChapterProps) {
         </Plate>
 
         <Plate
-          number={4}
+          number={5}
           title="Marquee"
           caption="Pauses on hover, when it leaves the screen, or with its button. It stands still when reduced motion is on."
         >
@@ -93,7 +102,7 @@ export function ComponentsChapter({ meta }: ChapterProps) {
         </Plate>
 
         <Plate
-          number={5}
+          number={6}
           title="Images"
           caption="Each image is wiped in once as it enters the view, then scales slowly on hover. Both are placeholders until photography arrives."
         >
@@ -114,7 +123,7 @@ export function ComponentsChapter({ meta }: ChapterProps) {
         </Plate>
 
         <Plate
-          number={6}
+          number={7}
           title="Drawer"
           caption="A native dialog. Escape or a click outside closes it, and focus returns to the button."
         >

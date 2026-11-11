@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import type { Status } from "@/content/schemas/residence";
 
-const statusLabels: Record<Status, string> = {
+export const statusLabels: Record<Status, string> = {
   available: "Available",
   reserved: "Reserved",
   sold: "Sold",

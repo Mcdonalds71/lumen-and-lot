@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  boundsCenter,
+  centroid,
+  containsPoint,
   edgeContaining,
   edges,
   isOnBoundary,
@@ -8,6 +11,7 @@ import {
   midpoint,
   type Point,
   polygonArea,
+  rotatePoint,
   segmentLength,
 } from "@/lib/geometry";
 
@@ -134,5 +138,43 @@ describe("isOnBoundary", () => {
   it("tells boundary points from interior points", () => {
     expect(isOnBoundary([2, 2], lShape)).toBe(true);
     expect(isOnBoundary([1, 1], lShape)).toBe(false);
+  });
+});
+
+describe("containsPoint", () => {
+  it("finds points inside a concave polygon", () => {
+    expect(containsPoint([1, 4], lShape)).toBe(true);
+    expect(containsPoint([4, 1], lShape)).toBe(true);
+    expect(containsPoint([4, 4], lShape)).toBe(false);
+    expect(containsPoint([-1, 1], lShape)).toBe(false);
+  });
+});
+
+describe("centroid", () => {
+  it("balances the polygon's area", () => {
+    expect(centroid(rectangle)).toEqual([2, 1.5]);
+    const [x, y] = centroid(lShape);
+    expect(x).toBeCloseTo(7 / 3);
+    expect(y).toBeCloseTo(11 / 6);
+  });
+});
+
+describe("boundsCenter", () => {
+  it("sits in the middle of the bounding box", () => {
+    expect(boundsCenter(lShape)).toEqual([3, 2.5]);
+  });
+});
+
+describe("rotatePoint", () => {
+  it("turns clockwise on screen for positive angles, like SVG", () => {
+    const [x, y] = rotatePoint([1, 0], 90, [0, 0]);
+    expect(x).toBeCloseTo(0);
+    expect(y).toBeCloseTo(1);
+  });
+
+  it("turns around the given center", () => {
+    const [x, y] = rotatePoint([3, 2], 180, [2, 2]);
+    expect(x).toBeCloseTo(1);
+    expect(y).toBeCloseTo(2);
   });
 });

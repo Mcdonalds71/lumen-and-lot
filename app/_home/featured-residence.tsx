@@ -1,6 +1,5 @@
-import { Area } from "@/components/preferences/area";
-import { Price } from "@/components/preferences/price";
 import { RatesNote } from "@/components/preferences/rates-note";
+import { ResidenceFacts } from "@/components/residences/residence-facts";
 import { ButtonLink } from "@/components/ui/button";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
@@ -14,12 +13,6 @@ export function FeaturedResidence() {
   const image =
     residence.gallery.find((candidate) => candidate.height > candidate.width) ??
     coverImage(residence);
-  const facts = [
-    { term: "Bedrooms", detail: residence.bedrooms },
-    { term: "Bathrooms", detail: residence.bathrooms },
-    { term: "Area", detail: <Area squareMeters={residence.areaM2} /> },
-    { term: "Indicative price", detail: <Price price={residence.price} /> },
-  ];
 
   return (
     <Section index={1} label="Featured residence">
@@ -40,14 +33,7 @@ export function FeaturedResidence() {
             {residence.name}
           </h2>
           <p className="mt-6 text-lead">{residence.story}</p>
-          <dl className="mt-10 grid grid-cols-2 border-t border-rule">
-            {facts.map(({ term, detail }) => (
-              <div key={term} className="border-b border-rule py-4">
-                <dt className="text-caption text-muted">{term}</dt>
-                <dd className="mt-1 text-body">{detail}</dd>
-              </div>
-            ))}
-          </dl>
+          <ResidenceFacts residence={residence} className="mt-10" />
           <RatesNote className="mt-4" />
           <ButtonLink href={`/residences/${residence.slug}`} className="mt-10">
             View the residence

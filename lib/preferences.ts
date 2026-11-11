@@ -38,7 +38,19 @@ export const currencyPreference = definePreference({
   fallback: "local",
 });
 
-export const preferences = [areaPreference, currencyPreference] as const;
+export const residenceViewPreference = definePreference({
+  attribute: "data-residence-view",
+  optionAttribute: "data-residence-view-option",
+  storageKey: "lumen-and-lot:residence-view",
+  values: ["grid", "list"],
+  fallback: "grid",
+});
+
+export const preferences = [
+  areaPreference,
+  currencyPreference,
+  residenceViewPreference,
+] as const;
 
 export function preferenceDefaults(
   list: readonly Preference<string>[],
