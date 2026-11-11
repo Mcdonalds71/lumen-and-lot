@@ -9,7 +9,7 @@ const variants = {
     "bg-ink px-6 py-3.5 text-paper transition-colors duration-fast hover:bg-moss",
   outline:
     "border border-ink px-6 py-3.5 text-ink transition-colors duration-fast hover:bg-ink hover:text-paper",
-  text: "link-underline text-ink",
+  text: "link-underline",
 } as const;
 
 type Variant = keyof typeof variants;
@@ -39,17 +39,20 @@ export function Button({
   );
 }
 
-type ButtonLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
-  href: Route;
+type ButtonLinkProps<T extends string> = Omit<
+  ComponentPropsWithoutRef<"a">,
+  "href"
+> & {
+  href: Route<T>;
   variant?: Variant;
 };
 
-export function ButtonLink({
+export function ButtonLink<T extends string>({
   href,
   variant = "solid",
   className,
   ...props
-}: ButtonLinkProps) {
+}: ButtonLinkProps<T>) {
   return (
     <Link
       href={href}

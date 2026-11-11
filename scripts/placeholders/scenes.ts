@@ -16,6 +16,10 @@ const opening = "#2d2a26";
 const sky = "#e8e4dc";
 const paper = "#f4f1ea";
 const ink = "#161513";
+const lamplight = "#e8cb9c";
+const duskSky = "#2b2724";
+const duskWall = "#3b3631";
+const duskGround = "#1f1c19";
 
 const weathered: Tones = {
   wall: "#8e887d",
@@ -93,6 +97,18 @@ export function drawing(size: Size): string {
     line("M12 50 H44 M52 14 V40 M52 48 V86 M52 62 H88"),
     line("M60 22 H82 M60 28 H82 M60 34 H82 M60 40 H82"),
     line("M24 14 V10 M36 14 V10 M88 70 H92 M88 78 H92"),
+  ]);
+}
+
+export function dusk(size: Size): string {
+  const windows = [12, 26, 40, 54, 68].flatMap((x) =>
+    [30, 52].map((y) => rect(x, y, 8, 12, lamplight, 0.9)),
+  );
+  return canvas(size, [
+    rect(0, 0, 100, 100, duskSky),
+    rect(6, 20, 74, 64, duskWall),
+    ...windows,
+    rect(0, 84, 100, 16, duskGround),
   ]);
 }
 

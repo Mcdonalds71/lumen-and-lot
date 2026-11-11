@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 
 import sharp from "sharp";
 
+import { home } from "@/content/home";
 import { lookbooks } from "@/content/lookbooks";
 import { findPalette } from "@/content/palettes";
 import { projects } from "@/content/projects";
@@ -18,6 +19,7 @@ import {
   before,
   detail,
   drawing,
+  dusk,
   exterior,
   room,
   type Scene,
@@ -105,7 +107,15 @@ const lookbookJobs = lookbooks.map((lookbook): Job => ({
   render: (size) => room(size, tonesOf(lookbook.palette), lookbook.hotspots),
 }));
 
-const jobs = [...systemJobs, ...residenceJobs, ...projectJobs, ...lookbookJobs];
+const homeJobs: Job[] = [{ target: home.hero.image, render: dusk }];
+
+const jobs = [
+  ...systemJobs,
+  ...homeJobs,
+  ...residenceJobs,
+  ...projectJobs,
+  ...lookbookJobs,
+];
 const publicDirectory = join(import.meta.dirname, "..", "public");
 let created = 0;
 

@@ -6,7 +6,7 @@ import { harborRoom } from "./harbor-room";
 import { highTerrace } from "./high-terrace";
 import { northLight } from "./north-light";
 import { orchardHouse } from "./orchard-house";
-import { uniqueBy } from "../schemas/common";
+import { type ImageAsset, uniqueBy } from "../schemas/common";
 import { type Residence, residenceSchema } from "../schemas/residence";
 
 export const residences: readonly Residence[] = z
@@ -23,6 +23,12 @@ export const residences: readonly Residence[] = z
 
 export function findResidence(slug: string): Residence | undefined {
   return residences.find((residence) => residence.slug === slug);
+}
+
+export function coverImage(residence: Residence): ImageAsset {
+  const [cover] = residence.gallery;
+  if (!cover) throw new Error(`${residence.name} has no gallery images.`);
+  return cover;
 }
 
 export function newestResidence(): Residence {

@@ -9,14 +9,47 @@ type MarqueeProps = {
   children: ReactNode;
   label: string;
   duration?: number;
+  repeat?: number;
   className?: string;
+  controlsClassName?: string;
 };
+
+function Copies({
+  children,
+  repeat,
+  hidden,
+}: {
+  children: ReactNode;
+  repeat: number;
+  hidden: boolean;
+}) {
+  return (
+    <div
+      className="flex shrink-0 items-center"
+      aria-hidden={hidden || undefined}
+      inert={hidden || undefined}
+    >
+      {Array.from({ length: repeat }, (_, copy) => (
+        <div
+          key={copy}
+          className="flex shrink-0 items-center"
+          aria-hidden={(!hidden && copy > 0) || undefined}
+          inert={(!hidden && copy > 0) || undefined}
+        >
+          {children}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export function Marquee({
   children,
   label,
   duration = 40,
+  repeat = 1,
   className,
+  controlsClassName,
 }: MarqueeProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const inView = useInView(frameRef);
@@ -39,16 +72,21 @@ export function Marquee({
             animationPlayState: running ? "running" : "paused",
           }}
         >
-          <div className="flex shrink-0 items-center">{children}</div>
-          <div className="flex shrink-0 items-center" aria-hidden inert>
+          <Copies repeat={repeat} hidden={false}>
             {children}
-          </div>
+          </Copies>
+          <Copies repeat={repeat} hidden>
+            {children}
+          </Copies>
         </div>
       </div>
       <button
         type="button"
         onClick={() => setPaused((value) => !value)}
-        className="self-end link-underline font-mono text-label uppercase motion-reduce:hidden"
+        className={cx(
+          "self-end link-underline font-mono text-label uppercase motion-reduce:hidden",
+          controlsClassName,
+        )}
       >
         {paused ? "Play" : "Pause"}
         <span className="sr-only"> {label}</span>

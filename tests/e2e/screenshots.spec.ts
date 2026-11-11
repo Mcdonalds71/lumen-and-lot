@@ -1,12 +1,52 @@
-import { type Page, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 
 import { pages } from "./pages";
 
-const viewports = [
-  { width: 375, height: 812 },
-  { width: 768, height: 1024 },
-  { width: 1440, height: 900 },
-] as const;
+const viewports = {
+  phone: { width: 375, height: 812 },
+  tablet: { width: 768, height: 1024 },
+  desktop: { width: 1440, height: 900 },
+} as const;
+
+type State = {
+  name: string;
+  viewport: (typeof viewports)[keyof typeof viewports];
+  enter: (page: Page) => Promise<void>;
+};
+
+const homeStates: readonly State[] = [
+  {
+    name: "residences-menu",
+    viewport: viewports.desktop,
+    async enter(page) {
+      const trigger = page.getByRole("button", {
+        name: "Residences",
+        exact: true,
+      });
+      await trigger.click();
+      await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    },
+  },
+  {
+    name: "mobile-menu",
+    viewport: viewports.phone,
+    async enter(page) {
+      await page.getByRole("button", { name: "Menu" }).click();
+      await expect(page.getByRole("dialog", { name: "Menu" })).toBeVisible();
+    },
+  },
+  {
+    name: "scrolled-header",
+    viewport: viewports.desktop,
+    async enter(page) {
+      await page.mouse.wheel(0, 1200);
+      await expect(page.locator("body > header")).toHaveAttribute(
+        "data-over-hero",
+        "false",
+      );
+    },
+  },
+];
 
 async function settle(page: Page) {
   await page.addStyleTag({
@@ -20,17 +60,31 @@ async function settle(page: Page) {
   });
 }
 
-for (const { name, path } of pages) {
-  for (const viewport of viewports) {
+function capture(page: Page, file: string, { fullPage = false } = {}) {
+  return page.screenshot({
+    path: `test-results/screenshots/${file}.png`,
+    fullPage,
+    animations: "disabled",
+  });
+}
+
+for (const { name, path } of pages.filter((page) => page.screenshot)) {
+  for (const viewport of Object.values(viewports)) {
     test(`${name} at ${viewport.width}`, async ({ page }) => {
       await page.setViewportSize(viewport);
       await page.goto(path);
       await settle(page);
-      await page.screenshot({
-        path: `test-results/screenshots/${name}-${viewport.width}.png`,
-        fullPage: true,
-        animations: "disabled",
-      });
+      await capture(page, `${name}-${viewport.width}`, { fullPage: true });
     });
   }
+}
+
+for (const { name, viewport, enter } of homeStates) {
+  test(`home with ${name} at ${viewport.width}`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    await settle(page);
+    await enter(page);
+    await capture(page, `home-${name}-${viewport.width}`);
+  });
 }

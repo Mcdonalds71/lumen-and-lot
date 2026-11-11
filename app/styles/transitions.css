@@ -1,0 +1,30 @@
+::view-transition-old(.page-exit) {
+  animation: var(--duration-fast) var(--ease-out) both page-fade-out;
+}
+
+::view-transition-new(.page-enter) {
+  animation: var(--duration-base) var(--ease-out) var(--duration-fast) both
+    page-fade-in;
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    translate: 0 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

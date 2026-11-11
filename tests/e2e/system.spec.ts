@@ -7,7 +7,9 @@ test.describe("system page", () => {
   });
 
   test("toggle selection follows the arrow keys", async ({ page }) => {
-    const area = page.getByRole("radiogroup", { name: "Area" });
+    const area = page
+      .getByRole("main")
+      .getByRole("radiogroup", { name: "Area" });
     await area.getByRole("radio", { name: "m²" }).focus();
     await page.keyboard.press("ArrowRight");
     await expect(area.getByRole("radio", { name: "ft²" })).toBeChecked();

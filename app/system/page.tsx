@@ -30,7 +30,7 @@ export default function SystemPage() {
   const tokens = readTokens();
 
   return (
-    <main>
+    <div>
       <Container as="header" className="pt-24 pb-20 md:pt-36 md:pb-28">
         <Label as="p">{site.name} — Design system</Label>
         <h1 className="mt-8 font-display text-display-xl">The system</h1>
@@ -66,6 +66,6 @@ export default function SystemPage() {
           />
         ))}
       </Container>
-    </main>
+    </div>
   );
 }

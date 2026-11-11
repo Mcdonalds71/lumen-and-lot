@@ -29,6 +29,7 @@ export function ToggleDemo() {
       <Toggle label="Area" options={areas} value={area} onChange={setArea} />
       <Toggle
         label="Currency"
+        layout="stacked"
         options={currencies}
         value={currency}
         onChange={setCurrency}

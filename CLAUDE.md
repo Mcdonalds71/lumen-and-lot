@@ -104,7 +104,13 @@ Platform
 - suncalc 2: angles in degrees, azimuth clockwise from north, altitude includes refraction.
 - Next 16 replaced the image `priority` prop with `preload`. Hero images use `preload`.
 - Playwright runs the app on port 3100 so tests never hit another local server. Screenshots run
-  with reduced motion, eager images and the Next dev badge hidden.
+  with reduced motion, eager images and the Next dev badge hidden, and also capture the open
+  residences menu, the open phone menu and the scrolled header.
+- Playwright reuses any server already listening on 3100, so stop a stale next dev before e2e.
+- Page transitions use React's <ViewTransition> in app/template.tsx. app/styles/transitions.css
+  styles the page-enter and page-exit classes and turns them off for reduced motion.
+- Partial Prefetching wants route params read inside Suspense, so [slug] pages wrap their content
+  in Suspense with PageFallback as the instant shell.
 
 Code
 - No code comments. Names and structure carry the meaning.
@@ -112,22 +118,41 @@ Code
 - React hooks live in hooks/. lib/ stays pure and unit tested.
 - Components expose variants and tones as props instead of accepting conflicting class overrides,
   so there is no class-merging library. `cx` in lib/cx.ts joins class names.
+- Components outside ui/ are grouped by domain: shell/, preferences/, residences/, markets/. Home
+  page sections are private to their route in app/_home/.
 
 Design system
 - Primitives live in components/ui. Button renders a <button>, ButtonLink renders next/link with a
-  typed Route: links navigate, buttons act.
-- app/styles/utilities.css adds link-underline (the animated text link), focus-ring and
-  duration-fast/base/slow on top of the tokens.
+  typed Route: links navigate, buttons act. ButtonLink is generic over Route<T>, so template
+  literal hrefs are checked too.
+- app/styles/utilities.css adds link-underline (the animated text link), link-reveal (the
+  navigation underline: drawn on hover, also when an enclosing link is hovered, and kept for
+  aria-current and aria-expanded), focus-ring and duration-fast/base/slow on top of the tokens.
 - lib/motion.ts mirrors the CSS motion tokens for JavaScript, and a unit test keeps them equal.
 - Lenis (components/shell/smooth-scroll.tsx) runs only without reduced motion and pauses itself
   when a modal dialog sets overflow hidden on the page.
-- Drawer is a native <dialog> with CSS @starting-style transitions. It closes itself when Activity
-  hides its route.
+- Drawer is a native <dialog> with CSS @starting-style transitions, in panel or full size. It
+  closes itself when Activity hides its route.
 - RevealImage animates only images that start below the fold, so it never delays LCP.
-- Toggle is native radio inputs in a radiogroup. Marquee pauses on hover, off screen and from its
+- Toggle is native radio inputs in a radiogroup, in ink or paper tone, with its label inline or
+  stacked. Label has muted, ink and paper tones. Marquee pauses on hover, off screen and from its
   button, and its duplicate copy is aria-hidden and inert.
 - /system reads tokens.css at build time. Every color and type step needs a description there or
   the build fails.
+
+Shell
+- The header is transparent over the home hero and turns solid paper with a hairline after
+  scrolling or while the residences menu is open. heroRoutes in site-header.tsx lists the pages
+  that open on a full-bleed hero.
+- The residences menu is a disclosure (a button with aria-expanded), not an ARIA menu. Escape, a
+  click outside or following a link closes it, and Escape returns focus to the trigger. Below xl,
+  a full-screen Drawer holds the navigation and the toggles.
+- Area unit and display currency are declared once in lib/preferences.ts. A head script copies the
+  saved choices onto <html> before first paint, server components render every variant, and
+  generated CSS shows only the chosen one, so nothing flashes on load. usePreference
+  (useSyncExternalStore) keeps open tabs in sync.
+- Pages that are not built yet render PageInProgress with their real title, so every link in the
+  shell resolves.
 
 Content and data
 - content/schemas/ holds one zod schema per domain. Every collection parses when its module loads,
@@ -162,3 +187,7 @@ Design and accessibility
   direct sun on an unobstructed site.
 - The marquee has a visible pause button. The newsletter form says that nothing was sent.
 - Home shows journal stubs until Phase 8. The compare store ships with "Add to compare" in Phase 4.
+- On the home page, text and image sit side by side from lg and stack below it. The project
+  collage staggers tiles with grid row spans, never negative margins, so tiles cannot overlap
+  whatever their image ratios.
+- City lists wrap only between cities, so a separator never starts a line.

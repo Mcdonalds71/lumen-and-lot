@@ -51,7 +51,7 @@ export function ComponentsChapter({ meta }: ChapterProps) {
         <Plate
           number={2}
           title="Toggles"
-          caption="A segmented control built on native radio buttons. Arrow keys move the selection."
+          caption="A segmented control built on native radio buttons, with its label inline or stacked. Arrow keys move the selection."
         >
           <ToggleDemo />
         </Plate>

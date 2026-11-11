@@ -41,6 +41,7 @@
 
   --spacing-margin: clamp(1.25rem, 5.5vw, 5rem);
   --spacing-gutter: clamp(1rem, 2.2vw, 2rem);
+  --spacing-header: 4.5rem;
 
   --container-page: 110rem;
 
@@ -63,10 +64,18 @@
   --default-transition-timing-function: var(--ease-out);
 
   --animate-marquee: marquee 40s linear infinite;
+  --animate-rise: rise var(--duration-slow) var(--ease-out) both;
+  --stagger: 120ms;
 
   @keyframes marquee {
     to {
       translate: -50% 0;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      translate: 0 100%;
     }
   }
 

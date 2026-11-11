@@ -7,11 +7,14 @@ import type { PolymorphicProps } from "./polymorphic";
 const tones = {
   muted: "text-muted",
   ink: "text-ink",
+  paper: "text-paper",
 } as const;
+
+export type LabelTone = keyof typeof tones;
 
 type LabelProps<E extends ElementType> = PolymorphicProps<
   E,
-  { tone?: keyof typeof tones; className?: string }
+  { tone?: LabelTone; className?: string }
 >;
 
 export function Label<E extends ElementType = "span">({

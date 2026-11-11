@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 
+import { home } from "@/content/home";
 import { lookbooks } from "@/content/lookbooks";
 import { projects } from "@/content/projects";
 import { residences } from "@/content/residences";
@@ -21,7 +22,7 @@ function collectImages(value: unknown): ImageReference[] {
   return Object.values(value).flatMap(collectImages);
 }
 
-const images = collectImages([residences, projects, lookbooks]);
+const images = collectImages([home.hero, residences, projects, lookbooks]);
 
 describe("content images", () => {
   it("gives every image slot its own file", () => {
