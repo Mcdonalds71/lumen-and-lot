@@ -11,11 +11,11 @@ describe("toSquareFeet", () => {
 
 describe("formatArea", () => {
   it("shows whole square meters", () => {
-    expect(formatArea(112, "m2")).toBe("112 m²");
-    expect(formatArea(84.4, "m2")).toBe("84 m²");
+    expect(formatArea(112, "m2")).toBe("112\u00a0m²");
+    expect(formatArea(84.4, "m2")).toBe("84\u00a0m²");
   });
 
   it("converts to whole square feet with a thousands separator", () => {
-    expect(formatArea(112, "ft2")).toBe("1,206 ft²");
+    expect(formatArea(112, "ft2")).toBe("1,206\u00a0ft²");
   });
 });

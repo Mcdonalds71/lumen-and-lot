@@ -58,7 +58,7 @@ describe("formatMoney", () => {
     [{ amount: 1_395_000, currency: "CAD" }, "CA$1,395,000"],
     [{ amount: 1_250_000, currency: "EUR" }, "€1,250,000"],
     [{ amount: 980, currency: "GBP" }, "£980"],
-    [{ amount: 7_950_000, currency: "DKK" }, "DKK 7,950,000"],
+    [{ amount: 7_950_000, currency: "DKK" }, "DKK\u00a07,950,000"],
   ] as const)("formats %o as %s", (money, expected) => {
     expect(formatMoney(money)).toBe(expected);
   });

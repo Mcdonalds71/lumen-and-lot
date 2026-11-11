@@ -16,5 +16,5 @@ export function toSquareFeet(squareMeters: number): number {
 
 export function formatArea(squareMeters: number, unit: AreaUnit): string {
   const value = unit === "m2" ? squareMeters : toSquareFeet(squareMeters);
-  return `${wholeNumber.format(value)} ${symbols[unit]}`;
+  return `${wholeNumber.format(value)}\u00a0${symbols[unit]}`;
 }
