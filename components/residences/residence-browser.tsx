@@ -5,8 +5,7 @@ import { Fragment, type ReactNode, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, type SelectOption } from "@/components/ui/select";
 import { Toggle } from "@/components/ui/toggle";
-import { marketList } from "@/content/markets";
-import { type Status, statuses } from "@/content/schemas/residence";
+import type { Status } from "@/content/schemas/residence";
 import { usePreference } from "@/hooks/use-preference";
 import { cx } from "@/lib/cx";
 import { formatCount } from "@/lib/format";
@@ -14,7 +13,6 @@ import { residenceViewPreference } from "@/lib/preferences";
 import { matchesFilters } from "@/lib/residence-filters";
 
 import { residenceColumns } from "./residence-row";
-import { statusLabels } from "./residence-status";
 
 export type ResidenceEntry = {
   slug: string;
@@ -27,19 +25,9 @@ export type ResidenceEntry = {
 
 const any = "any";
 
-const cityOptions: SelectOption<string>[] = [
-  { value: any, label: "All cities" },
-  ...marketList.map((market) => ({ value: market.id, label: market.name })),
-];
-
 const bedroomOptions: SelectOption<string>[] = [
   { value: any, label: "Any" },
   ...[1, 2, 3].map((count) => ({ value: String(count), label: `${count}+` })),
-];
-
-const statusOptions: SelectOption<string>[] = [
-  { value: any, label: "Any" },
-  ...statuses.map((status) => ({ value: status, label: statusLabels[status] })),
 ];
 
 const viewOptions = [
@@ -51,11 +39,19 @@ const unfiltered = { city: any, bedrooms: any, status: any };
 
 const optionAttribute = residenceViewPreference.optionAttribute;
 
+type ResidenceBrowserProps = {
+  entries: readonly ResidenceEntry[];
+  cities: readonly SelectOption<string>[];
+  statuses: readonly SelectOption<string>[];
+};
+
 export function ResidenceBrowser({
   entries,
-}: {
-  entries: readonly ResidenceEntry[];
-}) {
+  cities,
+  statuses,
+}: ResidenceBrowserProps) {
+  const cityOptions = [{ value: any, label: "All cities" }, ...cities];
+  const statusOptions = [{ value: any, label: "Any" }, ...statuses];
   const [choice, setChoice] = useState(unfiltered);
   const [view, setView] = usePreference(residenceViewPreference);
   const shown = entries.filter((entry) =>

@@ -4,10 +4,13 @@ import { RatesNote } from "@/components/preferences/rates-note";
 import { ResidenceBrowser } from "@/components/residences/residence-browser";
 import { ResidenceCard } from "@/components/residences/residence-card";
 import { ResidenceRow } from "@/components/residences/residence-row";
+import { statusLabels } from "@/components/residences/residence-status";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
+import { marketList } from "@/content/markets";
 import { residences } from "@/content/residences";
+import { statuses } from "@/content/schemas/residence";
 
 export const metadata: Metadata = {
   title: "Residences",
@@ -38,7 +41,17 @@ export default function ResidencesPage() {
         </p>
       </Grid>
       <div className="mt-16 md:mt-24">
-        <ResidenceBrowser entries={entries} />
+        <ResidenceBrowser
+          entries={entries}
+          cities={marketList.map((market) => ({
+            value: market.id,
+            label: market.name,
+          }))}
+          statuses={statuses.map((status) => ({
+            value: status,
+            label: statusLabels[status],
+          }))}
+        />
       </div>
       <RatesNote className="mt-16 max-w-xl" />
     </Container>
