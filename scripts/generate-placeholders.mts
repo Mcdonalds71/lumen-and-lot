@@ -1,119 +1,124 @@
+import { existsSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import sharp from "sharp";
 
-type Shape =
-  | {
-      kind: "rect";
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-      fill: string;
-    }
-  | { kind: "polygon"; points: string; fill: string };
+import { lookbooks } from "@/content/lookbooks";
+import { findPalette } from "@/content/palettes";
+import { projects } from "@/content/projects";
+import { residences } from "@/content/residences";
+import {
+  type PaletteId,
+  paletteIds,
+  type SwatchRole,
+} from "@/content/schemas/palette";
 
-type Placeholder = {
-  name: string;
-  width: number;
-  height: number;
-  background: string;
-  shapes: Shape[];
-};
+import {
+  before,
+  detail,
+  drawing,
+  exterior,
+  room,
+  type Scene,
+  type Size,
+  type Tones,
+} from "./placeholders/scenes";
 
-const placeholders: Placeholder[] = [
+type Job = { target: Size & { src: string }; render: (size: Size) => string };
+
+const sequence: readonly [Scene, ...Scene[]] = [exterior, room, detail];
+
+function cyclic<T>(items: readonly [T, ...T[]], index: number): T {
+  return items[index % items.length] ?? items[0];
+}
+
+function tonesOf(id: PaletteId): Tones {
+  const { swatches } = findPalette(id);
+  const color = (role: SwatchRole) => {
+    const swatch = swatches.find((candidate) => candidate.role === role);
+    if (!swatch) throw new Error(`Palette "${id}" has no ${role} swatch.`);
+    return swatch.color;
+  };
+  return {
+    wall: color("wall"),
+    floor: color("floor"),
+    stone: color("stone"),
+    metal: color("metal"),
+  };
+}
+
+const systemJobs: Job[] = [
   {
-    name: "north-light",
-    width: 1600,
-    height: 2000,
-    background: "#d9d1c4",
-    shapes: [
-      {
-        kind: "rect",
-        x: 0,
-        y: 1480,
-        width: 1600,
-        height: 520,
-        fill: "#a98d6c",
-      },
-      {
-        kind: "rect",
-        x: 880,
-        y: 280,
-        width: 420,
-        height: 1040,
-        fill: "#efe9dd",
-      },
-      {
-        kind: "rect",
-        x: 1084,
-        y: 280,
-        width: 12,
-        height: 1040,
-        fill: "#d9d1c4",
-      },
-      {
-        kind: "polygon",
-        points: "840,1540 1300,1540 1150,1930 690,1930",
-        fill: "#c7a582",
-      },
-    ],
+    target: {
+      src: "/images/placeholders/north-light.webp",
+      width: 1600,
+      height: 2000,
+    },
+    render: (size) => room(size, tonesOf("limewash")),
   },
   {
-    name: "courtyard",
-    width: 2400,
-    height: 1600,
-    background: "#e7e1d6",
-    shapes: [
-      { kind: "rect", x: 0, y: 0, width: 960, height: 1600, fill: "#cbc2b3" },
-      {
-        kind: "rect",
-        x: 0,
-        y: 1180,
-        width: 2400,
-        height: 420,
-        fill: "#b5aa98",
-      },
-      {
-        kind: "rect",
-        x: 1480,
-        y: 470,
-        width: 330,
-        height: 710,
-        fill: "#3b3833",
-      },
-      {
-        kind: "polygon",
-        points: "960,1180 2400,1180 2400,1600 1500,1600",
-        fill: "#c4b9a6",
-      },
-    ],
+    target: {
+      src: "/images/placeholders/courtyard.webp",
+      width: 2400,
+      height: 1600,
+    },
+    render: (size) => exterior(size, tonesOf("umber")),
   },
 ];
 
-function toSvg({ width, height, background, shapes }: Placeholder): string {
-  const elements = shapes.map((shape) =>
-    shape.kind === "rect"
-      ? `<rect x="${shape.x}" y="${shape.y}" width="${shape.width}" height="${shape.height}" fill="${shape.fill}"/>`
-      : `<polygon points="${shape.points}" fill="${shape.fill}"/>`,
-  );
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="${width}" height="${height}" fill="${background}"/>${elements.join("")}</svg>`;
+const residenceJobs = residences.flatMap((residence, index): Job[] => {
+  const tones = tonesOf(cyclic(paletteIds, index));
+  return [
+    ...residence.gallery.map((target, position) => ({
+      target,
+      render: (size: Size) => cyclic(sequence, position)(size, tones),
+    })),
+    ...residence.palettes.flatMap(({ palette, rooms }) =>
+      rooms.map(({ image: target }) => ({
+        target,
+        render: (size: Size) => room(size, tonesOf(palette)),
+      })),
+    ),
+  ];
+});
+
+const projectJobs = projects.flatMap((project, index): Job[] => {
+  const tones = tonesOf(cyclic(paletteIds, index + 1));
+  return [
+    { target: project.cover, render: (size) => exterior(size, tones) },
+    ...project.sections.map(({ image: target }, position) => ({
+      target,
+      render: (size: Size) => cyclic(sequence, position)(size, tones),
+    })),
+    ...project.drawings.map(({ image: target }) => ({
+      target,
+      render: drawing,
+    })),
+    { target: project.beforeAfter.before, render: before },
+    { target: project.beforeAfter.after, render: (size) => room(size, tones) },
+  ];
+});
+
+const lookbookJobs = lookbooks.map((lookbook): Job => ({
+  target: lookbook.image,
+  render: (size) => room(size, tonesOf(lookbook.palette), lookbook.hotspots),
+}));
+
+const jobs = [...systemJobs, ...residenceJobs, ...projectJobs, ...lookbookJobs];
+const publicDirectory = join(import.meta.dirname, "..", "public");
+let created = 0;
+
+for (const { target, render } of jobs) {
+  const file = join(publicDirectory, target.src);
+  if (existsSync(file)) continue;
+  await mkdir(dirname(file), { recursive: true });
+  await sharp(Buffer.from(render(target)))
+    .webp({ quality: 82 })
+    .toFile(file);
+  created += 1;
 }
 
-const outputDirectory = join(
-  import.meta.dirname,
-  "..",
-  "public",
-  "images",
-  "placeholders",
-);
-
-await mkdir(outputDirectory, { recursive: true });
-await Promise.all(
-  placeholders.map((placeholder) =>
-    sharp(Buffer.from(toSvg(placeholder)))
-      .webp({ quality: 82 })
-      .toFile(join(outputDirectory, `${placeholder.name}.webp`)),
-  ),
+console.log(
+  `Created ${created} placeholder images. ${jobs.length - created} already existed.`,
 );

@@ -14,7 +14,7 @@
     "screenshots": "playwright test --project=screenshots",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "images": "node scripts/generate-placeholders.mts"
+    "images": "tsx scripts/generate-placeholders.mts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -44,6 +44,7 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "sharp": "^0.35.5",
     "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.1.0"
   },

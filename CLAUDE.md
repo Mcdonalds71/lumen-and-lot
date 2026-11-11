@@ -128,18 +128,32 @@ Design system
   button, and its duplicate copy is aria-hidden and inert.
 - /system reads tokens.css at build time. Every color and type step needs a description there or
   the build fails.
-- Placeholder images come from `npm run images` (scripts/generate-placeholders.mts, using sharp).
 
 Content and data
-- Copenhagen prices are stored in DKK, and rates.ts includes DKK. Currency toggle: Local (default),
-  USD, CAD, EUR, GBP.
-- Every residence has an IANA time zone. The Daylight Explorer shows the home's local time.
-- Residences also carry a listing date, room types, windows grouped by room, and image credits.
-  One floor level per plan.
+- content/schemas/ holds one zod schema per domain. Every collection parses when its module loads,
+  so invalid content fails the build and the unit tests. Collections export their validated list
+  and small finders (findResidence, newestResidence, findProject, nextProject, findLookbook).
+- Markets (content/markets.ts) carry the city name, country, IANA time zone, currency and energy
+  label system. Residences and projects store a market id, and the schema resolves it to the
+  market. Prices must be in the market's currency, labels in its system.
+- Copenhagen prices are stored in DKK. Currency toggle: Local (default), USD, CAD, EUR, GBP.
+- Rates are the ECB euro reference rates for 2026-11-10, stored as published. Conversions go
+  through the euro, and converted prices round to three significant figures.
+- The three studio palettes (Limewash, Umber, Slate) are shared. Each residence supplies a photo of
+  the same rooms in every palette, and there is one lookbook per palette.
+- Floor plans are in meters with the origin at the top left, x to the right and y down, like SVG.
+  northRotation is the angle in degrees, clockwise, from the top of the plan to true north. One
+  level per plan, exactly one living room, and windows sit on their room's outside walls.
+  Bedroom and bathroom counts must match the rooms on the plan.
 - Energy labels stay in each country's own system (EnerGuide, HERS Index, Energimærke,
   Certificado Energético). Compare never ranks across systems.
-- Neighborhood-level locations only, no street addresses. Shop the Room makers are invented.
-- Real photos are pending. Solid-tone placeholders until they arrive.
+- Neighborhood-level locations only, no street addresses. Shop the Room makers and prices are
+  invented. Project credits name only the studio and say the photos are placeholders.
+- Images use four formats from content/media.ts: portrait 1600×2000, landscape 2400×1600,
+  square 1800×1800, wide 2400×1350. `npm run images` (tsx, sharp) draws a flat-tone placeholder for
+  every image the content references and never overwrites an existing file. To use a real photo,
+  save it at the same path in the same format, or update its width and height. A unit test checks
+  every image exists at its stated size.
 
 Design and accessibility
 - Clay (4.4:1 on paper) is for display type, graphics and sunlight only, never small text or
