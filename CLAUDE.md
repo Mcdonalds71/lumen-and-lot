@@ -184,6 +184,19 @@ Residences
   a server request. Photos for every palette are stacked and cross-fade; the hidden ones are
   aria-hidden with empty alt text.
 
+Compare and brief
+- The compare tray (components/features/compare) sits at the bottom of every page except
+  /compare, with a spacer so it never covers the footer. Index cards add homes with a checkbox.
+- /compare reads ?homes= inside Suspense. Removing a home updates the store and the URL; an empty
+  URL picks up the saved list. Living room sun uses the March equinox from the explorer's days.
+- The brief validates each step with its own zod schema (lib/brief.ts), so a step never trips on
+  later fields. It is the one client feature that ships zod. describeBrief feeds both the review
+  and the PDF.
+- The PDF loads @react-pdf/renderer only on download and uses the PDF standard fonts (Times,
+  Helvetica, Courier) with lib/colors.ts, which mirrors the color tokens under a unit test.
+- html has scroll-padding-top for the fixed header. Absolutely positioned content inside a scroll
+  container needs a positioned scroller.
+
 Interiors
 - Each lookbook section takes its palette id as an anchor (#limewash). The home teaser and the
   residence finishes link to it.

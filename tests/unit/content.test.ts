@@ -7,6 +7,8 @@ import { findProject, nextProject, projects } from "@/content/projects";
 import { rates } from "@/content/rates";
 import {
   findResidence,
+  findResidences,
+  livingRoomSunlight,
   newestResidence,
   nextResidence,
   paletteRooms,
@@ -104,6 +106,20 @@ describe("residences", () => {
     expect(rooms[0]?.images.map((entry) => entry.palette)).toEqual([
       ...paletteIds,
     ]);
+  });
+
+  it("finds several residences and skips unknown slugs", () => {
+    expect(
+      findResidences(["high-terrace", "missing", "harbor-room"]).map(
+        (residence) => residence.slug,
+      ),
+    ).toEqual(["high-terrace", "harbor-room"]);
+  });
+
+  it("measures the living room's sun on a given day", () => {
+    const harborRoom = findResidence("harbor-room");
+    if (!harborRoom) throw new Error("Harbor Room exists.");
+    expect(livingRoomSunlight(harborRoom, "2026-03-20")?.minutes).toBe(720);
   });
 
   it("wraps from the last residence back to the first", () => {

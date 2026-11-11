@@ -6,13 +6,13 @@ import {
 } from "@/content/schemas/energy-label";
 import { cx } from "@/lib/cx";
 
-type Reading = {
+export type EnergyReading = {
   value: string;
   scale?: { ratings: readonly string[]; current: string };
   explanation: string;
 };
 
-function reading(label: EnergyLabel): Reading {
+export function describeEnergyLabel(label: EnergyLabel): EnergyReading {
   switch (label.system) {
     case "EnerGuide":
       return {
@@ -44,7 +44,7 @@ function reading(label: EnergyLabel): Reading {
 }
 
 export function EnergyCard({ label }: { label: EnergyLabel }) {
-  const { value, scale, explanation } = reading(label);
+  const { value, scale, explanation } = describeEnergyLabel(label);
 
   return (
     <div className="border border-ink p-6 md:p-8">

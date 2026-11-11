@@ -53,5 +53,6 @@ export function useCompareList() {
     slugs,
     add: (slug: string) => save(addToCompare(slugs, slug)),
     remove: (slug: string) => save(removeFromCompare(slugs, slug)),
+    clear: () => save([]),
   };
 }

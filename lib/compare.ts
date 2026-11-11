@@ -29,3 +29,17 @@ export function removeFromCompare(
 ): string[] {
   return slugs.filter((candidate) => candidate !== slug);
 }
+
+export function compareListFromParam(
+  value: string | string[] | undefined,
+): string[] {
+  return parseCompareList(
+    Array.isArray(value) ? value.join(",") : (value ?? null),
+  );
+}
+
+export function compareHref(
+  slugs: readonly string[],
+): `/compare?homes=${string}` {
+  return `/compare?homes=${serializeCompareList(slugs)}`;
+}

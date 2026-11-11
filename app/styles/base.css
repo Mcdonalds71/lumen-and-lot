@@ -2,6 +2,7 @@
   html {
     color-scheme: light;
     scrollbar-gutter: stable;
+    scroll-padding-top: calc(var(--spacing-header) + 1.5rem);
     background-color: var(--color-paper);
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;

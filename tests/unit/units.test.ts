@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { formatArea, formatDimensions, toSquareFeet } from "@/lib/units";
+import {
+  formatArea,
+  formatAreaRange,
+  formatDimensions,
+  toSquareFeet,
+} from "@/lib/units";
 
 describe("toSquareFeet", () => {
   it("uses 10.7639 square feet per square meter", () => {
@@ -39,5 +44,13 @@ describe("formatDimensions", () => {
     expect(
       formatDimensions({ width: 240, depth: 170, height: 1.5 }, "m2"),
     ).toBe("W\u00a0240 × D\u00a0170 × H\u00a01.5\u00a0cm");
+  });
+});
+
+describe("formatAreaRange", () => {
+  it("writes closed and open ranges in either unit", () => {
+    expect(formatAreaRange(75, 110, "m2")).toBe("75–110\u00a0m²");
+    expect(formatAreaRange(0, 75, "m2")).toBe("Up to 75\u00a0m²");
+    expect(formatAreaRange(150, undefined, "ft2")).toBe("Over 1,615\u00a0ft²");
   });
 });

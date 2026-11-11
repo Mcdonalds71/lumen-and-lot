@@ -10,6 +10,7 @@ import {
   type Coordinates,
   isSunlit,
   middleOfLongestPeriod,
+  roomSunlight,
   solarDay,
   sunlightByRoom,
   sunPosition,
@@ -41,11 +42,7 @@ function openingProgress(
   const day = solarDay(date, coordinates);
   const living = plan.rooms.find((room) => room.kind === "living");
   if (!day || !living) return 0.5;
-  const [sunlight] = sunlightByRoom(
-    { northRotation: plan.northRotation, rooms: [living] },
-    coordinates,
-    day,
-  );
+  const sunlight = roomSunlight(plan, living.id, coordinates, day);
   const moment = middleOfLongestPeriod(sunlight?.periods ?? []);
   if (!moment) return 0.5;
   return (

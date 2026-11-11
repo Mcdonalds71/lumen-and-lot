@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 
+import { CompareTray } from "@/components/features/compare/compare-tray";
 import { PreferenceHead } from "@/components/preferences/preference-head";
 import { ResidencesMenu } from "@/components/shell/residences-menu";
 import { SiteFooter } from "@/components/shell/site-footer";
 import { SiteHeader } from "@/components/shell/site-header";
 import { SkipLink } from "@/components/shell/skip-link";
 import { SmoothScroll } from "@/components/shell/smooth-scroll";
+import { coverImage, residences } from "@/content/residences";
 import { site } from "@/content/site";
 import { preferenceDefaults, preferences } from "@/lib/preferences";
 
@@ -39,6 +41,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <CompareTray
+          homes={residences.map((residence) => ({
+            slug: residence.slug,
+            name: residence.name,
+            image: coverImage(residence),
+          }))}
+        />
       </body>
     </html>
   );

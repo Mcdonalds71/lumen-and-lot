@@ -252,3 +252,19 @@ export function middleOfLongestPeriod(
   );
   return longest && new Date(longest.start.getTime() + length(longest) / 2);
 }
+
+export function roomSunlight(
+  plan: Plan,
+  roomId: string,
+  coordinates: Coordinates,
+  day: SolarDay,
+): RoomSunlight | undefined {
+  const room = plan.rooms.find((candidate) => candidate.id === roomId);
+  if (!room) return undefined;
+  const [sunlight] = sunlightByRoom(
+    { northRotation: plan.northRotation, rooms: [room] },
+    coordinates,
+    day,
+  );
+  return sunlight;
+}

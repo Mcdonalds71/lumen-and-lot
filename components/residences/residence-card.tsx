@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CompareCheckbox } from "@/components/features/compare/compare-checkbox";
 import { Area } from "@/components/preferences/area";
 import { Price } from "@/components/preferences/price";
 import { Label } from "@/components/ui/label";
@@ -43,6 +44,11 @@ export function ResidenceCard({ residence }: { residence: Residence }) {
           <Price price={residence.price} />
         </span>
       </p>
+      <CompareCheckbox
+        slug={residence.slug}
+        name={residence.name}
+        className="mt-3"
+      />
     </article>
   );
 }

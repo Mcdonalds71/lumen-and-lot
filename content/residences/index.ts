@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { type RoomSunlight, roomSunlight, solarDay } from "@/lib/sun";
+
 import { courtyardRooms } from "./courtyard-rooms";
 import { gardenFloor } from "./garden-floor";
 import { harborRoom } from "./harbor-room";
@@ -65,4 +67,23 @@ export function paletteRooms(residence: Residence): PaletteRoom[] {
       return image ? [{ palette, image }] : [];
     }),
   }));
+}
+
+export function findResidences(slugs: readonly string[]): Residence[] {
+  return slugs.flatMap((slug) => {
+    const residence = findResidence(slug);
+    return residence ? [residence] : [];
+  });
+}
+
+export function livingRoomSunlight(
+  residence: Residence,
+  date: string,
+): RoomSunlight | undefined {
+  const day = solarDay(date, residence.location);
+  const living = residence.floorPlan.rooms.find(
+    (room) => room.kind === "living",
+  );
+  if (!day || !living) return undefined;
+  return roomSunlight(residence.floorPlan, living.id, residence.location, day);
 }

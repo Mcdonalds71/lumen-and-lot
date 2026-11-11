@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import {
   addToCompare,
+  compareHref,
   compareLimit,
+  compareListFromParam,
   isCompareFull,
   parseCompareList,
   removeFromCompare,
@@ -51,5 +53,21 @@ describe("addToCompare", () => {
 describe("removeFromCompare", () => {
   it("removes only the given home", () => {
     expect(removeFromCompare(["a", "b", "c"], "b")).toEqual(["a", "c"]);
+  });
+});
+
+describe("compareListFromParam", () => {
+  it("reads one or repeated homes parameters", () => {
+    expect(compareListFromParam("a,b")).toEqual(["a", "b"]);
+    expect(compareListFromParam(["a", "b,c"])).toEqual(["a", "b", "c"]);
+    expect(compareListFromParam(undefined)).toEqual([]);
+  });
+});
+
+describe("compareHref", () => {
+  it("puts the homes in a shareable address", () => {
+    expect(compareHref(["harbor-room", "high-terrace"])).toBe(
+      "/compare?homes=harbor-room,high-terrace",
+    );
   });
 });

@@ -11,7 +11,12 @@ export const pages: readonly Page[] = [
   { name: "journal", path: "/journal" },
   { name: "article", path: "/journal/designing-for-daylight" },
   { name: "studio", path: "/studio" },
-  { name: "brief", path: "/brief" },
+  { name: "brief", path: "/brief", screenshot: true },
   { name: "compare", path: "/compare" },
+  {
+    name: "comparison",
+    path: "/compare?homes=harbor-room,high-terrace,orchard-house",
+    screenshot: true,
+  },
   { name: "colophon", path: "/colophon" },
 ];

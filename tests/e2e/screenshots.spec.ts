@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { expect, type Page, test } from "@playwright/test";
 
 import { pages } from "./pages";
+import { fillBrief } from "./support/brief";
 
 const viewports = {
   phone: { width: 375, height: 812 },
@@ -66,6 +67,26 @@ const states: readonly State[] = [
       ).toBeVisible();
     },
   },
+  ...[viewports.desktop, viewports.phone].map((viewport) => ({
+    name: "compare-tray",
+    path: "/residences",
+    viewport,
+    async enter(page: Page) {
+      await page.getByRole("checkbox", { name: /Compare Harbor Room/ }).check();
+      await page
+        .getByRole("checkbox", { name: /Compare High Terrace/ })
+        .check();
+      await expect(
+        page.getByRole("complementary", { name: "Homes to compare" }),
+      ).toBeVisible();
+    },
+  })),
+  ...[viewports.desktop, viewports.phone].map((viewport) => ({
+    name: "brief-review",
+    path: "/brief",
+    viewport,
+    enter: fillBrief,
+  })),
   ...[viewports.desktop, viewports.phone].map((viewport) => ({
     name: "interiors-hotspot",
     path: "/interiors",

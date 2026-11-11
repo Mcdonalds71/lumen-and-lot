@@ -37,3 +37,18 @@ export function formatDimensions(
     upToOneDecimal.format(centimeters * scale);
   return `W\u00a0${value(width)} × D\u00a0${value(depth)} × H\u00a0${value(height)}\u00a0${symbol}`;
 }
+
+export function formatAreaRange(
+  min: number,
+  max: number | undefined,
+  unit: AreaUnit,
+): string {
+  const value = (squareMeters: number) =>
+    wholeNumber.format(
+      unit === "m2" ? squareMeters : toSquareFeet(squareMeters),
+    );
+  const symbol = `\u00a0${symbols[unit]}`;
+  if (max === undefined) return `Over ${value(min)}${symbol}`;
+  if (min === 0) return `Up to ${value(max)}${symbol}`;
+  return `${value(min)}–${value(max)}${symbol}`;
+}

@@ -1,5 +1,7 @@
 import { calendarDateIn } from "@/lib/time";
 
+export const marchEquinox = "2026-03-20";
+
 export const days = [
   {
     id: "winter",
@@ -11,7 +13,7 @@ export const days = [
     id: "equinox",
     label: "Equinox",
     name: "March equinox",
-    date: "2026-03-20",
+    date: marchEquinox,
   },
   {
     id: "summer",
