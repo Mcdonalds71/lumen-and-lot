@@ -66,6 +66,17 @@ const states: readonly State[] = [
       ).toBeVisible();
     },
   },
+  ...[viewports.desktop, viewports.phone].map((viewport) => ({
+    name: "interiors-hotspot",
+    path: "/interiors",
+    viewport,
+    async enter(page: Page) {
+      await page.getByRole("button", { name: "Lounge chair" }).click();
+      await expect(
+        page.getByRole("group", { name: "Lounge chair" }),
+      ).toBeVisible();
+    },
+  })),
 ];
 
 async function settle(page: Page) {

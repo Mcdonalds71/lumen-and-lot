@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import {
   type MouseEvent,
   type ReactNode,
-  useEffect,
   useId,
   useRef,
   useState,
@@ -14,6 +13,7 @@ import {
 import { PreferenceToggles } from "@/components/preferences/preference-toggles";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { useDismiss } from "@/hooks/use-dismiss";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { cx } from "@/lib/cx";
 
@@ -38,28 +38,10 @@ export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
   const menuOpen = menuOn === pathname;
   const overHero = heroRoutes.has(pathname) && !scrolled && !menuOpen;
 
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setMenuOn(null);
-      triggerRef.current?.focus();
-    };
-    const onPointerDown = (event: PointerEvent) => {
-      const inside =
-        event.target instanceof Node &&
-        headerRef.current?.contains(event.target);
-      if (!inside) setMenuOn(null);
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [menuOpen]);
+  useDismiss(menuOpen, headerRef, (reason) => {
+    setMenuOn(null);
+    if (reason === "escape") triggerRef.current?.focus();
+  });
 
   const closeOnLink = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target instanceof Element && event.target.closest("a")) {

@@ -7,6 +7,7 @@ import { highTerrace } from "./high-terrace";
 import { northLight } from "./north-light";
 import { orchardHouse } from "./orchard-house";
 import { type ImageAsset, uniqueBy } from "../schemas/common";
+import type { PaletteId } from "../schemas/palette";
 import { type Residence, residenceSchema } from "../schemas/residence";
 
 export const residences: readonly Residence[] = z
@@ -43,4 +44,25 @@ export function newestResidence(): Residence {
   );
   if (!newest) throw new Error("There are no residences.");
   return newest;
+}
+
+export type PaletteRoom = {
+  id: string;
+  name: string;
+  images: { palette: PaletteId; image: ImageAsset }[];
+};
+
+export function paletteRooms(residence: Residence): PaletteRoom[] {
+  const names = new Map(
+    residence.floorPlan.rooms.map((room) => [room.id, room.name]),
+  );
+  const [first] = residence.palettes;
+  return (first?.rooms ?? []).map(({ room }, index) => ({
+    id: room,
+    name: names.get(room) ?? room,
+    images: residence.palettes.flatMap(({ palette, rooms }) => {
+      const image = rooms[index]?.image;
+      return image ? [{ palette, image }] : [];
+    }),
+  }));
 }

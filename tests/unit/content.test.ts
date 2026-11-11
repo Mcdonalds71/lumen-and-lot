@@ -2,13 +2,14 @@ import { describe, expect, it } from "vitest";
 
 import { lookbooks } from "@/content/lookbooks";
 import { marketList } from "@/content/markets";
-import { palettes } from "@/content/palettes";
+import { paletteFromParam, palettes } from "@/content/palettes";
 import { findProject, nextProject, projects } from "@/content/projects";
 import { rates } from "@/content/rates";
 import {
   findResidence,
   newestResidence,
   nextResidence,
+  paletteRooms,
   residences,
 } from "@/content/residences";
 import type { MarketId } from "@/content/schemas/market";
@@ -92,6 +93,19 @@ describe("residences", () => {
     expect(newestResidence().slug).toBe("high-terrace");
   });
 
+  it("groups each room's photo in every palette", () => {
+    const harborRoom = findResidence("harbor-room");
+    if (!harborRoom) throw new Error("Harbor Room exists.");
+    const rooms = paletteRooms(harborRoom);
+    expect(rooms.map((room) => room.name)).toEqual([
+      "Living and kitchen",
+      "Main bedroom",
+    ]);
+    expect(rooms[0]?.images.map((entry) => entry.palette)).toEqual([
+      ...paletteIds,
+    ]);
+  });
+
   it("wraps from the last residence back to the first", () => {
     expect(nextResidence("harbor-room")?.slug).toBe("courtyard-rooms");
     expect(nextResidence("high-terrace")?.slug).toBe("garden-floor");
@@ -114,6 +128,13 @@ describe("projects", () => {
 describe("palettes and lookbooks", () => {
   it("offers the three studio palettes", () => {
     expect(palettes.map((palette) => palette.id)).toEqual([...paletteIds]);
+  });
+
+  it("reads the palette from the URL and falls back to the first", () => {
+    expect(paletteFromParam("umber")).toBe("umber");
+    expect(paletteFromParam("neon")).toBe("limewash");
+    expect(paletteFromParam(undefined)).toBe("limewash");
+    expect(paletteFromParam(["umber", "slate"])).toBe("limewash");
   });
 
   it("has one lookbook for each palette", () => {

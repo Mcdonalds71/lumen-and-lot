@@ -128,6 +128,10 @@ Code
 - Node and the browser can disagree in the last digits of trig results, so SVG coordinates go
   through svgNumber/svgPoints (lib/svg.ts), rounded to the millimeter, before they render.
 - Source holds no invisible characters. A no-break space is written as   or &nbsp;.
+- Client components import only types from content/. Content values reach them as props, which
+  keeps zod and the schemas out of client bundles.
+- hooks/use-dismiss.ts closes anything open on Escape or a click outside. The header menu and
+  Shop the Room share it.
 
 Design system
 - Primitives live in components/ui. Button renders a <button>, ButtonLink renders next/link with a
@@ -174,6 +178,20 @@ Residences
   the residence page. The tray and /compare come in Phase 6.
 - The energy card shows each label on its own system's scale. Letter scales are stepped bars, the
   most efficient first.
+- The chosen palette lives in ?palette=. The residence page resolves searchParams inside its own
+  Suspense boundary, with the first palette as the fallback, so the page stays prerendered and
+  only the finishes stream. Choosing a palette updates the URL with history.replaceState, without
+  a server request. Photos for every palette are stacked and cross-fade; the hidden ones are
+  aria-hidden with empty alt text.
+
+Interiors
+- Each lookbook section takes its palette id as an anchor (#limewash). The home teaser and the
+  residence finishes link to it.
+- Hotspots are buttons named after the piece, with aria-expanded and aria-controls. From md the
+  card opens beside its marker, on the side with more room; on phones it sits below the photo.
+  Escape and a click outside close it, and Escape returns focus to the marker.
+- Every piece is also listed below its photo. The page says the makers and prices are invented.
+- The m²/ft² preference also switches furniture sizes between centimeters and inches.
 
 Daylight Explorer
 - lib/sun.ts is the model. A day's sunrise and sunset come from suncalc at an instant near local

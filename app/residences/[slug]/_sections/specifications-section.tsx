@@ -34,7 +34,7 @@ export function SpecificationsSection({ residence }: { residence: Residence }) {
   ];
 
   return (
-    <Section index={2} label="Specifications">
+    <Section index={3} label="Specifications">
       <Grid className="mt-10 gap-y-12">
         <div className="col-span-12 lg:col-span-7">
           <h2 className="font-display text-display-lg">The details</h2>

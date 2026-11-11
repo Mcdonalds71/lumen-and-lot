@@ -116,6 +116,30 @@ test.describe("residence page", () => {
     ).toBeVisible();
   });
 
+  test("switches palettes and keeps the choice in the URL", async ({
+    page,
+  }) => {
+    const picker = page.getByRole("radiogroup", { name: "Palette" });
+    const finishes = page.getByRole("region", { name: /Finishes/ });
+    await expect(picker.getByRole("radio", { name: "Limewash" })).toBeChecked();
+
+    await picker.locator("label", { hasText: "Umber" }).click();
+    await expect(page).toHaveURL(/[?&]palette=umber/);
+    await expect(finishes).toContainText("Clay plaster");
+
+    await page.reload();
+    await expect(picker.getByRole("radio", { name: "Umber" })).toBeChecked();
+    await expect(finishes).toContainText("Smoked oak");
+  });
+
+  test("moves between palettes with the arrow keys", async ({ page }) => {
+    const picker = page.getByRole("radiogroup", { name: "Palette" });
+    await picker.getByRole("radio", { name: "Limewash" }).focus();
+    await page.keyboard.press("ArrowRight");
+    await expect(picker.getByRole("radio", { name: "Umber" })).toBeChecked();
+    await expect(page).toHaveURL(/[?&]palette=umber/);
+  });
+
   test("adds the home to compare and remembers it", async ({ page }) => {
     await page.getByRole("button", { name: "Add to compare" }).click();
     await expect(

@@ -16,7 +16,10 @@ export function InteriorsTeaser() {
             Every piece in our rooms is listed with its maker, its materials and
             an indicative price.
           </p>
-          <ButtonLink href="/interiors" className="mt-10">
+          <ButtonLink
+            href={`/interiors#${home.lookbook.palette}`}
+            className="mt-10"
+          >
             Explore the {title} room
           </ButtonLink>
         </div>

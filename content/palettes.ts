@@ -77,3 +77,11 @@ export function findPalette(id: PaletteId): Palette {
   if (!palette) throw new Error(`Unknown palette "${id}".`);
   return palette;
 }
+
+export const defaultPaletteId: PaletteId = paletteIds[0];
+
+export function paletteFromParam(
+  value: string | string[] | undefined,
+): PaletteId {
+  return paletteIds.find((id) => id === value) ?? defaultPaletteId;
+}

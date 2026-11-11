@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { formatArea, toSquareFeet } from "@/lib/units";
+import { formatArea, formatDimensions, toSquareFeet } from "@/lib/units";
 
 describe("toSquareFeet", () => {
   it("uses 10.7639 square feet per square meter", () => {
@@ -17,5 +17,27 @@ describe("formatArea", () => {
 
   it("converts to whole square feet with a thousands separator", () => {
     expect(formatArea(112, "ft2")).toBe("1,206\u00a0ft²");
+  });
+});
+
+describe("formatDimensions", () => {
+  const sofa = { width: 228, depth: 95, height: 74 };
+
+  it("lists width, depth and height in centimeters", () => {
+    expect(formatDimensions(sofa, "m2")).toBe(
+      "W\u00a0228 × D\u00a095 × H\u00a074\u00a0cm",
+    );
+  });
+
+  it("switches to inches with the imperial preference", () => {
+    expect(formatDimensions(sofa, "ft2")).toBe(
+      "W\u00a089.8 × D\u00a037.4 × H\u00a029.1\u00a0in",
+    );
+  });
+
+  it("keeps thin pieces to one decimal", () => {
+    expect(
+      formatDimensions({ width: 240, depth: 170, height: 1.5 }, "m2"),
+    ).toBe("W\u00a0240 × D\u00a0170 × H\u00a01.5\u00a0cm");
   });
 });
