@@ -29,6 +29,13 @@ test.describe("header", () => {
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
     await expect(trigger).toBeFocused();
   });
+
+  test("marks Residences as current on a residence page", async ({ page }) => {
+    await page.goto("/residences/harbor-room");
+    await expect(
+      page.getByRole("button", { name: "Residences", exact: true }),
+    ).toHaveAttribute("aria-current", "page");
+  });
 });
 
 test("the skip link moves focus to the main content", async ({ page }) => {

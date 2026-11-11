@@ -22,8 +22,10 @@ import { primaryNavigation } from "./navigation";
 
 const heroRoutes: ReadonlySet<string> = new Set(["/"]);
 
+const residencesHref = "/residences";
+
 const pageLinks = primaryNavigation.filter(
-  (item) => item.href !== "/residences",
+  (item) => item.href !== residencesHref,
 );
 
 export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
@@ -88,6 +90,9 @@ export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
                 type="button"
                 aria-expanded={menuOpen}
                 aria-controls={panelId}
+                aria-current={
+                  pathname.startsWith(residencesHref) ? "page" : undefined
+                }
                 onClick={() => setMenuOn(menuOpen ? null : pathname)}
                 className="link-reveal"
               >
