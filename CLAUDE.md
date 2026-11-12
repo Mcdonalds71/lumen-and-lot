@@ -127,7 +127,7 @@ Code
   and app/residences/[slug]/_sections/.
 - Node and the browser can disagree in the last digits of trig results, so SVG coordinates go
   through svgNumber/svgPoints (lib/svg.ts), rounded to the millimeter, before they render.
-- Source holds no invisible characters. A no-break space is written as   or &nbsp;.
+- Source holds no invisible characters. A no-break space is written as \u00a0 or &nbsp;.
 - Client components import only types from content/. Content values reach them as props, which
   keeps zod and the schemas out of client bundles.
 - hooks/use-dismiss.ts closes anything open on Escape or a click outside. The header menu and
@@ -149,8 +149,10 @@ Design system
 - Toggle is native radio inputs in a radiogroup, in ink or paper tone, with its label inline or
   stacked. Label has muted, ink and paper tones. Marquee pauses on hover, off screen and from its
   button, and its duplicate copy is aria-hidden and inert.
-- Select wraps a native select and Slider a native range input (the slider utility), so both keep
-  the browser's keyboard and screen reader behavior. Both are on /system.
+- Select wraps a native select, Slider a native range input (the slider utility), TextField an
+  input or textarea and ChoiceCards a radio group, so each keeps
+  the browser's keyboard and screen reader behavior. FieldError links an error to its field.
+  All of them are on the /system Fields plate.
 - /system reads tokens.css at build time. Every color and type step needs a description there or
   the build fails.
 
@@ -195,7 +197,7 @@ Compare and brief
 - The PDF loads @react-pdf/renderer only on download and uses the PDF standard fonts (Times,
   Helvetica, Courier) with lib/colors.ts, which mirrors the color tokens under a unit test.
 - html has scroll-padding-top for the fixed header. Absolutely positioned content inside a scroll
-  container needs a positioned scroller.
+  container needs a positioned scroller. An e2e test fails any page that scrolls sideways at 375.
 
 Interiors
 - Each lookbook section takes its palette id as an anchor (#limewash). The home teaser and the

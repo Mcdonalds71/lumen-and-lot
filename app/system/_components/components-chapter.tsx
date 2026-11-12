@@ -59,8 +59,8 @@ export function ComponentsChapter({ meta }: ChapterProps) {
 
         <Plate
           number={3}
-          title="Select, slider"
-          caption="A native select and a native range input, styled with hairlines. Both keep the browser's own keyboard and screen reader behavior."
+          title="Fields"
+          caption="Native select, range, text and radio inputs with hairline borders, so each keeps the browser's own keyboard and screen reader behavior. An error sits under its field and is linked to it."
         >
           <InputsDemo />
         </Plate>
