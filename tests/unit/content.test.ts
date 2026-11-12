@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { colophon } from "@/content/colophon";
 import { lookbooks } from "@/content/lookbooks";
 import { marketList } from "@/content/markets";
 import { paletteFromParam, palettes } from "@/content/palettes";
@@ -14,9 +15,13 @@ import {
   paletteRooms,
   residences,
 } from "@/content/residences";
+import { colophonSchema } from "@/content/schemas/colophon";
 import type { MarketId } from "@/content/schemas/market";
 import { paletteIds } from "@/content/schemas/palette";
+import { studio } from "@/content/studio";
 import { polygonArea } from "@/lib/geometry";
+
+import manifest from "../../package.json";
 
 const cityCenters: Record<MarketId, readonly [lat: number, lng: number]> = {
   toronto: [43.6532, -79.3832],
@@ -165,5 +170,34 @@ describe("rates", () => {
     expect(rates.base).toBe("EUR");
     expect(rates.perBase.EUR).toBe(1);
     expect(rates.asOf).toBe("2026-11-10");
+  });
+});
+
+describe("studio", () => {
+  it("names each team member's city", () => {
+    expect(studio.team.map((person) => person.city)).toContain("Hudson Valley");
+  });
+
+  it("links every award to a real project", () => {
+    for (const { project } of studio.awards) {
+      expect(findProject(project.slug)?.name).toBe(project.name);
+    }
+  });
+});
+
+describe("colophon", () => {
+  it("reads each tool's version from package.json", () => {
+    const next = colophon.tools.find((tool) => tool.name === "Next.js");
+    expect(manifest.dependencies.next.startsWith(next?.version ?? "?")).toBe(
+      true,
+    );
+  });
+
+  it("refuses a tool the site does not install", () => {
+    const result = colophonSchema.safeParse({
+      fonts: colophon.fonts,
+      tools: [{ name: "Left Pad", role: "Padding", package: "left-pad" }],
+    });
+    expect(result.success).toBe(false);
   });
 });

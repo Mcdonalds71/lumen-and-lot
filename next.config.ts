@@ -1,7 +1,13 @@
+import { resolve } from "node:path";
+
 import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 
-const withMDX = createMDX();
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [resolve("lib/remark-reading-time.mts")],
+  },
+});
 
 const nextConfig: NextConfig = {
   cacheComponents: true,

@@ -36,7 +36,7 @@ export function NextUp<T extends string, A extends string>({
       <ButtonLink
         href={all.href}
         variant="text"
-        className="self-start md:self-auto"
+        className="shrink-0 self-start md:self-auto"
       >
         {all.label}
       </ButtonLink>

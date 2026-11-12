@@ -4,6 +4,7 @@ import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 
 import { home } from "@/content/home";
+import { journalMedia } from "@/content/journal/media";
 import { lookbooks } from "@/content/lookbooks";
 import { projects } from "@/content/projects";
 import { residences } from "@/content/residences";
@@ -22,7 +23,13 @@ function collectImages(value: unknown): ImageReference[] {
   return Object.values(value).flatMap(collectImages);
 }
 
-const images = collectImages([home.hero, residences, projects, lookbooks]);
+const images = collectImages([
+  home.hero,
+  residences,
+  projects,
+  lookbooks,
+  journalMedia,
+]);
 
 describe("content images", () => {
   it("gives every image slot its own file", () => {

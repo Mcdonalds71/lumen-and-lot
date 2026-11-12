@@ -48,6 +48,10 @@ export function formatLongDate(date: string): string {
   return formatDate(date, { year: "numeric", month: "long", day: "numeric" });
 }
 
+export function formatReadingTime(minutes: number): string {
+  return `${minutes}\u00a0min read`;
+}
+
 export function formatDuration(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const rest = minutes % 60;

@@ -1,9 +1,73 @@
+import { energyMedia as media } from "./media";
+
 export const metadata = {
   title: "How to read an energy certificate",
   description:
     "EnerGuide, HERS, Energimærke and the Portuguese certificate each measure something different. A short guide to what they tell you.",
   topic: "Energy",
-  status: "draft",
+  publishedOn: "2026-10-06",
+  cover: media.cover,
 };
 
-This article is being written.
+When you look at a home for sale, you will usually find an energy rating somewhere in the listing. It looks simple: a letter or a number, sometimes on a colored bar. But each country measures something different, on its own scale, with its own assumptions. A good score in one system tells you little about a score in another.
+
+We build in four places, so we work with four systems. Here is how to read each one, and what none of them can tell you.
+
+## What every certificate has in common
+
+Every energy certificate is a calculation, not a meter reading. An assessor looks at the building: its walls, roof, windows, airtightness, heating and hot water. Then software estimates how much energy the home would use under standard conditions. Standard weather, standard indoor temperatures and a standard household.
+
+That makes certificates good for comparing homes within one system. Two homes rated the same way, in the same climate, can be compared fairly. It also means the rating is not your bill. How many people live in the home, how warm you keep it and the price of energy all change what you pay.
+
+<PullQuote>Every energy certificate is a calculation, not a meter reading.</PullQuote>
+
+## Canada: EnerGuide
+
+In Canada, homes are rated under the EnerGuide Rating System, run by Natural Resources Canada. The current label shows the home's estimated yearly energy use in gigajoules. Lower is better.
+
+The label also shows a reference house: the same home as if it were built to typical new-home standards. If the rated home uses less energy than its reference, it performs better than a typical new build. Older labels used a scale from 0 to 100, where higher was better, so check which version you are reading.
+
+## United States: the HERS Index
+
+In the United States, many new homes carry a HERS Index score, from the Residential Energy Services Network. Lower is better here too.
+
+A score of 100 means the home performs like a standard reference home. A score of 0 means a home that makes as much energy as it uses over a year. Each point is roughly one percent, so a home with a score of 60 is estimated to use about 40 percent less energy than the reference.
+
+HERS is common but not universal. Many existing homes have never been rated.
+
+## Denmark: Energimærke
+
+In Denmark, an energy label is required when a home is sold or rented. The scale runs from A2020, the best, through A2015, A2010 and B, down to G.
+
+The A grades are named after the building regulations whose energy limits they meet. A home rated A2020 meets the strictest of them. The label comes with a report that lists suggested improvements, with rough costs and savings. That report is often more useful than the letter.
+
+## Portugal: Certificado Energético
+
+In Portugal, energy certificates are managed by ADENE, the national energy agency. As in Denmark, a certificate is required for a sale or a rental. The classes run from A+, the best, through A, B and B-, then C down to F.
+
+New homes must reach at least class B-. Older homes, especially those built before modern insulation rules, often sit at the lower end of the scale. Many Portuguese homes have little or no central heating, so the certificate's assumptions about heating may not match how the home is really used.
+
+<Figure
+  image={media.wall}
+  caption="Much of a rating is decided by things you cannot see once a home is finished: insulation, airtightness and the care taken at every joint."
+/>
+
+## Why we never rank across systems
+
+It is tempting to line the scales up side by side. An A2020 in Copenhagen, a B in Lisbon, a HERS score of 45 in the Hudson Valley and an EnerGuide rating well below its reference in Toronto. Which home is best?
+
+There is no fair answer. The systems use different climates, different reference homes and different measures. Some count the energy delivered to the home. Others weigh it by how that energy was produced. A home in Lisbon needs very little heating. A home in Toronto needs a lot. The same wall would score differently in each.
+
+So on this site, each label is shown on its own scale. When you [compare homes](/compare), we show every rating in its own system, and never claim that one beats another.
+
+## What to ask beyond the label
+
+A certificate is a good start, not the whole story. When you look at a home, it is worth asking:
+
+- **When was it rated?** Certificates are valid for a fixed number of years, and a renovation can change the result.
+- **Is it a design rating or an as-built rating?** New homes are sometimes rated from the drawings, then tested again when finished.
+- **Was the airtightness tested?** A blower door test measures how much air leaks out of the home. Airtightness is one of the biggest factors in comfort.
+- **How is the home heated and cooled?** A heat pump and a gas boiler can give similar ratings and very different running costs.
+- **What do the recommendations say?** The suggested improvements tell you where the home is weakest.
+
+<Note>This article is general information, not professional advice. Rating systems change. Check the current rules with a certified assessor in the country where you are buying.</Note>

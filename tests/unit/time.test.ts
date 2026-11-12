@@ -6,6 +6,7 @@ import {
   formatClock,
   formatDuration,
   formatLongDate,
+  formatReadingTime,
 } from "@/lib/time";
 
 describe("formatClock", () => {
@@ -41,5 +42,11 @@ describe("formatDuration", () => {
     expect(formatDuration(345)).toBe("5\u00a0h 45\u00a0min");
     expect(formatDuration(120)).toBe("2\u00a0h");
     expect(formatDuration(30)).toBe("30\u00a0min");
+  });
+});
+
+describe("formatReadingTime", () => {
+  it("keeps the number and its unit on one line", () => {
+    expect(formatReadingTime(4)).toBe("4\u00a0min read");
   });
 });

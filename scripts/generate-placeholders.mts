@@ -5,6 +5,7 @@ import { dirname, join } from "node:path";
 import sharp from "sharp";
 
 import { home } from "@/content/home";
+import { journalMedia } from "@/content/journal/media";
 import { lookbooks } from "@/content/lookbooks";
 import { findPalette } from "@/content/palettes";
 import { projects } from "@/content/projects";
@@ -109,12 +110,28 @@ const lookbookJobs = lookbooks.map((lookbook): Job => ({
 
 const homeJobs: Job[] = [{ target: home.hero.image, render: dusk }];
 
+const journalScenes: Readonly<Record<string, Scene>> = {
+  northRoom: room,
+  section: drawing,
+  wall: detail,
+  visit: room,
+};
+
+const journalJobs = journalMedia.flatMap((media, index): Job[] => {
+  const tones = tonesOf(cyclic(paletteIds, index));
+  return Object.entries(media).map(([name, target]) => {
+    const scene = journalScenes[name] ?? exterior;
+    return { target, render: (size: Size) => scene(size, tones) };
+  });
+});
+
 const jobs = [
   ...systemJobs,
   ...homeJobs,
   ...residenceJobs,
   ...projectJobs,
   ...lookbookJobs,
+  ...journalJobs,
 ];
 const publicDirectory = join(import.meta.dirname, "..", "public");
 let created = 0;

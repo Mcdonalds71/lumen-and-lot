@@ -93,3 +93,41 @@
   --tw-duration: var(--duration-slow);
   transition-duration: var(--duration-slow);
 }
+
+@utility article-flow {
+  display: grid;
+  grid-template-columns:
+    [wide-start] minmax(0, 1fr)
+    [quote-start] minmax(0, 6rem)
+    [text-start] min(100%, var(--container-measure))
+    [text-end] minmax(0, 6rem)
+    [quote-end] minmax(0, 1fr)
+    [wide-end];
+
+  :where(&) > * {
+    grid-column: text;
+  }
+
+  :where(&) > :first-child {
+    margin-block-start: 0;
+  }
+
+  :where(&) > p:first-child::first-letter {
+    float: left;
+    margin-block-start: 0.06em;
+    margin-inline-end: 0.1em;
+    font-family: var(--font-display);
+    font-size: 5.3em;
+    line-height: 0.78;
+    color: var(--color-clay);
+  }
+
+  @supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+    :where(&) > p:first-child::first-letter {
+      float: none;
+      margin: 0 0.12em 0 0;
+      -webkit-initial-letter: 3;
+      initial-letter: 3;
+    }
+  }
+}

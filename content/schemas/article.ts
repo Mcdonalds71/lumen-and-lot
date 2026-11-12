@@ -1,16 +1,18 @@
 import { z } from "zod";
 
-export const articleMetadataSchema = z
-  .object({
-    title: z.string().min(1),
-    description: z.string().min(1),
-    topic: z.string().min(1),
-    status: z.enum(["draft", "published"]),
-    publishedOn: z.iso.date().optional(),
-  })
-  .refine(
-    ({ status, publishedOn }) => status === "draft" || publishedOn,
-    "A published article needs a publishedOn date.",
-  );
+import { imageSchema } from "./common";
+
+export const articleMetadataSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  topic: z.string().min(1),
+  publishedOn: z.iso.date(),
+  cover: imageSchema,
+});
+
+export const articleModuleSchema = z.object({
+  metadata: articleMetadataSchema,
+  readingMinutes: z.number().int().positive(),
+});
 
 export type ArticleMetadata = z.infer<typeof articleMetadataSchema>;

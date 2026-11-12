@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ArticleMeta } from "@/components/journal/article-meta";
 import { ButtonLink } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Section } from "@/components/ui/section";
@@ -26,11 +27,11 @@ export function JournalCards() {
             <p className="mt-4 max-w-md text-small text-muted">
               {article.description}
             </p>
-            {article.status === "draft" && (
-              <Label as="p" className="mt-6">
-                Being written
-              </Label>
-            )}
+            <ArticleMeta
+              publishedOn={article.publishedOn}
+              readingMinutes={article.readingMinutes}
+              className="mt-6"
+            />
           </li>
         ))}
       </ul>

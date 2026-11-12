@@ -100,7 +100,9 @@ Platform
   colors, radii and shadows are reset, so only tokens exist.
 - Raw hex and px values live only in app/styles/. ESLint blocks them in app/ and components/.
 - MDX through @next/mdx. Articles live in content/journal/*.mdx and export `metadata`, typed as
-  unknown and validated with zod.
+  unknown and validated with zod. lib/remark-reading-time.mts adds a `readingMinutes` export at
+  compile time. next.config passes it by absolute path, because @next/mdx resolves plugin paths
+  from each MDX file's folder, and Node 24 strips its types.
 - suncalc 2: angles in degrees, azimuth clockwise from north, altitude includes refraction.
 - Next 16 replaced the image `priority` prop with `preload`. Hero images use `preload`.
 - Playwright runs the app on port 3100 so tests never hit another local server. Screenshots run
@@ -123,8 +125,8 @@ Code
 - Components expose variants and tones as props instead of accepting conflicting class overrides,
   so there is no class-merging library. `cx` in lib/cx.ts joins class names.
 - Components outside ui/ are grouped by domain: shell/, preferences/, residences/, projects/,
-  markets/, and features/ for the signature features. Page sections stay private to their route,
-  in app/_home/, app/residences/[slug]/_sections/ and app/projects/[slug]/_sections/.
+  journal/, markets/, and features/ for the signature features. Page sections stay private to
+  their route, in a _sections/ folder beside the page, or app/_home/ and app/_not-found/ at the root.
 - Node and the browser can disagree in the last digits of trig results, so SVG coordinates go
   through svgNumber/svgPoints (lib/svg.ts), rounded to the millimeter, before they render.
 - Source holds no invisible characters. A no-break space is written as \u00a0 or &nbsp;.
@@ -167,8 +169,6 @@ Shell
   saved choices onto <html> before first paint, server components render every variant, and
   generated CSS shows only the chosen one, so nothing flashes on load. usePreference
   (useSyncExternalStore) keeps open tabs in sync.
-- Pages that are not built yet render PageInProgress with their real title, so every link in the
-  shell resolves.
 
 Residences
 - The grid or list view is a third preference (data-residence-view) on the same no-flash
@@ -222,6 +222,31 @@ Projects
   Home, End and screen readers work unchanged. The before photo is clipped with clip-path, and
   aria-valuetext reads both percentages.
 
+Journal
+- Articles import their images from content/journal/media.ts, which the placeholder script and the
+  image test read too, so nothing outside the app has to load MDX. The cover sits in metadata;
+  figures are <Figure image={media.name} />, with width="text" for drawings.
+- mdx-components.tsx maps Markdown to components/journal/prose.tsx and adds Figure, PullQuote and
+  Note. MDX is not type-checked, so internal links cast to Route and the build catches the rest.
+- The article-flow utility lays the body on named grid lines (wide, quote, text) around a 40rem
+  measure (--container-measure). Children take the text column through :where(), so a col-[wide]
+  class always wins.
+- The drop cap is ::first-letter of the first paragraph: initial-letter 3 where supported, a float
+  elsewhere, in clay as display type.
+- Pull quotes repeat a line from the text, so they are aria-hidden. Articles that give practical
+  advice end with a Note saying they are general information.
+- Articles sort newest first. Reading time is words ÷ 230, counting text and inline code only.
+- docs/journal-fact-check.md lists the claims to verify before launch.
+
+Studio, colophon and 404
+- The studio's team and awards are invented, and the page says so beside each. People get their
+  initials on a color tile (aria-hidden), never photos. Awards link to the project they name.
+- The colophon schema reads each tool's version from package.json, so removing a package fails the
+  build. Versions show the release line: 16, or 0.35 before 1.0.
+- The colophon says the site sets no cookies and runs no analytics. Adding either means updating it.
+- app/not-found.tsx is the designed 404. Pages in tests/e2e/pages.ts may declare a status: the
+  warm-up expects it, and the console suite ignores the page's own 404 response.
+
 Daylight Explorer
 - lib/sun.ts is the model. A day's sunrise and sunset come from suncalc at an instant near local
   solar noon (12:00 UTC minus longitude ÷ 15 hours), so no time zone math is needed. Times show in
@@ -272,7 +297,6 @@ Design and accessibility
 - Daylight patches span sill ÷ tan(altitude) to head ÷ tan(altitude). The page says it shows
   direct sun on an unobstructed site.
 - The marquee has a visible pause button. The newsletter form says that nothing was sent.
-- Home shows journal stubs until Phase 8.
 - On the home page, text and image sit side by side from lg and stack below it. The project
   collage staggers tiles with grid row spans, never negative margins, so tiles cannot overlap
   whatever their image ratios.
