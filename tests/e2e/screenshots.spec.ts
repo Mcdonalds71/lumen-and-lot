@@ -67,6 +67,30 @@ const states: readonly State[] = [
       ).toBeVisible();
     },
   },
+  {
+    name: "projects-hover",
+    path: "/projects",
+    viewport: viewports.desktop,
+    async enter(page) {
+      await page.getByRole("link", { name: "Courtyard Block" }).hover();
+      await expect(page.locator("[data-preview]")).toHaveAttribute(
+        "data-preview",
+        "courtyard-block",
+      );
+    },
+  },
+  {
+    name: "projects-lookbook",
+    path: "/projects",
+    viewport: viewports.desktop,
+    async enter(page) {
+      await page
+        .getByRole("radiogroup", { name: "View" })
+        .locator("label", { hasText: "Lookbook" })
+        .click();
+      await expect(page.getByRole("article").first()).toBeVisible();
+    },
+  },
   ...[viewports.desktop, viewports.phone].map((viewport) => ({
     name: "compare-tray",
     path: "/residences",

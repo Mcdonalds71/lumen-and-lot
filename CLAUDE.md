@@ -122,9 +122,9 @@ Code
 - React hooks live in hooks/. lib/ stays pure and unit tested.
 - Components expose variants and tones as props instead of accepting conflicting class overrides,
   so there is no class-merging library. `cx` in lib/cx.ts joins class names.
-- Components outside ui/ are grouped by domain: shell/, preferences/, residences/, markets/, and
-  features/ for the signature features. Page sections stay private to their route, in app/_home/
-  and app/residences/[slug]/_sections/.
+- Components outside ui/ are grouped by domain: shell/, preferences/, residences/, projects/,
+  markets/, and features/ for the signature features. Page sections stay private to their route,
+  in app/_home/, app/residences/[slug]/_sections/ and app/projects/[slug]/_sections/.
 - Node and the browser can disagree in the last digits of trig results, so SVG coordinates go
   through svgNumber/svgPoints (lib/svg.ts), rounded to the millimeter, before they render.
 - Source holds no invisible characters. A no-break space is written as \u00a0 or &nbsp;.
@@ -207,6 +207,20 @@ Interiors
   Escape and a click outside close it, and Escape returns focus to the marker.
 - Every piece is also listed below its photo. The page says the makers and prices are invented.
 - The m²/ft² preference also switches furniture sizes between centimeters and inches.
+
+Projects
+- The list or lookbook view is a fourth preference (data-project-view) on the no-flash mechanism.
+- The editorial list is a 12-column grid only for a fine pointer from md (pointer-fine:md:).
+  Touch screens and phones get a thumbnail in every row and no hover image.
+- One fixed preview frame follows the mouse, eased in a requestAnimationFrame loop that runs only
+  while a row is active, and jumps straight to the cursor under reduced motion. Keyboard focus
+  shows it beside the focused row. It is aria-hidden; data-preview names the active project.
+- Breadcrumb and NextUp live in components/shell and serve residences and projects alike.
+- Story chapters alternate image and text from lg and stack below it. Image width follows its
+  format: wide 7 columns, square 6, portrait 5.
+- The before/after slider is a native range input laid transparently over both photos, so arrows,
+  Home, End and screen readers work unchanged. The before photo is clipped with clip-path, and
+  aria-valuetext reads both percentages.
 
 Daylight Explorer
 - lib/sun.ts is the model. A day's sunrise and sunset come from suncalc at an instant near local

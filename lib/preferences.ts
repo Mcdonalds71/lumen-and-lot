@@ -46,10 +46,19 @@ export const residenceViewPreference = definePreference({
   fallback: "grid",
 });
 
+export const projectViewPreference = definePreference({
+  attribute: "data-project-view",
+  optionAttribute: "data-project-view-option",
+  storageKey: "lumen-and-lot:project-view",
+  values: ["list", "grid"],
+  fallback: "list",
+});
+
 export const preferences = [
   areaPreference,
   currencyPreference,
   residenceViewPreference,
+  projectViewPreference,
 ] as const;
 
 export function preferenceDefaults(

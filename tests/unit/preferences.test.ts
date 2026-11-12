@@ -48,6 +48,7 @@ describe("preferenceDefaults", () => {
       "data-area": "m2",
       "data-currency": "local",
       "data-residence-view": "grid",
+      "data-project-view": "list",
     });
   });
 });

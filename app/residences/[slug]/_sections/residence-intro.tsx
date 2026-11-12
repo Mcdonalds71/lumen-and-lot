@@ -1,9 +1,8 @@
-import Link from "next/link";
-
 import { AddToCompare } from "@/components/features/compare/add-to-compare";
 import { RatesNote } from "@/components/preferences/rates-note";
 import { ResidenceFacts } from "@/components/residences/residence-facts";
 import { ResidenceStatus } from "@/components/residences/residence-status";
+import { Breadcrumb } from "@/components/shell/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
@@ -12,18 +11,10 @@ import type { Residence } from "@/content/schemas/residence";
 export function ResidenceIntro({ residence }: { residence: Residence }) {
   return (
     <Container className="pt-16 md:pt-24">
-      <nav aria-label="Breadcrumb">
-        <ol className="flex flex-wrap gap-x-2 font-mono text-label text-muted uppercase">
-          <li className="after:ml-2 after:content-['/']">
-            <Link href="/residences" className="link-reveal">
-              Residences
-            </Link>
-          </li>
-          <li aria-current="page" className="text-ink">
-            {residence.name}
-          </li>
-        </ol>
-      </nav>
+      <Breadcrumb
+        parent={{ href: "/residences", label: "Residences" }}
+        current={residence.name}
+      />
       <Grid className="mt-10 gap-y-12 md:mt-16">
         <div className="col-span-12 lg:col-span-7">
           <Label as="p">
