@@ -94,7 +94,7 @@ export function BriefReview({
   };
 
   return (
-    <div className="mt-12">
+    <div className="mt-12 transition-opacity duration-base starting:opacity-0">
       <h2
         ref={headingRef}
         tabIndex={-1}

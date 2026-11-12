@@ -84,7 +84,13 @@ export function BriefBuilder({ cities, palettes, credit }: BriefBuilderProps) {
     <div>
       <BriefProgress step={step} titles={stepTitles} />
       {current ? (
-        <form ref={formRef} noValidate onSubmit={next} className="mt-12">
+        <form
+          key={current.id}
+          ref={formRef}
+          noValidate
+          onSubmit={next}
+          className="mt-12 transition-opacity duration-base starting:opacity-0"
+        >
           <h2
             ref={headingRef}
             tabIndex={-1}

@@ -11,7 +11,12 @@ import { formatCount } from "@/lib/format";
 
 import { ResidenceStatus } from "./residence-status";
 
-export function ResidenceCard({ residence }: { residence: Residence }) {
+type ResidenceCardProps = { residence: Residence; preload?: boolean };
+
+export function ResidenceCard({
+  residence,
+  preload = false,
+}: ResidenceCardProps) {
   const image = coverImage(residence);
 
   return (
@@ -22,6 +27,7 @@ export function ResidenceCard({ residence }: { residence: Residence }) {
         height={image.height}
         alt=""
         sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+        preload={preload}
       />
       <div className="mt-5 flex items-baseline justify-between gap-4">
         <h2 className="font-display text-display-sm">

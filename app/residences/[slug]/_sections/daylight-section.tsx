@@ -1,4 +1,5 @@
 import { DaylightExplorer } from "@/components/features/daylight/daylight-explorer";
+import { daylightOpening } from "@/components/features/daylight/opening";
 import { Grid } from "@/components/ui/grid";
 import { Section } from "@/components/ui/section";
 import type { Residence } from "@/content/schemas/residence";
@@ -23,6 +24,7 @@ export function DaylightSection({ residence }: { residence: Residence }) {
           coordinates={residence.location}
           timeZone={residence.market.timeZone}
           zoneName={residence.market.name}
+          opening={daylightOpening(residence.floorPlan, residence.location)}
         />
       </div>
     </Section>

@@ -13,12 +13,22 @@ export function RevealImage({ alt, className, ...image }: RevealImageProps) {
 
   useEffect(() => {
     const frame = frameRef.current;
-    if (!frame || !startsBelowView(frame)) return;
+    if (!frame || matchMedia(reducedMotionQuery).matches) return;
 
-    frame.dataset.reveal = "hidden";
+    let placed = false;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry?.isIntersecting) return;
+        if (!entry) return;
+        if (!placed) {
+          placed = true;
+          if (entry.boundingClientRect.top > innerHeight) {
+            frame.dataset.reveal = "hidden";
+          } else {
+            observer.disconnect();
+          }
+          return;
+        }
+        if (!entry.isIntersecting) return;
         frame.dataset.reveal = "shown";
         observer.disconnect();
       },
@@ -42,12 +52,5 @@ export function RevealImage({ alt, className, ...image }: RevealImageProps) {
         {...image}
       />
     </div>
-  );
-}
-
-function startsBelowView(element: Element): boolean {
-  return (
-    !matchMedia(reducedMotionQuery).matches &&
-    element.getBoundingClientRect().top > innerHeight
   );
 }

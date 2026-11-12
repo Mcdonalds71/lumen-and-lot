@@ -1,10 +1,8 @@
 import { rates } from "@/content/rates";
 import { cx } from "@/lib/cx";
+import { formatLongDate } from "@/lib/time";
 
-const asOf = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "long",
-  timeZone: "UTC",
-}).format(new Date(`${rates.asOf}T00:00:00Z`));
+const asOf = formatLongDate(rates.asOf);
 
 export function RatesNote({ className }: { className?: string }) {
   return (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
@@ -10,10 +11,11 @@ import { NotesSection } from "./_sections/notes-section";
 import { StackSection } from "./_sections/stack-section";
 import { TypeSection } from "./_sections/type-section";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Colophon",
   description: "The concept, type, tools and images behind this site.",
-};
+  path: "/colophon",
+});
 
 export default function ColophonPage() {
   return (

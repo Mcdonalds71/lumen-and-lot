@@ -30,6 +30,21 @@ test.describe("header", () => {
     await expect(trigger).toBeFocused();
   });
 
+  test("keeps the residences menu next to its button in the tab order", async ({
+    page,
+  }) => {
+    await page.goto("/system");
+    const nav = page.getByRole("navigation", { name: "Main" });
+    const trigger = nav.getByRole("button", { name: "Residences" });
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Tab");
+    await expect(nav.locator("li").first().locator(":focus")).toHaveCount(1);
+
+    await nav.getByRole("link", { name: "Projects" }).focus();
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
+
   test("marks Residences as current on a residence page", async ({ page }) => {
     await page.goto("/residences/harbor-room");
     await expect(

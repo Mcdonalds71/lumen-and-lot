@@ -23,7 +23,7 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-linear-to-b from-ink/60 via-ink/10 to-ink/75"
+        className="absolute inset-0 bg-linear-to-b from-ink/60 via-ink/40 to-ink/75"
       />
       <Container className="relative flex h-full flex-col justify-end gap-10 pb-margin">
         <h1

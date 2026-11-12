@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
@@ -9,17 +10,21 @@ import { compareListFromParam } from "@/lib/compare";
 
 import { Comparison } from "./_sections/comparison";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Compare homes",
   description: "Up to three homes side by side, with a link you can share.",
-};
+  path: "/compare",
+});
 
 export default function ComparePage({ searchParams }: PageProps<"/compare">) {
   return (
     <Container className="pt-16 md:pt-24">
       <Label as="p">Compare</Label>
       <Grid className="mt-6 gap-y-8">
-        <h1 className="col-span-12 font-display text-display-xl lg:col-span-8">
+        <h1
+          tabIndex={-1}
+          className="col-span-12 font-display text-display-xl outline-none lg:col-span-8"
+        >
           Compare homes
         </h1>
         <p className="col-span-12 text-lead md:col-span-8 lg:col-span-4 lg:col-start-9 lg:self-end">

@@ -31,17 +31,20 @@ const pageLinks = primaryNavigation.filter(
 export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
   const pathname = usePathname();
   const scrolled = useScrolled();
-  const headerRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLLIElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelId = useId();
   const [menuOn, setMenuOn] = useState<string | null>(null);
+  const [menuPrimed, setMenuPrimed] = useState(false);
   const menuOpen = menuOn === pathname;
   const overHero = heroRoutes.has(pathname) && !scrolled && !menuOpen;
 
-  useDismiss(menuOpen, headerRef, (reason) => {
+  useDismiss(menuOpen, menuRef, (reason) => {
     setMenuOn(null);
     if (reason === "escape") triggerRef.current?.focus();
   });
+
+  const primeMenu = () => setMenuPrimed(true);
 
   const closeOnLink = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target instanceof Element && event.target.closest("a")) {
@@ -51,7 +54,6 @@ export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
 
   return (
     <header
-      ref={headerRef}
       data-over-hero={overHero}
       className={cx(
         "fixed inset-x-0 top-0 z-40 border-b transition-colors duration-base",
@@ -66,7 +68,7 @@ export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
         </Link>
         <nav aria-label="Main" className="hidden xl:block">
           <ul className="flex items-center gap-8 text-small font-medium">
-            <li>
+            <li ref={menuRef}>
               <button
                 ref={triggerRef}
                 type="button"
@@ -75,11 +77,24 @@ export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
                 aria-current={
                   pathname.startsWith(residencesHref) ? "page" : undefined
                 }
-                onClick={() => setMenuOn(menuOpen ? null : pathname)}
+                onPointerEnter={primeMenu}
+                onFocus={primeMenu}
+                onClick={() => {
+                  primeMenu();
+                  setMenuOn(menuOpen ? null : pathname);
+                }}
                 className="link-reveal"
               >
                 Residences
               </button>
+              <div
+                id={panelId}
+                hidden={!menuOpen}
+                onClick={closeOnLink}
+                className="absolute inset-x-0 top-full border-b border-rule bg-paper text-body font-normal text-ink transition-[opacity,translate,display] transition-discrete duration-base ease-out starting:-translate-y-2 starting:opacity-0"
+              >
+                {menuPrimed && residencesMenu}
+              </div>
             </li>
             {pageLinks.map((item) => (
               <li key={item.href}>
@@ -104,14 +119,6 @@ export function SiteHeader({ residencesMenu }: { residencesMenu: ReactNode }) {
         </div>
         <MobileMenu className="xl:hidden" />
       </Container>
-      <div
-        id={panelId}
-        hidden={!menuOpen}
-        onClick={closeOnLink}
-        className="absolute inset-x-0 top-full border-b border-rule bg-paper text-ink transition-[opacity,translate,display] transition-discrete duration-base ease-out starting:-translate-y-2 starting:opacity-0"
-      >
-        {residencesMenu}
-      </div>
     </header>
   );
 }

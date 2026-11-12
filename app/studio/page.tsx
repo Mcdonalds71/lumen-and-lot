@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
@@ -11,11 +12,12 @@ import { PhilosophySection } from "./_sections/philosophy-section";
 import { ProcessSection } from "./_sections/process-section";
 import { TeamSection } from "./_sections/team-section";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Studio",
   description:
     "How Lumen & Lot works, from the first sketch to the last shelf.",
-};
+  path: "/studio",
+});
 
 export default function StudioPage() {
   return (

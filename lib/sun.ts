@@ -253,6 +253,18 @@ export function middleOfLongestPeriod(
   return longest && new Date(longest.start.getTime() + length(longest) / 2);
 }
 
+export function openingProgress(
+  day: SolarDay,
+  periods: readonly SunPeriod[],
+): number {
+  const moment = middleOfLongestPeriod(periods);
+  if (!moment) return 0.5;
+  return (
+    (moment.getTime() - day.sunrise.getTime()) /
+    (day.sunset.getTime() - day.sunrise.getTime())
+  );
+}
+
 export function roomSunlight(
   plan: Plan,
   roomId: string,

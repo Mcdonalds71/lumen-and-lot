@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { BriefBuilder } from "@/components/features/brief/brief-builder";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
@@ -8,11 +9,12 @@ import { marketList } from "@/content/markets";
 import { palettes } from "@/content/palettes";
 import { site } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Start a brief",
   description:
     "Six short steps that end in a PDF you keep. Nothing is sent anywhere.",
-};
+  path: "/brief",
+});
 
 export default function BriefPage() {
   return (

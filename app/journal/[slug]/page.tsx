@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
+import { JsonLd } from "@/app/_seo/json-ld";
+import { pageMetadata } from "@/app/_seo/page-metadata";
+import { absoluteUrl } from "@/app/_seo/site-url";
+import { articleData, breadcrumbData } from "@/app/_seo/structured-data";
 import { NextUp } from "@/components/shell/next-up";
-import { PageFallback } from "@/components/shell/page-fallback";
 import { Container } from "@/components/ui/container";
 import { articles, findArticle, nextArticle } from "@/content/journal";
+import { site } from "@/content/site";
 import { formatReadingTime } from "@/lib/time";
 
 import { ArticleHeader } from "./_sections/article-header";
 
-type Params = PageProps<"/journal/[slug]">["params"];
+export const instant = false;
 
 export function generateStaticParams() {
   return articles.map(({ slug }) => ({ slug }));
@@ -21,26 +24,42 @@ export async function generateMetadata({
 }: PageProps<"/journal/[slug]">): Promise<Metadata> {
   const article = findArticle((await params).slug);
   return article
-    ? { title: article.title, description: article.description }
+    ? pageMetadata({
+        title: article.title,
+        description: article.description,
+        path: `/journal/${article.slug}`,
+        type: "article",
+      })
     : {};
 }
 
-export default function ArticlePage({ params }: PageProps<"/journal/[slug]">) {
-  return (
-    <Suspense fallback={<PageFallback />}>
-      <ArticleContent params={params} />
-    </Suspense>
-  );
-}
-
-async function ArticleContent({ params }: { params: Params }) {
+export default async function ArticlePage({
+  params,
+}: PageProps<"/journal/[slug]">) {
   const article = findArticle((await params).slug);
   if (!article) notFound();
   const next = nextArticle(article.slug);
   const { Content } = article;
+  const url = absoluteUrl(`/journal/${article.slug}`);
 
   return (
     <>
+      <JsonLd
+        data={articleData({
+          headline: article.title,
+          description: article.description,
+          url,
+          image: absoluteUrl(article.cover.src),
+          datePublished: article.publishedOn,
+          author: site.author,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbData([
+          { name: "Journal", url: absoluteUrl("/journal") },
+          { name: article.title, url },
+        ])}
+      />
       <article>
         <ArticleHeader article={article} />
         <Container className="mt-16 md:mt-24">

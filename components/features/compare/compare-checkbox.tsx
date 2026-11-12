@@ -18,7 +18,7 @@ export function CompareCheckbox({
   return (
     <label
       className={cx(
-        "relative z-10 inline-flex items-center gap-2 text-small",
+        "relative z-10 inline-flex min-h-6 items-center gap-2 text-small",
         disabled ? "cursor-not-allowed text-muted" : "cursor-pointer",
         className,
       )}

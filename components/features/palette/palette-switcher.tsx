@@ -6,6 +6,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Grid } from "@/components/ui/grid";
 import type { PaletteRoom } from "@/content/residences";
 import type { Palette, PaletteId } from "@/content/schemas/palette";
+import { useSearchParam } from "@/hooks/use-search-param";
 
 import { PaletteFigure } from "./palette-figure";
 import { PalettePicker } from "./palette-picker";
@@ -21,13 +22,19 @@ export function PaletteSwitcher({
   rooms,
   initialPalette,
 }: PaletteSwitcherProps) {
-  const [selected, setSelected] = useState(initialPalette);
+  const requested = useSearchParam("palette");
+  const [chosen, setChosen] = useState<PaletteId | null>(null);
+  const selected =
+    chosen ??
+    palettes.find((candidate) => candidate.id === requested)?.id ??
+    initialPalette;
+  const [loadAll, setLoadAll] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const palette = palettes.find((candidate) => candidate.id === selected);
   if (!palette) return null;
 
   const choose = (id: PaletteId) => {
-    setSelected(id);
+    setChosen(id);
     setAnnouncement(
       `Showing the ${palettes.find((candidate) => candidate.id === id)?.name} palette.`,
     );
@@ -46,7 +53,11 @@ export function PaletteSwitcher({
         that come with it.
       </p>
 
-      <div className="col-span-12 md:col-span-8 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:mt-6">
+      <div
+        onPointerEnter={() => setLoadAll(true)}
+        onFocus={() => setLoadAll(true)}
+        className="col-span-12 md:col-span-8 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:mt-6"
+      >
         <PalettePicker palettes={palettes} value={selected} onChange={choose} />
       </div>
 
@@ -57,6 +68,7 @@ export function PaletteSwitcher({
             room={room}
             palette={selected}
             paletteName={palette.name}
+            loadAll={loadAll}
           />
         ))}
       </div>

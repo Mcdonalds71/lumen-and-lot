@@ -27,11 +27,13 @@ const layouts = {
 type ArticleCardProps = {
   article: Article;
   layout?: keyof typeof layouts;
+  preload?: boolean;
 };
 
 export function ArticleCard({
   article,
   layout = "standard",
+  preload = false,
 }: ArticleCardProps) {
   const styles = layouts[layout];
 
@@ -43,6 +45,7 @@ export function ArticleCard({
         height={article.cover.height}
         alt={article.cover.alt}
         sizes={styles.sizes}
+        preload={preload}
         className={styles.image}
       />
       <div className={styles.body}>

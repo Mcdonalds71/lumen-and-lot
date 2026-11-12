@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { requireToken } from "@/lib/design-tokens";
-import { durations, easeOut, transition } from "@/lib/motion";
+import { durations, easeOut } from "@/lib/motion";
 
 import { tokens } from "./support/tokens";
 
@@ -19,9 +19,5 @@ describe("motion tokens", () => {
     expect(requireToken(tokens, "ease-out")).toBe(
       `cubic-bezier(${easeOut.join(", ")})`,
     );
-  });
-
-  it("builds transitions from a duration name", () => {
-    expect(transition("slow")).toEqual({ duration: 0.8, ease: easeOut });
   });
 });

@@ -28,32 +28,45 @@ type Point = { x: number; y: number };
 
 const followEase = 0.16;
 const focusAnchor = 0.6;
+const settled = 0.5;
 
 export function ProjectList({ rows }: { rows: readonly ProjectRow[] }) {
   const [active, setActive] = useState<string | null>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const target = useRef<Point>({ x: 0, y: 0 });
+  const wake = useRef(() => {});
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!active) return;
     const position = { ...target.current };
     const ease = reducedMotion ? 1 : followEase;
-    let frame = requestAnimationFrame(function follow() {
-      position.x += (target.current.x - position.x) * ease;
-      position.y += (target.current.y - position.y) * ease;
+    let frame = 0;
+    const follow = () => {
+      const dx = target.current.x - position.x;
+      const dy = target.current.y - position.y;
+      position.x += dx * ease;
+      position.y += dy * ease;
       frameRef.current?.style.setProperty(
         "transform",
         `translate3d(${position.x}px, ${position.y}px, 0)`,
       );
-      frame = requestAnimationFrame(follow);
-    });
-    return () => cancelAnimationFrame(frame);
+      frame = Math.hypot(dx, dy) > settled ? requestAnimationFrame(follow) : 0;
+    };
+    wake.current = () => {
+      frame ||= requestAnimationFrame(follow);
+    };
+    wake.current();
+    return () => {
+      cancelAnimationFrame(frame);
+      wake.current = () => {};
+    };
   }, [active, reducedMotion]);
 
   const track = (event: PointerEvent) => {
     if (event.pointerType !== "mouse") return;
     target.current = { x: event.clientX, y: event.clientY };
+    wake.current();
   };
 
   const showBeside = (slug: string, event: FocusEvent<HTMLElement>) => {

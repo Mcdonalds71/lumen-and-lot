@@ -9,8 +9,6 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import {
   type Coordinates,
   isSunlit,
-  middleOfLongestPeriod,
-  roomSunlight,
   solarDay,
   sunlightByRoom,
   sunPosition,
@@ -18,6 +16,7 @@ import {
 import { formatCalendarDate, formatClock } from "@/lib/time";
 
 import { dateOf, dayById, type DayId, days, defaultDay } from "./days";
+import type { DaylightOpening } from "./opening";
 import { PlanDrawing } from "./plan-drawing";
 import { SunHoursTable } from "./sun-hours-table";
 import { SunReadout } from "./sun-readout";
@@ -29,27 +28,11 @@ type DaylightExplorerProps = {
   coordinates: Coordinates;
   timeZone: string;
   zoneName: string;
+  opening: DaylightOpening;
 };
 
 const dayDuration = 14_000;
 const reducedMotionStep = 60;
-
-function openingProgress(
-  plan: FloorPlan,
-  coordinates: Coordinates,
-  date: string,
-): number {
-  const day = solarDay(date, coordinates);
-  const living = plan.rooms.find((room) => room.kind === "living");
-  if (!day || !living) return 0.5;
-  const sunlight = roomSunlight(plan, living.id, coordinates, day);
-  const moment = middleOfLongestPeriod(sunlight?.periods ?? []);
-  if (!moment) return 0.5;
-  return (
-    (moment.getTime() - day.sunrise.getTime()) /
-    (day.sunset.getTime() - day.sunrise.getTime())
-  );
-}
 
 const dayOptions = days.map((day) => ({
   value: day.id,
@@ -67,14 +50,13 @@ export function DaylightExplorer({
   coordinates,
   timeZone,
   zoneName,
+  opening,
 }: DaylightExplorerProps) {
   const [selection, setSelection] = useState<{ dayId: DayId; date: string }>({
     dayId: defaultDay.id,
     date: defaultDay.date,
   });
-  const [progress, setProgress] = useState(() =>
-    openingProgress(plan, coordinates, defaultDay.date),
-  );
+  const [progress, setProgress] = useState(opening.progress);
   const reducedMotion = useReducedMotion();
   const day = solarDay(selection.date, coordinates);
   const dayMinutes = day
@@ -172,7 +154,11 @@ export function DaylightExplorer({
       <div className="col-span-12">
         <SunHoursTable
           plan={plan}
-          sunlight={sunlightByRoom(plan, coordinates, day)}
+          sunlight={
+            selection.date === defaultDay.date
+              ? opening.sunlight
+              : sunlightByRoom(plan, coordinates, day)
+          }
           sunlitNow={new Set(sunlitRooms.map((room) => room.id))}
           timeZone={timeZone}
           caption={`Direct sun by room on ${date}, sampled every 15 minutes`}

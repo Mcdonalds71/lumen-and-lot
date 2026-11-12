@@ -10,6 +10,7 @@ import {
   isSunlit,
   lightPatch,
   middleOfLongestPeriod,
+  openingProgress,
   outwardNormal,
   type Plan,
   type PlanRoom,
@@ -302,5 +303,31 @@ describe("middleOfLongestPeriod", () => {
 
   it("has nothing to say about a room without sun", () => {
     expect(middleOfLongestPeriod([])).toBeUndefined();
+  });
+});
+
+describe("openingProgress", () => {
+  const day = {
+    sunrise: new Date("2026-03-20T06:00:00Z"),
+    sunset: new Date("2026-03-20T18:00:00Z"),
+    solarNoon: new Date("2026-03-20T12:00:00Z"),
+  };
+
+  it("opens at the middle of the longest sunny period", () => {
+    const progress = openingProgress(day, [
+      {
+        start: new Date("2026-03-20T08:00:00Z"),
+        end: new Date("2026-03-20T09:00:00Z"),
+      },
+      {
+        start: new Date("2026-03-20T12:00:00Z"),
+        end: new Date("2026-03-20T16:00:00Z"),
+      },
+    ]);
+    expect(progress).toBeCloseTo(8 / 12);
+  });
+
+  it("opens at midday when the room gets no sun", () => {
+    expect(openingProgress(day, [])).toBe(0.5);
   });
 });

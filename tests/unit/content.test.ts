@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { colophon } from "@/content/colophon";
 import { lookbooks } from "@/content/lookbooks";
 import { marketList } from "@/content/markets";
-import { paletteFromParam, palettes } from "@/content/palettes";
+import { palettes } from "@/content/palettes";
 import { findProject, nextProject, projects } from "@/content/projects";
 import { rates } from "@/content/rates";
 import {
@@ -149,13 +149,6 @@ describe("projects", () => {
 describe("palettes and lookbooks", () => {
   it("offers the three studio palettes", () => {
     expect(palettes.map((palette) => palette.id)).toEqual([...paletteIds]);
-  });
-
-  it("reads the palette from the URL and falls back to the first", () => {
-    expect(paletteFromParam("umber")).toBe("umber");
-    expect(paletteFromParam("neon")).toBe("limewash");
-    expect(paletteFromParam(undefined)).toBe("limewash");
-    expect(paletteFromParam(["umber", "slate"])).toBe("limewash");
   });
 
   it("has one lookbook for each palette", () => {

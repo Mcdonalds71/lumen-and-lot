@@ -3,7 +3,6 @@ import { Geist_Mono, Instrument_Serif, Inter_Tight } from "next/font/google";
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
   variable: "--font-instrument-serif",
 });
 

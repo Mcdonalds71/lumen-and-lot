@@ -34,4 +34,5 @@ export const pages: readonly Page[] = [
     screenshot: true,
     status: 404,
   },
+  { name: "unknown-home", path: "/residences/no-such-home", status: 404 },
 ];

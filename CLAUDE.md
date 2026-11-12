@@ -25,7 +25,7 @@ Signature features:
 ## Stack
 - Next.js (latest, App Router), React, TypeScript strict
 - Tailwind CSS v4 with design tokens as CSS variables in app/styles/tokens.css
-- motion (motion/react), lenis, View Transitions API for page transitions
+- lenis, React's <ViewTransition> for page transitions (CSS for everything else)
 - zod for content schemas; MDX for the journal
 - suncalc for sun position; @react-pdf/renderer for the brief PDF
 - Vitest for logic, Playwright + @axe-core/playwright for pages
@@ -114,8 +114,10 @@ Platform
   project writes to its own folder in test-results/, so an e2e run keeps the screenshots.
 - Page transitions use React's <ViewTransition> in app/template.tsx. app/styles/transitions.css
   styles the page-enter and page-exit classes and turns them off for reduced motion.
-- Partial Prefetching wants route params read inside Suspense, so [slug] pages wrap their content
-  in Suspense with PageFallback as the instant shell.
+- [slug] pages await params at the top and export `instant = false`. Every slug is in
+  generateStaticParams, so each page prerenders whole and inline, and an unknown slug gets a real
+  404. A Suspense boundary around params made React stream the content after the footer, which
+  shifted the layout and delayed LCP.
 - An e2e suite fails any page that logs a console error, which includes hydration mismatches.
 
 Code
@@ -132,8 +134,10 @@ Code
 - Source holds no invisible characters. A no-break space is written as \u00a0 or &nbsp;.
 - Client components import only types from content/. Content values reach them as props, which
   keeps zod and the schemas out of client bundles.
-- hooks/use-dismiss.ts closes anything open on Escape or a click outside. The header menu and
-  Shop the Room share it.
+- hooks/use-dismiss.ts closes anything open on Escape, a click outside or focus moving outside.
+  The header menu and Shop the Room share it.
+- Intl formatters are created on first use (lib/number-format.ts, lib/time.ts), never at module
+  scope, because building one costs real time while the page boots.
 
 Design system
 - Primitives live in components/ui. Button renders a <button>, ButtonLink renders next/link with a
@@ -143,11 +147,15 @@ Design system
   navigation underline: drawn on hover, also when an enclosing link is hovered, and kept for
   aria-current and aria-expanded), focus-ring and duration-fast/base/slow on top of the tokens.
 - lib/motion.ts mirrors the CSS motion tokens for JavaScript, and a unit test keeps them equal.
-- Lenis (components/shell/smooth-scroll.tsx) runs only without reduced motion and pauses itself
-  when a modal dialog sets overflow hidden on the page.
+- Lenis (components/shell/smooth-scroll.tsx) is imported on demand, only for a fine pointer
+  without reduced motion. Its frame loop runs only while a smooth scroll is in flight, woken by
+  wheel input and clicks. It pauses itself when a modal dialog sets overflow hidden on the page.
 - Drawer is a native <dialog> with CSS @starting-style transitions, in panel or full size. It
-  closes itself when Activity hides its route.
-- RevealImage animates only images that start below the fold, so it never delays LCP.
+  renders its content only once first opened, and closes itself when Activity hides its route.
+- RevealImage animates only images that start below the fold, so it never delays LCP. It reads
+  the position from its IntersectionObserver's first entry, so it never forces a layout.
+- focus-ring is clay. focus-ring-contrast (ink with a paper halo) is for controls that sit on
+  photos: the Shop the Room markers and the before/after handle.
 - Toggle is native radio inputs in a radiogroup, in ink or paper tone, with its label inline or
   stacked. Label has muted, ink and paper tones. Marquee pauses on hover, off screen and from its
   button, and its duplicate copy is aria-hidden and inert.
@@ -180,15 +188,21 @@ Residences
   the residence page. The tray and /compare come in Phase 6.
 - The energy card shows each label on its own system's scale. Letter scales are stepped bars, the
   most efficient first.
-- The chosen palette lives in ?palette=. The residence page resolves searchParams inside its own
-  Suspense boundary, with the first palette as the fallback, so the page stays prerendered and
-  only the finishes stream. Choosing a palette updates the URL with history.replaceState, without
-  a server request. Photos for every palette are stacked and cross-fade; the hidden ones are
-  aria-hidden with empty alt text.
+- The chosen palette lives in ?palette=. The server renders the first palette, and the switcher
+  reads the parameter in the browser through useSearchParam (useSyncExternalStore), so residence
+  pages stay fully static and hydrate in place. Choosing a palette updates the URL with
+  history.replaceState, without a server request. The other palettes' photos mount when the picker
+  is first hovered or focused, then stack and cross-fade; the hidden ones are aria-hidden with
+  empty alt text.
+- The Daylight Explorer gets its opening state (sun hours and opening time on the equinox) from
+  the server, and only computes again when the reader picks another date.
 
 Compare and brief
 - The compare tray (components/features/compare) sits at the bottom of every page except
   /compare, with a spacer so it never covers the footer. Index cards add homes with a checkbox.
+  While it shows, html gets scroll-padding-bottom, so focus never hides behind it. Removing a home
+  moves focus to the next Remove button, or to main when none is left, and the announcer
+  (components/shell/announcer.tsx, hooks/use-announcement.ts) says what happened.
 - /compare reads ?homes= inside Suspense. Removing a home updates the store and the URL; an empty
   URL picks up the saved list. Living room sun uses the March equinox from the explorer's days.
 - The brief validates each step with its own zod schema (lib/brief.ts), so a step never trips on
@@ -202,9 +216,11 @@ Compare and brief
 Interiors
 - Each lookbook section takes its palette id as an anchor (#limewash). The home teaser and the
   residence finishes link to it.
-- Hotspots are buttons named after the piece, with aria-expanded and aria-controls. From md the
-  card opens beside its marker, on the side with more room; on phones it sits below the photo.
-  Escape and a click outside close it, and Escape returns focus to the marker.
+- Hotspots are buttons named after the piece, with aria-expanded and aria-controls. Each card
+  renders right after its marker, so it comes next in the tab order. The photo is a grid cell that
+  the markers (and the card from md) are positioned in, with explicit end lines; on phones the card
+  sits in the row below the photo. From md the card opens beside its marker, on the side with more
+  room. Escape, a click outside or focus leaving close it, and Escape returns focus to the marker.
 - Every piece is also listed below its photo. The page says the makers and prices are invented.
 - The m²/ft² preference also switches furniture sizes between centimeters and inches.
 
@@ -246,6 +262,22 @@ Studio, colophon and 404
 - The colophon says the site sets no cookies and runs no analytics. Adding either means updating it.
 - app/not-found.tsx is the designed 404. Pages in tests/e2e/pages.ts may declare a status: the
   warm-up expects it, and the console suite ignores the page's own 404 response.
+
+Launch
+- The site stays on Vercel. Cloudflare's Next.js adapters still have open bugs with Cache
+  Components and partial prerendering, which this site depends on.
+- app/_seo holds the metadata helpers. pageMetadata gives every page its canonical URL and its own
+  Open Graph and Twitter fields, because a page that sets openGraph replaces the layout's. The
+  origin comes from SITE_URL, then Vercel's production URL, then localhost.
+- Open Graph cards are drawn with next/og in the site's type. next/og cannot read WOFF2, so
+  Instrument Serif and Geist Mono are kept as TTF in assets/fonts with their OFL texts. Each detail
+  route's card prerenders through generateStaticParams.
+- Structured data: WebSite on home, Article on journal posts, BreadcrumbList on detail pages. The
+  homes are never described as listings for sale, because they are invented.
+- sitemap.ts lists every page except /compare, whose content depends on the visitor.
+- Lighthouse runs against `next start` with the installed Chrome. Playwright's Chromium cannot be
+  launched by Lighthouse on Windows. Scores swing several points with load on the machine, so
+  report the median of three runs.
 
 Daylight Explorer
 - lib/sun.ts is the model. A day's sunrise and sunset come from suncalc at an instant near local

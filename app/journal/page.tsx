@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { ArticleCard } from "@/components/journal/article-card";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
 import { articles } from "@/content/journal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Journal",
   description: "Notes on daylight, energy labels and buying a home abroad.",
-};
+  path: "/journal",
+});
 
 export default function JournalPage() {
   const [latest, ...earlier] = articles;
@@ -29,7 +31,7 @@ export default function JournalPage() {
 
       {latest && (
         <div className="mt-16 border-t border-ink pt-8 md:mt-24">
-          <ArticleCard article={latest} layout="featured" />
+          <ArticleCard article={latest} layout="featured" preload />
         </div>
       )}
 

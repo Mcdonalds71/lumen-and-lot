@@ -8,18 +8,21 @@ type PaletteFigureProps = {
   room: PaletteRoom;
   palette: PaletteId;
   paletteName: string;
+  loadAll: boolean;
 };
 
 export function PaletteFigure({
   room,
   palette,
   paletteName,
+  loadAll,
 }: PaletteFigureProps) {
   return (
     <figure>
       <div className="relative overflow-hidden">
-        {room.images.map(({ palette: shownIn, image }, index) => {
+        {room.images.map(({ palette: shownIn, image }) => {
           const shown = shownIn === palette;
+          if (!shown && !loadAll) return null;
           return (
             <Image
               key={shownIn}
@@ -31,9 +34,7 @@ export function PaletteFigure({
               sizes="(min-width: 64rem) 28vw, 50vw"
               className={cx(
                 "w-full transition-opacity duration-slow ease-out",
-                index === 0
-                  ? "h-auto"
-                  : "absolute inset-0 size-full object-cover",
+                shown ? "h-auto" : "absolute inset-0 size-full object-cover",
                 shown ? "opacity-100" : "opacity-0",
               )}
             />

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { CompareTray } from "@/components/features/compare/compare-tray";
 import { PreferenceHead } from "@/components/preferences/preference-head";
+import { Announcer } from "@/components/shell/announcer";
 import { ResidencesMenu } from "@/components/shell/residences-menu";
 import { SiteFooter } from "@/components/shell/site-footer";
 import { SiteHeader } from "@/components/shell/site-header";
@@ -11,10 +12,12 @@ import { coverImage, residences } from "@/content/residences";
 import { site } from "@/content/site";
 import { preferenceDefaults, preferences } from "@/lib/preferences";
 
+import { siteUrl } from "./_seo/site-url";
 import { fontVariables } from "./styles/fonts";
 import "./styles/globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: {
     default: site.name,
     template: `%s — ${site.name}`,
@@ -48,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             image: coverImage(residence),
           }))}
         />
+        <Announcer />
       </body>
     </html>
   );

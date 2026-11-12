@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { RatesNote } from "@/components/preferences/rates-note";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
@@ -8,11 +9,12 @@ import { lookbooks } from "@/content/lookbooks";
 
 import { LookbookSection } from "./_sections/lookbook-section";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Interiors",
   description:
     "Lookbooks for the Limewash, Umber and Slate palettes, with every piece listed.",
-};
+  path: "/interiors",
+});
 
 export default function InteriorsPage() {
   return (

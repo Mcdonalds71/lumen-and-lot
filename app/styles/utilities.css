@@ -79,6 +79,13 @@
   outline-offset: var(--focus-offset);
 }
 
+@utility focus-ring-contrast {
+  outline: var(--focus-width) solid var(--color-ink);
+  outline-offset: var(--focus-offset);
+  box-shadow: 0 0 0 calc(var(--focus-offset) + var(--focus-width))
+    var(--color-paper);
+}
+
 @utility duration-fast {
   --tw-duration: var(--duration-fast);
   transition-duration: var(--duration-fast);

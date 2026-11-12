@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useId, useRef } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 
 import { cx } from "@/lib/cx";
 
@@ -28,6 +28,8 @@ export function Drawer({
 }: DrawerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
+  const [opened, setOpened] = useState(open);
+  if (open && !opened) setOpened(true);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -54,7 +56,7 @@ export function Drawer({
       )}
     >
       <div className="flex h-full flex-col">
-        <header className="flex items-baseline justify-between gap-6 border-b border-rule px-6 py-5">
+        <div className="flex items-baseline justify-between gap-6 border-b border-rule px-6 py-5">
           <h2 id={titleId} className="font-display text-display-sm">
             {title}
           </h2>
@@ -65,12 +67,12 @@ export function Drawer({
           >
             Close
           </button>
-        </header>
+        </div>
         <div
           data-lenis-prevent
           className="flex-1 overflow-y-auto overscroll-contain px-6 py-8"
         >
-          {children}
+          {opened && children}
         </div>
       </div>
     </dialog>

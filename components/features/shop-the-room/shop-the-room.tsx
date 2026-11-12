@@ -37,36 +37,36 @@ function besideHotspot({ x, y }: ShopItem): CSSProperties {
 
 export function ShopTheRoom({ image, items }: ShopTheRoomProps) {
   const cardId = useId();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const openRef = useRef<HTMLDivElement>(null);
   const hotspots = useRef(new Map<string, HTMLButtonElement>());
   const [openId, setOpenId] = useState<string | null>(null);
-  const open = items.find((item) => item.id === openId);
 
   const close = (refocus: boolean) => {
     if (refocus && openId) hotspots.current.get(openId)?.focus();
     setOpenId(null);
   };
 
-  useDismiss(open !== undefined, containerRef, (reason) =>
-    close(reason === "escape"),
-  );
+  useDismiss(openId !== null, openRef, (reason) => close(reason === "escape"));
 
   return (
-    <div ref={containerRef} className="relative">
-      <div className="relative">
-        <Image
-          src={image.src}
-          width={image.width}
-          height={image.height}
-          alt={image.alt}
-          sizes="(min-width: 110rem) 100rem, 100vw"
-          className="h-auto w-full"
-        />
-        {items.map((item) => {
-          const expanded = item.id === openId;
-          return (
+    <div className="relative grid">
+      <Image
+        src={image.src}
+        width={image.width}
+        height={image.height}
+        alt={image.alt}
+        sizes="(min-width: 110rem) 100rem, 100vw"
+        className="col-start-1 row-start-1 h-auto w-full"
+      />
+      {items.map((item) => {
+        const expanded = item.id === openId;
+        return (
+          <div
+            key={item.id}
+            ref={expanded ? openRef : undefined}
+            className="contents"
+          >
             <button
-              key={item.id}
               ref={(node) => {
                 if (node) hotspots.current.set(item.id, node);
                 return () => {
@@ -77,7 +77,7 @@ export function ShopTheRoom({ image, items }: ShopTheRoomProps) {
               aria-expanded={expanded}
               aria-controls={expanded ? cardId : undefined}
               onClick={() => setOpenId(expanded ? null : item.id)}
-              className="group absolute grid size-9 -translate-1/2 place-items-center"
+              className="group absolute col-start-1 col-end-2 row-start-1 row-end-2 grid size-9 -translate-1/2 place-items-center focus-visible:focus-ring-contrast"
               style={{ left: `${item.x}%`, top: `${item.y}%` }}
             >
               <span
@@ -101,23 +101,27 @@ export function ShopTheRoom({ image, items }: ShopTheRoomProps) {
               </span>
               <span className="sr-only">{item.name}</span>
             </button>
-          );
-        })}
-      </div>
-      {open && (
-        <div
-          id={cardId}
-          role="group"
-          aria-label={open.name}
-          className="mt-4 border border-ink bg-paper p-5 md:absolute md:mt-0 md:w-80"
-          style={besideHotspot(open)}
-        >
-          {open.details}
-          <Button variant="text" onClick={() => close(true)} className="mt-5">
-            Close
-          </Button>
-        </div>
-      )}
+            {expanded && (
+              <div
+                id={cardId}
+                role="group"
+                aria-label={item.name}
+                className="z-10 col-start-1 row-start-2 mt-4 border border-ink bg-paper p-5 transition-[opacity,translate] duration-fast md:absolute md:row-start-1 md:row-end-2 md:mt-0 md:w-80 starting:translate-y-1 starting:opacity-0"
+                style={besideHotspot(item)}
+              >
+                {item.details}
+                <Button
+                  variant="text"
+                  onClick={() => close(true)}
+                  className="mt-5"
+                >
+                  Close
+                </Button>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

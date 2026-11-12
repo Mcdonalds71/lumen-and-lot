@@ -34,6 +34,19 @@ test.describe("Shop the Room", () => {
     await expect(sofa).toBeFocused();
   });
 
+  test("an open card follows its hotspot and closes when focus moves on", async ({
+    page,
+  }) => {
+    await page.getByRole("button", { name: "Three-seat sofa" }).click();
+    const card = page.getByRole("group", { name: "Three-seat sofa" });
+    await page.keyboard.press("Tab");
+    await expect(card.getByRole("button", { name: "Close" })).toBeFocused();
+
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("button", { name: "Low table" })).toBeFocused();
+    await expect(card).toBeHidden();
+  });
+
   test("Tab moves from one hotspot to the next", async ({ page }) => {
     await page.getByRole("button", { name: "Three-seat sofa" }).focus();
     await page.keyboard.press("Tab");

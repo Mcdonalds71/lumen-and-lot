@@ -79,9 +79,3 @@ export function findPalette(id: PaletteId): Palette {
 }
 
 export const defaultPaletteId: PaletteId = paletteIds[0];
-
-export function paletteFromParam(
-  value: string | string[] | undefined,
-): PaletteId {
-  return paletteIds.find((id) => id === value) ?? defaultPaletteId;
-}

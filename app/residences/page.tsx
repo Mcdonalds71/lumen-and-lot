@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { RatesNote } from "@/components/preferences/rates-note";
 import { ResidenceBrowser } from "@/components/residences/residence-browser";
 import { ResidenceCard } from "@/components/residences/residence-card";
@@ -12,19 +13,20 @@ import { marketList } from "@/content/markets";
 import { residences } from "@/content/residences";
 import { statuses } from "@/content/schemas/residence";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Residences",
   description:
     "Homes for sale in Toronto, the Hudson Valley, Copenhagen and Lisbon.",
-};
+  path: "/residences",
+});
 
 export default function ResidencesPage() {
-  const entries = residences.map((residence) => ({
+  const entries = residences.map((residence, index) => ({
     slug: residence.slug,
     market: residence.market.id,
     bedrooms: residence.bedrooms,
     status: residence.status,
-    card: <ResidenceCard residence={residence} />,
+    card: <ResidenceCard residence={residence} preload={index === 0} />,
     row: <ResidenceRow residence={residence} />,
   }));
 

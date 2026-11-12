@@ -1,3 +1,5 @@
+import { numberFormat } from "./number-format";
+
 export const currencies = ["CAD", "DKK", "EUR", "GBP", "USD"] as const;
 
 export type Currency = (typeof currencies)[number];
@@ -49,7 +51,7 @@ export function displayPrice(
 }
 
 export function formatMoney({ amount, currency }: Money): string {
-  return new Intl.NumberFormat("en-US", {
+  return numberFormat({
     style: "currency",
     currency,
     maximumFractionDigits: 0,

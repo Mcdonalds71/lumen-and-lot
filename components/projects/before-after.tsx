@@ -49,7 +49,7 @@ export function BeforeAfter({ before, after }: BeforeAfterProps) {
       />
       <span
         aria-hidden
-        className="pointer-events-none absolute top-1/2 grid size-10 -translate-1/2 place-items-center border border-ink bg-paper text-ink peer-focus-visible:focus-ring"
+        className="pointer-events-none absolute top-1/2 grid size-10 -translate-1/2 place-items-center border border-ink bg-paper text-ink peer-focus-visible:focus-ring-contrast"
         style={{ left: `${split}%` }}
       >
         <svg viewBox="0 0 16 10" className="w-4 fill-none stroke-current">

@@ -24,6 +24,35 @@ test.describe("compare", () => {
     await expect(page.getByRole("complementary", { name: tray })).toBeHidden();
   });
 
+  test("keeps focus and says what happened when a home leaves the tray", async ({
+    page,
+  }) => {
+    await page.goto("/residences");
+    await page.getByRole("checkbox", { name: /Compare Harbor Room/ }).check();
+    await page.getByRole("checkbox", { name: /Compare High Terrace/ }).check();
+    await expect(page.locator("html")).toHaveCSS(
+      "scroll-padding-bottom",
+      "104px",
+    );
+
+    const bar = page.getByRole("complementary", { name: tray });
+    await bar
+      .getByRole("button", { name: "Remove Harbor Room from compare" })
+      .click();
+    await expect(
+      bar.getByRole("button", { name: "Remove High Terrace from compare" }),
+    ).toBeFocused();
+    await expect(
+      page.getByRole("status").filter({
+        hasText: "Harbor Room removed from compare.",
+      }),
+    ).toHaveCount(1);
+
+    await bar.getByRole("button", { name: "Clear" }).click();
+    await expect(bar).toBeHidden();
+    await expect(page.locator("main")).toBeFocused();
+  });
+
   test("holds three homes at most", async ({ page }) => {
     await page.goto("/residences");
     for (const name of ["Garden Floor", "North Light", "Orchard House"]) {

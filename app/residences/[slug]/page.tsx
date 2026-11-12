@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
-import { PageFallback } from "@/components/shell/page-fallback";
+import { JsonLd } from "@/app/_seo/json-ld";
+import { pageMetadata } from "@/app/_seo/page-metadata";
+import { absoluteUrl } from "@/app/_seo/site-url";
+import { breadcrumbData } from "@/app/_seo/structured-data";
 import { Container } from "@/components/ui/container";
-import { defaultPaletteId, paletteFromParam } from "@/content/palettes";
 import { findResidence, residences } from "@/content/residences";
 
 import { DaylightSection } from "./_sections/daylight-section";
@@ -14,9 +15,7 @@ import { ResidenceGallery } from "./_sections/residence-gallery";
 import { ResidenceIntro } from "./_sections/residence-intro";
 import { SpecificationsSection } from "./_sections/specifications-section";
 
-type Params = PageProps<"/residences/[slug]">["params"];
-
-type SearchParams = PageProps<"/residences/[slug]">["searchParams"];
+export const instant = false;
 
 export function generateStaticParams() {
   return residences.map(({ slug }) => ({ slug }));
@@ -27,49 +26,36 @@ export async function generateMetadata({
 }: PageProps<"/residences/[slug]">): Promise<Metadata> {
   const residence = findResidence((await params).slug);
   return residence
-    ? { title: residence.name, description: residence.story }
+    ? pageMetadata({
+        title: residence.name,
+        description: residence.story,
+        path: `/residences/${residence.slug}`,
+      })
     : {};
 }
 
-export default function ResidencePage({
+export default async function ResidencePage({
   params,
-  searchParams,
 }: PageProps<"/residences/[slug]">) {
-  return (
-    <Suspense fallback={<PageFallback />}>
-      <ResidenceContent params={params} searchParams={searchParams} />
-    </Suspense>
-  );
-}
-
-async function ResidenceContent({
-  params,
-  searchParams,
-}: {
-  params: Params;
-  searchParams: SearchParams;
-}) {
   const residence = findResidence((await params).slug);
   if (!residence) notFound();
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbData([
+          { name: "Residences", url: absoluteUrl("/residences") },
+          {
+            name: residence.name,
+            url: absoluteUrl(`/residences/${residence.slug}`),
+          },
+        ])}
+      />
       <ResidenceIntro residence={residence} />
       <ResidenceGallery residence={residence} />
       <Container className="flex flex-col gap-32 pt-32 md:gap-48 md:pt-40">
         <DaylightSection residence={residence} />
-        <Suspense
-          fallback={
-            <FinishesSection residence={residence} palette={defaultPaletteId} />
-          }
-        >
-          {searchParams.then(({ palette }) => (
-            <FinishesSection
-              residence={residence}
-              palette={paletteFromParam(palette)}
-            />
-          ))}
-        </Suspense>
+        <FinishesSection residence={residence} />
         <SpecificationsSection residence={residence} />
         <NextResidence residence={residence} />
       </Container>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { Container } from "@/components/ui/container";
 import { Label } from "@/components/ui/label";
 import { site } from "@/content/site";
@@ -12,11 +13,12 @@ import { MotionChapter } from "./_components/motion-chapter";
 import { TypeChapter } from "./_components/type-chapter";
 import { readTokens } from "./_lib/read-tokens";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "System",
   description:
     "The colors, type, layout, motion and components that Lumen & Lot is built from.",
-};
+  path: "/system",
+});
 
 const chapters = [
   { id: "color", label: "Color", Chapter: ColorChapter },

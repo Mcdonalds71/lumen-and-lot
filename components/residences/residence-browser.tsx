@@ -12,7 +12,7 @@ import { formatCount } from "@/lib/format";
 import { residenceViewPreference } from "@/lib/preferences";
 import { matchesFilters } from "@/lib/residence-filters";
 
-import { residenceColumns } from "./residence-row";
+import { residenceColumns } from "./residence-columns";
 
 export type ResidenceEntry = {
   slug: string;

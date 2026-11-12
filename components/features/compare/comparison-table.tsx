@@ -100,14 +100,14 @@ export function ComparisonTable({
                 <th
                   key={residence.slug}
                   scope="col"
-                  className="px-gutter pb-6 align-top font-normal"
+                  className="px-gutter pb-2 align-top font-normal"
                 >
                   <Image
                     src={image.src}
                     width={image.width}
                     height={image.height}
                     alt=""
-                    sizes="(min-width: 64rem) 25vw, 15rem"
+                    sizes="(min-width: 64rem) 20vw, (min-width: 48rem) 15vw, 9rem"
                     className="h-auto w-full"
                   />
                   <Link
@@ -116,16 +116,21 @@ export function ComparisonTable({
                   >
                     {residence.name}
                   </Link>
-                  <div className="mt-2">
-                    <RemoveHomeButton
-                      slug={residence.slug}
-                      name={residence.name}
-                      slugs={slugs}
-                    />
-                  </div>
                 </th>
               );
             })}
+          </tr>
+          <tr>
+            <td />
+            {residences.map((residence) => (
+              <td key={residence.slug} className="px-gutter pb-6">
+                <RemoveHomeButton
+                  slug={residence.slug}
+                  name={residence.name}
+                  slugs={slugs}
+                />
+              </td>
+            ))}
           </tr>
         </thead>
         <tbody>

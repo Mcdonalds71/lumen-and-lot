@@ -25,14 +25,20 @@ function Copies({
 }) {
   return (
     <div
-      className="flex shrink-0 items-center"
+      className={cx(
+        "flex shrink-0 items-center motion-reduce:shrink motion-reduce:flex-wrap",
+        hidden && "motion-reduce:hidden",
+      )}
       aria-hidden={hidden || undefined}
       inert={hidden || undefined}
     >
       {Array.from({ length: repeat }, (_, copy) => (
         <div
           key={copy}
-          className="flex shrink-0 items-center"
+          className={cx(
+            "flex shrink-0 items-center motion-reduce:shrink motion-reduce:flex-wrap",
+            copy > 0 && "motion-reduce:hidden",
+          )}
           aria-hidden={(!hidden && copy > 0) || undefined}
           inert={(!hidden && copy > 0) || undefined}
         >
@@ -66,7 +72,7 @@ export function Marquee({
         onPointerLeave={() => setHeld(false)}
       >
         <div
-          className="flex w-max animate-marquee motion-reduce:animate-none"
+          className="flex w-max animate-marquee motion-reduce:w-auto motion-reduce:animate-none"
           style={{
             animationDuration: `${duration}s`,
             animationPlayState: running ? "running" : "paused",

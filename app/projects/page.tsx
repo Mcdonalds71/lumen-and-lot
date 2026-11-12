@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { pageMetadata } from "@/app/_seo/page-metadata";
 import { ProjectCard } from "@/components/projects/project-card";
 import { ProjectList } from "@/components/projects/project-list";
 import { ProjectViewToggle } from "@/components/projects/project-view-toggle";
@@ -10,10 +11,11 @@ import { projects } from "@/content/projects";
 import { formatCount, formatIndex } from "@/lib/format";
 import { projectViewPreference } from "@/lib/preferences";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description: "Case studies of homes we have designed, built and furnished.",
-};
+  path: "/projects",
+});
 
 const optionAttribute = projectViewPreference.optionAttribute;
 
