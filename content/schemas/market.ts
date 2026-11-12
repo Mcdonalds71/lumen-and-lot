@@ -2,16 +2,10 @@ import { z } from "zod";
 
 import { currencies } from "@/lib/currency";
 
+import { type MarketId, marketIds } from "../ids";
 import { energySystems } from "./energy-label";
 
-export const marketIds = [
-  "toronto",
-  "hudson-valley",
-  "copenhagen",
-  "lisbon",
-] as const;
-
-export type MarketId = (typeof marketIds)[number];
+export { type MarketId, marketIds } from "../ids";
 
 function isTimeZone(zone: string): boolean {
   try {

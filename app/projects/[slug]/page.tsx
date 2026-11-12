@@ -19,6 +19,8 @@ import { ProjectStory } from "./_sections/project-story";
 
 export const instant = false;
 
+export const ensureStatic = "navigation";
+
 export function generateStaticParams() {
   return projects.map(({ slug }) => ({ slug }));
 }

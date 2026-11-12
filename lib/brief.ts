@@ -1,7 +1,6 @@
-import { z } from "zod";
+import * as z from "zod/mini";
 
-import { marketIds } from "@/content/schemas/market";
-import { paletteIds } from "@/content/schemas/palette";
+import { marketIds, paletteIds } from "@/content/ids";
 
 import { type Currency, currencies, formatMoney } from "./currency";
 import { type AreaUnit, formatAreaRange } from "./units";
@@ -81,16 +80,15 @@ export const currencyLabels: Record<Currency, string> = {
 
 const choose = (message: string) => ({ error: message });
 
-const amount = z
-  .string()
-  .trim()
-  .min(1, "Enter an amount.")
-  .transform((value) => Number(value.replace(/[\s,]/g, "")))
-  .pipe(
-    z
-      .number({ error: "Write the amount in numbers." })
-      .positive("Enter an amount above zero."),
-  );
+const amount = z.pipe(
+  z.pipe(
+    z.string().check(z.trim(), z.minLength(1, "Enter an amount.")),
+    z.transform((value: string) => Number(value.replace(/[\s,]/g, ""))),
+  ),
+  z
+    .number({ error: "Write the amount in numbers." })
+    .check(z.positive("Enter an amount above zero.")),
+);
 
 const shapes = {
   project: {
@@ -121,18 +119,27 @@ const shapes = {
     ),
   },
   details: {
-    name: z.string().trim().max(80, "Keep the name under 80 characters."),
-    notes: z.string().trim().max(600, "Keep the notes under 600 characters."),
+    name: z
+      .string()
+      .check(z.trim(), z.maxLength(80, "Keep the name under 80 characters.")),
+    notes: z
+      .string()
+      .check(
+        z.trim(),
+        z.maxLength(600, "Keep the notes under 600 characters."),
+      ),
   },
 };
 
-const budgetInOrder = (budget: { budgetFrom: number; budgetTo: number }) =>
-  budget.budgetTo >= budget.budgetFrom;
+type BudgetRange = { budgetFrom: number; budgetTo: number };
 
-const budgetOrderIssue = {
-  message: "The upper amount should be at least the lower one.",
-  path: ["budgetTo"],
-};
+const budgetInOrderCheck = z.refine<BudgetRange>(
+  (budget) => budget.budgetTo >= budget.budgetFrom,
+  {
+    error: "The upper amount should be at least the lower one.",
+    path: ["budgetTo"],
+  },
+);
 
 export const briefSteps = [
   { id: "project", title: "Project", schema: z.object(shapes.project) },
@@ -141,7 +148,7 @@ export const briefSteps = [
   {
     id: "budget",
     title: "Budget",
-    schema: z.object(shapes.budget).refine(budgetInOrder, budgetOrderIssue),
+    schema: z.object(shapes.budget).check(budgetInOrderCheck),
   },
   { id: "timeline", title: "Timeline", schema: z.object(shapes.timeline) },
   { id: "palette", title: "Palette", schema: z.object(shapes.palette) },
@@ -161,7 +168,7 @@ export const briefSchema = z
     ...shapes.palette,
     ...shapes.details,
   })
-  .refine(budgetInOrder, budgetOrderIssue);
+  .check(budgetInOrderCheck);
 
 export type Brief = z.output<typeof briefSchema>;
 
@@ -189,7 +196,10 @@ function isBriefField(value: unknown): value is BriefField {
   return typeof value === "string" && Object.hasOwn(emptyDraft, value);
 }
 
-export function fieldErrors(schema: z.ZodType, draft: BriefDraft): FieldErrors {
+export function fieldErrors(
+  schema: z.ZodMiniType,
+  draft: BriefDraft,
+): FieldErrors {
   const result = schema.safeParse(draft);
   if (result.success) return {};
   const errors: FieldErrors = {};

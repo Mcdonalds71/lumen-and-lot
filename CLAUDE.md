@@ -114,10 +114,11 @@ Platform
   project writes to its own folder in test-results/, so an e2e run keeps the screenshots.
 - Page transitions use React's <ViewTransition> in app/template.tsx. app/styles/transitions.css
   styles the page-enter and page-exit classes and turns them off for reduced motion.
-- [slug] pages await params at the top and export `instant = false`. Every slug is in
-  generateStaticParams, so each page prerenders whole and inline, and an unknown slug gets a real
-  404. A Suspense boundary around params made React stream the content after the footer, which
-  shifted the layout and delayed LCP.
+- [slug] pages await params at the top and export `instant = false` and
+  `ensureStatic = "navigation"`. Every slug is in generateStaticParams, so each page prerenders
+  whole and inline. ensureStatic makes the first request for an unknown slug wait for the real 404
+  instead of getting the app shell with a 200. A Suspense boundary around params made React stream
+  the content after the footer, which shifted the layout and delayed LCP.
 - An e2e suite fails any page that logs a console error, which includes hydration mismatches.
 
 Code
@@ -206,8 +207,10 @@ Compare and brief
 - /compare reads ?homes= inside Suspense. Removing a home updates the store and the URL; an empty
   URL picks up the saved list. Living room sun uses the March equinox from the explorer's days.
 - The brief validates each step with its own zod schema (lib/brief.ts), so a step never trips on
-  later fields. It is the one client feature that ships zod. describeBrief feeds both the review
-  and the PDF.
+  later fields. It is the one client feature that ships zod, and it uses zod/mini. Its id lists
+  come from content/ids.ts, so classic zod and the content schemas never reach the browser. Every
+  "Start a brief" link prefetches /brief, so this also lightens every page's prefetch.
+  describeBrief feeds both the review and the PDF.
 - The PDF loads @react-pdf/renderer only on download and uses the PDF standard fonts (Times,
   Helvetica, Courier) with lib/colors.ts, which mirrors the color tokens under a unit test.
 - html has scroll-padding-top for the fixed header. Absolutely positioned content inside a scroll
@@ -297,6 +300,8 @@ Daylight Explorer
   (lib/plan-frame.ts). The sun hours table is the text alternative.
 
 Content and data
+- content/ids.ts holds marketIds and paletteIds without zod, for client code; the market and
+  palette schemas re-export them.
 - content/schemas/ holds one zod schema per domain. Every collection parses when its module loads,
   so invalid content fails the build and the unit tests. Collections export their validated list
   and small finders (findResidence, newestResidence, nextResidence, findProject, nextProject,

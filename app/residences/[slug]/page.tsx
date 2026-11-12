@@ -17,6 +17,8 @@ import { SpecificationsSection } from "./_sections/specifications-section";
 
 export const instant = false;
 
+export const ensureStatic = "navigation";
+
 export function generateStaticParams() {
   return residences.map(({ slug }) => ({ slug }));
 }

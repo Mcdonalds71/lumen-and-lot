@@ -15,6 +15,8 @@ import { ArticleHeader } from "./_sections/article-header";
 
 export const instant = false;
 
+export const ensureStatic = "navigation";
+
 export function generateStaticParams() {
   return articles.map(({ slug }) => ({ slug }));
 }

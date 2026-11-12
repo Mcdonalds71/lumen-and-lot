@@ -1,10 +1,9 @@
 import { z } from "zod";
 
+import { paletteIds } from "../ids";
 import { uniqueBy } from "./common";
 
-export const paletteIds = ["limewash", "umber", "slate"] as const;
-
-export type PaletteId = (typeof paletteIds)[number];
+export { type PaletteId, paletteIds } from "../ids";
 
 export const swatchRoles = ["wall", "floor", "stone", "metal"] as const;
 
