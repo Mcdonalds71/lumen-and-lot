@@ -86,19 +86,19 @@ The full list of decisions, phase by phase, is in [CLAUDE.md](CLAUDE.md).
 - **Tests.** Over 300 Vitest unit tests cover the sun model, units, currency, the brief, content
   validation and the SEO helpers. More than 140 Playwright tests run axe, check for console
   errors and sideways scrolling on every page, and walk through each feature by keyboard.
-- **Lighthouse, mobile.** Median of three runs on a local production build:
+- **PageSpeed Insights.** The live site on Vercel, tested on November 17, 2026:
 
-  | Page                    | Performance | Accessibility | Best practices | SEO | LCP   | CLS |
-  | ----------------------- | ----------- | ------------- | -------------- | --- | ----- | --- |
-  | Home                    | 87          | 100           | 100            | 100 | 0.9 s | 0   |
-  | Residence (Harbor Room) | 94          | 100           | 100            | 100 | 1.0 s | 0   |
-  | Project (Stair House)   | 94          | 100           | 100            | 100 | 0.8 s | 0   |
+  | Page                    | Device  | Performance | Accessibility | Best practices | SEO | LCP   | CLS |
+  | ----------------------- | ------- | ----------- | ------------- | -------------- | --- | ----- | --- |
+  | Home                    | Mobile  | 98          | 100           | 100            | 100 | 0.9 s | 0   |
+  | Home                    | Desktop | 100         | 100           | 100            | 100 | 0.3 s | 0   |
+  | Residence (Harbor Room) | Mobile  | 100         | 100           | 100            | 100 | 0.9 s | 0   |
+  | Residence (Harbor Room) | Desktop | 100         | 100           | 100            | 100 | 0.6 s | 0   |
+  | Project (Stair House)   | Mobile  | 100         | 100           | 100            | 100 | 0.9 s | 0   |
+  | Project (Stair House)   | Desktop | 99          | 100           | 100            | 100 | 0.7 s | 0   |
 
-  Performance moves between 85 and 97 from run to run, with the real photographs in place. Each
-  photo reaches a phone as 14 to 26 KB, and blocking every image does not change the score. The
-  rest is main-thread time while the framework starts up. The colophon, which has almost no code of
-  its own and no photos, scores in the same range, so that time is mostly the Next.js and React
-  runtime rather than the site's own code.
+  Each photo reaches a phone as 14 to 26 KB. The home page's Speed Index is its one slower metric,
+  because the city marquee and the rising headline keep the screen moving by design.
 
 ## Getting started
 

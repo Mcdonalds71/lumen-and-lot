@@ -288,6 +288,9 @@ Launch
 - Lighthouse runs against `next start` with the installed Chrome. Playwright's Chromium cannot be
   launched by Lighthouse on Windows. Scores swing several points with load on the machine, so
   report the median of three runs.
+- The README reports PageSpeed Insights on the live site. Local Lighthouse runs are for checking a
+  change, with /colophon as a control. The keyless PageSpeed API has no quota, so run it at
+  pagespeed.web.dev.
 
 Daylight Explorer
 - lib/sun.ts is the model. A day's sunrise and sunset come from suncalc at an instant near local
