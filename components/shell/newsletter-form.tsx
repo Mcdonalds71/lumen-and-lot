@@ -32,7 +32,7 @@ export function NewsletterForm({ className }: { className?: string }) {
       </div>
       <p role="status" className="text-small text-muted">
         {submitted &&
-          "Thank you. This is a concept site, so nothing was sent and your address was not stored."}
+          "Thank you. The newsletter is not running yet, so nothing was sent and your address was not stored."}
       </p>
     </form>
   );

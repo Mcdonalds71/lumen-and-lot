@@ -156,7 +156,7 @@ export function BriefDocument({ sheet, date, credit }: BriefDocumentProps) {
 
         <View style={styles.footer} fixed>
           <Text>
-            {`${credit.studio} is a concept studio, designed and built by ${credit.author}. ${credit.url}`}
+            {`${credit.studio} · Website by ${credit.author} · ${credit.url}`}
           </Text>
           <Text>Made in your browser. Nothing was sent.</Text>
         </View>

@@ -12,11 +12,11 @@ import { Label } from "@/components/ui/label";
 import { marketList } from "@/content/markets";
 import { residences } from "@/content/residences";
 import { statuses } from "@/content/schemas/residence";
+import { site } from "@/content/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Residences",
-  description:
-    "Homes for sale in Toronto, the Hudson Valley, Copenhagen and Lisbon.",
+  description: `Homes for sale in ${site.places}.`,
   path: "/residences",
 });
 
@@ -35,11 +35,11 @@ export default function ResidencesPage() {
       <Label as="p">Residences</Label>
       <Grid className="mt-6 gap-y-8">
         <h1 className="col-span-12 font-display text-display-xl lg:col-span-8">
-          Homes in four cities
+          Homes in five cities
         </h1>
         <p className="col-span-12 text-lead md:col-span-8 lg:col-span-4 lg:col-start-9 lg:self-end">
-          Small homes in Toronto, the Hudson Valley, Copenhagen and Lisbon, each
-          designed, built and furnished by the studio.
+          Small homes in {site.places}, each designed, built and furnished by
+          the studio.
         </p>
       </Grid>
       <div className="mt-16 md:mt-24">

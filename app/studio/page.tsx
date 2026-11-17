@@ -4,9 +4,9 @@ import { pageMetadata } from "@/app/_seo/page-metadata";
 import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
+import { site } from "@/content/site";
 import { studio } from "@/content/studio";
 
-import { AwardsSection } from "./_sections/awards-section";
 import { BriefInvitation } from "./_sections/brief-invitation";
 import { PhilosophySection } from "./_sections/philosophy-section";
 import { ProcessSection } from "./_sections/process-section";
@@ -25,11 +25,11 @@ export default function StudioPage() {
       <Label as="p">Studio</Label>
       <Grid className="mt-6 gap-y-8">
         <h1 className="col-span-12 font-display text-display-xl lg:col-span-8">
-          A small studio in four cities
+          A small studio in five cities
         </h1>
         <p className="col-span-12 text-lead md:col-span-8 lg:col-span-4 lg:col-start-9 lg:self-end">
           Lumen & Lot designs, builds and furnishes small residential buildings
-          in Toronto, the Hudson Valley, Copenhagen and Lisbon.
+          in {site.places}.
         </p>
       </Grid>
 
@@ -41,7 +41,6 @@ export default function StudioPage() {
         />
         <ProcessSection index={2} steps={studio.process} />
         <TeamSection index={3} team={studio.team} />
-        <AwardsSection index={4} awards={studio.awards} />
         <BriefInvitation />
       </div>
     </Container>

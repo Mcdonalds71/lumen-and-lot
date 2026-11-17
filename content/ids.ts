@@ -3,6 +3,7 @@ export const marketIds = [
   "hudson-valley",
   "copenhagen",
   "lisbon",
+  "london",
 ] as const;
 
 export type MarketId = (typeof marketIds)[number];

@@ -22,6 +22,6 @@ export default async function Image({
     title: residence?.name ?? "Residences",
     detail: residence
       ? `${residence.locality} · ${formatCount(residence.bedrooms, "bedroom")}`
-      : "Homes in four cities",
+      : "Homes in five cities",
   });
 }

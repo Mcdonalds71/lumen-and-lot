@@ -12,8 +12,8 @@ export function TeamSection({ index, team }: TeamSectionProps) {
     <Section index={index} label="Team">
       <h2 className="mt-10 font-display text-display-lg">The people</h2>
       <p className="mt-6 max-w-2xl text-lead">
-        The studio is a concept, and so are its people. Their initials stand in
-        for portraits.
+        Architects, builders and makers who stay with each home from the first
+        sketch to the last shelf.
       </p>
       <ul className="mt-12 grid grid-cols-2 gap-x-gutter gap-y-12 md:mt-16 md:grid-cols-3 xl:grid-cols-6">
         {team.map((person, position) => (

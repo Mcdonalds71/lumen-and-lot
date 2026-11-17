@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { courtyardBlock } from "./courtyard-block";
 import { lanewayHouse } from "./laneway-house";
+import { mewsHouse } from "./mews-house";
 import { millApartments } from "./mill-apartments";
 import { stairHouse } from "./stair-house";
 import { uniqueBy } from "../schemas/common";
@@ -10,7 +11,7 @@ import { type Project, projectSchema } from "../schemas/project";
 export const projects: readonly Project[] = z
   .array(projectSchema)
   .check(uniqueBy("project", (project) => project.slug))
-  .parse([lanewayHouse, millApartments, courtyardBlock, stairHouse]);
+  .parse([lanewayHouse, millApartments, courtyardBlock, stairHouse, mewsHouse]);
 
 export function findProject(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);

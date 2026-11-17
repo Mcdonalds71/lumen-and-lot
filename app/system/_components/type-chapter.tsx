@@ -1,4 +1,5 @@
 import { Label } from "@/components/ui/label";
+import { site } from "@/content/site";
 import { cx } from "@/lib/cx";
 import { typeScale } from "@/lib/design-tokens";
 
@@ -31,7 +32,7 @@ const specimens: Readonly<Record<string, Specimen>> = {
   },
   lead: {
     className: "text-lead",
-    text: "Small residential developments in Toronto, the Hudson Valley, Copenhagen and Lisbon.",
+    text: `Small residential developments in ${site.places}.`,
   },
   body: {
     className: "max-w-prose text-body",

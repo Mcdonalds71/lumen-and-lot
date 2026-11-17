@@ -1,10 +1,11 @@
 # Lumen & Lot: project rules
 
 ## What this is
-The website for Lumen & Lot, a fictional design-build studio that designs, builds and
-furnishes small residential developments in Toronto, the Hudson Valley (NY), Copenhagen
-and Lisbon. Editorial, calm, architectural: a printed monograph, not a store.
-It is a portfolio concept by Emmanuel Onugwu (emmanuelonugwu.com).
+The website for Lumen & Lot, a design-build studio that designs, builds and furnishes small
+residential developments in Toronto, the Hudson Valley (NY), Copenhagen, Lisbon and London.
+Editorial, calm, architectural: a printed monograph, not a store. Designed and built by
+Emmanuel Onugwu (emmanuelonugwu.com) to show and sell, so it reads as a real studio site; the
+homes, prices and people are sample content.
 
 The full build plan is in docs/BUILD_PROMPTS.md, one phase at a time.
 
@@ -16,9 +17,10 @@ Signature features:
 4. Compare (up to 3 homes, shareable URL) and Brief builder (6 steps, PDF download).
 
 ## Honesty rules (never break)
-- Every page footer says: "Lumen & Lot is a concept studio, designed and built by
-  Emmanuel Onugwu." with a link to emmanuelonugwu.com.
-- No testimonials or reviews from invented people presented as real.
+- Every page footer says: "Website by Emmanuel Onugwu. Homes, prices and people shown are
+  sample content. Want a site like this?" with both links to emmanuelonugwu.com. That line is the
+  one disclosure; no other page calls the studio a concept.
+- No testimonials, reviews or awards from invented people or bodies presented as real.
 - Prices are labelled "Indicative". Forms never claim to reach a sales team.
 - The brief downloads as a PDF in the browser. Nothing is sent to a server.
 
@@ -117,7 +119,9 @@ Platform
 - [slug] pages await params at the top and export `instant = false` and
   `ensureStatic = "navigation"`. Every slug is in generateStaticParams, so each page prerenders
   whole and inline. ensureStatic makes the first request for an unknown slug wait for the real 404
-  instead of getting the app shell with a 200. A Suspense boundary around params made React stream
+  instead of getting the app shell with a 200. Under ensureStatic, Next sends that 404 as an empty
+  error document and the browser draws the designed 404, so unknown slugs stay out of the shared
+  page suites (axe and console checks would race the render); seo.spec covers them. A Suspense boundary around params made React stream
   the content after the footer, which shifted the layout and delayed LCP.
 - An e2e suite fails any page that logs a console error, which includes hydration mismatches.
 
@@ -224,7 +228,8 @@ Interiors
   the markers (and the card from md) are positioned in, with explicit end lines; on phones the card
   sits in the row below the photo. From md the card opens beside its marker, on the side with more
   room. Escape, a click outside or focus leaving close it, and Escape returns focus to the marker.
-- Every piece is also listed below its photo. The page says the makers and prices are invented.
+- Every piece is also listed below its photo. The makers and prices are sample content, which the
+  footer line covers.
 - The m²/ft² preference also switches furniture sizes between centimeters and inches.
 
 Projects
@@ -258,8 +263,8 @@ Journal
 - docs/journal-fact-check.md lists the claims to verify before launch.
 
 Studio, colophon and 404
-- The studio's team and awards are invented, and the page says so beside each. People get their
-  initials on a color tile (aria-hidden), never photos. Awards link to the project they name.
+- The team are sample people, shown as initials on a color tile (aria-hidden), never photos or
+  generated faces. There is no awards section, because invented awards would read as real.
 - The colophon schema reads each tool's version from package.json, so removing a package fails the
   build. Versions show the release line: 16, or 0.35 before 1.0.
 - The colophon says the site sets no cookies and runs no analytics. Adding either means updating it.
@@ -276,7 +281,7 @@ Launch
   Instrument Serif and Geist Mono are kept as TTF in assets/fonts with their OFL texts. Each detail
   route's card prerenders through generateStaticParams.
 - Structured data: WebSite on home, Article on journal posts, BreadcrumbList on detail pages. The
-  homes are never described as listings for sale, because they are invented.
+  homes are never described as listings for sale, because they are sample content.
 - sitemap.ts lists every page except /compare, whose content depends on the visitor.
 - Lighthouse runs against `next start` with the installed Chrome. Playwright's Chromium cannot be
   launched by Lighthouse on Windows. Scores swing several points with load on the machine, so
@@ -309,7 +314,9 @@ Content and data
 - Markets (content/markets.ts) carry the city name, country, IANA time zone, currency and energy
   label system. Residences and projects store a market id, and the schema resolves it to the
   market. Prices must be in the market's currency, labels in its system.
-- Copenhagen prices are stored in DKK. Currency toggle: Local (default), USD, CAD, EUR, GBP.
+- Copenhagen prices are stored in DKK and London prices in GBP. Currency toggle: Local (default),
+  USD, CAD, EUR, GBP.
+- City prose ("Toronto, the Hudson Valley, ... and London") lives once, in site.places.
 - Rates are the ECB euro reference rates for 2026-11-10, stored as published. Conversions go
   through the euro, and converted prices round to three significant figures.
 - The three studio palettes (Limewash, Umber, Slate) are shared. Each residence supplies a photo of
@@ -319,9 +326,10 @@ Content and data
   level per plan, exactly one living room, and windows sit on their room's outside walls.
   Bedroom and bathroom counts must match the rooms on the plan.
 - Energy labels stay in each country's own system (EnerGuide, HERS Index, Energimærke,
-  Certificado Energético). Compare never ranks across systems.
+  Certificado Energético, EPC). The UK's EPC stores its band (A to G) and score. Compare never
+  ranks across systems.
 - Neighborhood-level locations only, no street addresses. Shop the Room makers and prices are
-  invented. Project credits name only the studio and say the photos are placeholders.
+  sample content. Project credits name only the studio.
 - Images use four formats from content/media.ts: portrait 1600×2000, landscape 2400×1600,
   square 1800×1800, wide 2400×1350. `npm run images` (tsx, sharp) draws a flat-tone placeholder for
   every image the content references and never overwrites an existing file. To use a real photo,

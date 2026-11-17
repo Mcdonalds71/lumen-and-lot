@@ -5,11 +5,14 @@ test.describe("colophon", () => {
     await page.goto("/colophon");
   });
 
-  test("states the concept and links to the portfolio", async ({ page }) => {
-    const concept = page.getByRole("region", { name: "01 — Concept" });
-    await expect(concept).toContainText("concept studio");
+  test("credits the website and links to its maker", async ({ page }) => {
+    const website = page.getByRole("region", { name: "01 — Website" });
+    await expect(website).toContainText(
+      "Designed and built by Emmanuel Onugwu",
+    );
+    await expect(website).toContainText("sample content");
     await expect(
-      concept.getByRole("link", { name: "emmanuelonugwu.com" }),
+      website.getByRole("link", { name: "emmanuelonugwu.com" }),
     ).toHaveAttribute("href", "https://emmanuelonugwu.com");
   });
 

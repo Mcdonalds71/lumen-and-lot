@@ -47,35 +47,9 @@ export const studio: Studio = studioSchema.parse({
   team: [
     { name: "Ingrid Holm", role: "Architect", market: "copenhagen" },
     { name: "Tomás Rocha", role: "Architect", market: "lisbon" },
-    { name: "Amara Okafor", role: "Interiors", market: "toronto" },
+    { name: "Amara Okafor", role: "Interiors", market: "london" },
     { name: "Daniel Reyes", role: "Construction", market: "hudson-valley" },
     { name: "Sofie Brandt", role: "Joinery", market: "copenhagen" },
     { name: "Leo Marchetti", role: "Site lead", market: "toronto" },
-  ],
-  awards: [
-    {
-      year: 2025,
-      name: "Small Housing Prize",
-      result: "Winner",
-      project: "stair-house",
-    },
-    {
-      year: 2024,
-      name: "Good Light Award",
-      result: "Shortlist",
-      project: "courtyard-block",
-    },
-    {
-      year: 2023,
-      name: "Infill Housing Medal",
-      result: "Commended",
-      project: "mill-apartments",
-    },
-    {
-      year: 2022,
-      name: "Quiet Rooms Prize",
-      result: "Finalist",
-      project: "laneway-house",
-    },
   ],
 });

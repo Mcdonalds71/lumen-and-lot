@@ -14,20 +14,12 @@ test.describe("studio", () => {
     await expect(steps.last()).toContainText("Furnish and hand over");
   });
 
-  test("says the team is part of the concept", async ({ page }) => {
-    const team = page.getByRole("region", { name: "03 — Team" });
-    await expect(team).toContainText("The studio is a concept");
-    await expect(team.getByRole("heading", { level: 3 })).toHaveCount(6);
-    await expect(team.locator("img")).toHaveCount(0);
-  });
-
-  test("says the awards are invented and links them to projects", async ({
+  test("shows the team as initials across the five cities", async ({
     page,
   }) => {
-    const awards = page.getByRole("region", { name: "04 — Recognition" });
-    await expect(awards).toContainText("invented for this concept");
-    await expect(
-      awards.getByRole("link", { name: "Stair House" }),
-    ).toHaveAttribute("href", "/projects/stair-house");
+    const team = page.getByRole("region", { name: "03 — Team" });
+    await expect(team.getByRole("heading", { level: 3 })).toHaveCount(6);
+    await expect(team.locator("img")).toHaveCount(0);
+    await expect(team).toContainText("Interiors, London");
   });
 });

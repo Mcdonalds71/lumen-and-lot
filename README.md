@@ -1,21 +1,21 @@
 # Lumen & Lot
 
-The website for Lumen & Lot, a fictional design-build studio that designs, builds and furnishes
-small residential developments in Toronto, the Hudson Valley, Copenhagen and Lisbon. It is meant
-to read like a printed monograph, not a store.
+The website for Lumen & Lot, a design-build studio that designs, builds and furnishes small homes
+in Toronto, the Hudson Valley, Copenhagen, Lisbon and London. It reads like a printed monograph,
+not a store.
 
-Lumen & Lot is a concept studio, designed and built by [Emmanuel Onugwu](https://emmanuelonugwu.com).
-The homes, projects, people, prices, makers and awards are invented. The sun positions, the
-exchange rates and the energy label systems are real.
+Designed and built by [Emmanuel Onugwu](https://emmanuelonugwu.com). The homes, prices and people
+are sample content; the sun positions, exchange rates and energy label systems are real. Want a
+website like this one? [Get in touch](https://emmanuelonugwu.com).
 
 ![The home page: a full-bleed dusk scene under the line "Homes built for the light we have"](docs/screenshots/home.webp)
 
 ## What is in it
 
-- **Residences.** Six homes across four cities, in a grid or a list, with filters. Each home has
+- **Residences.** Seven homes across five cities, in a grid or a list, with filters. Each home has
   a gallery, a floor plan, finishes, specifications and an energy label on its own country's
   scale.
-- **Projects.** Four case studies with an editorial index, alternating story chapters, drawings
+- **Projects.** Five case studies with an editorial index, alternating story chapters, drawings
   and a before and after slider.
 - **Interiors.** One lookbook per studio palette, with the pieces in each room.
 - **Journal.** Three MDX articles with a drop cap, pull quotes, wide figures and a reading time
@@ -69,7 +69,8 @@ validates each step and downloads as a PDF made in the browser. Nothing is sent 
   head script before first paint. The server renders every variant and CSS shows the chosen one.
 - **Light, modeled honestly.** A window lets sun in only when the sun is up, faces it and is not
   fully shaded by its reveal. The page says it shows direct sun on an open site.
-- **Honest by design.** Every footer credits the concept. Prices are labelled indicative and
+- **Honest by design.** Every footer credits the website and says the homes, prices and people
+  are sample content. Prices are labelled indicative and
   converted at stated ECB rates. Energy labels stay in their own systems and are never ranked
   against each other. Forms say that nothing was sent.
 - **Accessible first.** WCAG 2.2 AA: semantic landmarks, a skip link, native form controls,

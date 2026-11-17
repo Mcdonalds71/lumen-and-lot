@@ -9,7 +9,7 @@ test.describe("projects index", () => {
     page,
   }) => {
     const rows = page.getByRole("main").getByRole("listitem");
-    await expect(rows).toHaveCount(4);
+    await expect(rows).toHaveCount(5);
     await expect(rows.first()).toContainText("01");
     await expect(rows.first()).toContainText("Laneway House");
     await expect(rows.first()).toContainText("2021");
@@ -42,13 +42,13 @@ test.describe("projects index", () => {
       .getByRole("radiogroup", { name: "View" })
       .locator("label", { hasText: "Lookbook" })
       .click();
-    await expect(page.getByRole("article")).toHaveCount(4);
+    await expect(page.getByRole("article")).toHaveCount(5);
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute(
       "data-project-view",
       "grid",
     );
-    await expect(page.getByRole("article")).toHaveCount(4);
+    await expect(page.getByRole("article")).toHaveCount(5);
   });
 });
 
@@ -102,8 +102,8 @@ test.describe("case study", () => {
   test("leads on to the next project", async ({ page }) => {
     await page
       .getByRole("navigation", { name: "Next project" })
-      .getByRole("link", { name: "Laneway House" })
+      .getByRole("link", { name: "Mews House" })
       .click();
-    await expect(page).toHaveURL(/\/projects\/laneway-house$/);
+    await expect(page).toHaveURL(/\/projects\/mews-house$/);
   });
 });

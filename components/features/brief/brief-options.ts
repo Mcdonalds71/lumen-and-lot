@@ -19,7 +19,7 @@ export const questions: Record<
   city: {
     heading: "Where would you like to live?",
     intro:
-      "The studio builds in four cities. If you are still deciding, say so.",
+      "The studio builds in five cities. If you are still deciding, say so.",
   },
   size: {
     heading: "How much room do you need?",

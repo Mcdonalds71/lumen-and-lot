@@ -80,9 +80,7 @@ function OgCard({ kicker, title, detail }: OgCardProps) {
           alignItems: "center",
         }}
       >
-        <span style={{ ...label, fontSize: 18 }}>
-          A concept studio by {site.author.name}
-        </span>
+        <span style={{ ...label, fontSize: 18 }}>Design · Build · Furnish</span>
         <div
           style={{
             width: 36,

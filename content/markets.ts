@@ -31,6 +31,13 @@ export const markets = marketsSchema.parse({
     currency: "EUR",
     energySystem: "Certificado Energético",
   },
+  london: {
+    name: "London",
+    country: "United Kingdom",
+    timeZone: "Europe/London",
+    currency: "GBP",
+    energySystem: "EPC",
+  },
 });
 
 export const marketList: readonly Market[] = marketIds.map((id) => ({

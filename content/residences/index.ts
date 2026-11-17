@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { type RoomSunlight, roomSunlight, solarDay } from "@/lib/sun";
 
+import { canalHouse } from "./canal-house";
 import { courtyardRooms } from "./courtyard-rooms";
 import { gardenFloor } from "./garden-floor";
 import { harborRoom } from "./harbor-room";
@@ -22,6 +23,7 @@ export const residences: readonly Residence[] = z
     harborRoom,
     courtyardRooms,
     highTerrace,
+    canalHouse,
   ]);
 
 export function findResidence(slug: string): Residence | undefined {

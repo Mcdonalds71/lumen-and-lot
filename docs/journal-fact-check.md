@@ -22,6 +22,9 @@ before launch. Each line names the article, the claim and what to confirm.
       B to G. The label comes with a report of suggested improvements.
 - [ ] Certificado Energético (Portugal): managed by ADENE, required for a sale or rental, classes
       A+, A, B, B-, C to F, and new homes must reach at least B-.
+- [ ] Energy Performance Certificate (UK): required in England and Wales to sell or rent a home,
+      bands A to G with a score beside the band where higher is better, and a potential rating
+      after the suggested improvements.
 - [ ] Certificates are valid for a fixed number of years in each system (stated only in general).
 
 ## Buying a new home from abroad
@@ -33,6 +36,8 @@ before launch. Each line names the article, the claim and what to confirm.
       exceptions, including for many EU citizens.
 - [ ] The United States and Portugal place fewer limits on who can buy a home. Some US states
       have passed restrictions on buyers from certain countries.
+- [ ] United Kingdom: few limits on who can buy, but buyers who live abroad pay extra stamp duty
+      (a 2% surcharge in England and Northern Ireland since April 2021).
 - [ ] Portugal: a tax number (NIF) is needed before signing.
 - [ ] New-build deposits are often held in a protected account or covered by a guarantee
       (stated as "in many places").

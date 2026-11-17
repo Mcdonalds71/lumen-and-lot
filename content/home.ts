@@ -41,5 +41,5 @@ export const home = homeSchema.parse({
   featuredResidence: "harbor-room",
   lookbook: "limewash-living-room",
   statement:
-    "We design, build and furnish small homes in four cities. Each one starts with the same question: where does the light fall, and when?",
+    "We design, build and furnish small homes in five cities. Each one starts with the same question: where does the light fall, and when?",
 });

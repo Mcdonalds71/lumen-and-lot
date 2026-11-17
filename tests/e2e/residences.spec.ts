@@ -12,12 +12,12 @@ test.describe("residences index", () => {
   });
 
   test("filters by city, bedrooms and status", async ({ page }) => {
-    await expect(results(page)).toHaveText("Showing all 6 homes.");
+    await expect(results(page)).toHaveText("Showing all 7 homes.");
 
     await page
       .getByRole("combobox", { name: "City" })
       .selectOption("copenhagen");
-    await expect(results(page)).toHaveText("Showing 2 of 6 homes.");
+    await expect(results(page)).toHaveText("Showing 2 of 7 homes.");
     await expect(page.getByRole("article")).toHaveCount(2);
 
     await page.getByRole("combobox", { name: "Bedrooms" }).selectOption("3");
@@ -30,7 +30,7 @@ test.describe("residences index", () => {
     await expect(page.getByText("No homes match these filters.")).toBeVisible();
 
     await page.getByRole("button", { name: "Clear filters" }).click();
-    await expect(page.getByRole("article")).toHaveCount(6);
+    await expect(page.getByRole("article")).toHaveCount(7);
   });
 
   test("remembers the list view", async ({ page }) => {
@@ -47,7 +47,7 @@ test.describe("residences index", () => {
       "data-residence-view",
       "list",
     );
-    await expect(table.getByRole("row")).toHaveCount(7);
+    await expect(table.getByRole("row")).toHaveCount(8);
   });
 
   test("shows prices in the chosen currency", async ({ page }) => {

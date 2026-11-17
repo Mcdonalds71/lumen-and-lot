@@ -28,6 +28,7 @@ const cityCenters: Record<MarketId, readonly [lat: number, lng: number]> = {
   "hudson-valley": [42.2529, -73.791],
   copenhagen: [55.6761, 12.5683],
   lisbon: [38.7223, -9.1393],
+  london: [51.5072, -0.1276],
 };
 
 function kilometersBetween(
@@ -48,7 +49,7 @@ const byName = residences.map(
 );
 
 describe("residences", () => {
-  it("are two in Toronto, one in the Hudson Valley, two in Copenhagen and one in Lisbon", () => {
+  it("are two in Toronto, one in the Hudson Valley, two in Copenhagen, one in Lisbon and one in London", () => {
     const perMarket = Object.fromEntries(
       marketList.map((market) => [
         market.name,
@@ -61,6 +62,7 @@ describe("residences", () => {
       "Hudson Valley": 1,
       Copenhagen: 2,
       Lisbon: 1,
+      London: 1,
     });
   });
 
@@ -97,7 +99,7 @@ describe("residences", () => {
   });
 
   it("knows the newest listing", () => {
-    expect(newestResidence().slug).toBe("high-terrace");
+    expect(newestResidence().slug).toBe("canal-house");
   });
 
   it("groups each room's photo in every palette", () => {
@@ -129,19 +131,22 @@ describe("residences", () => {
 
   it("wraps from the last residence back to the first", () => {
     expect(nextResidence("harbor-room")?.slug).toBe("courtyard-rooms");
-    expect(nextResidence("high-terrace")?.slug).toBe("garden-floor");
+    expect(nextResidence("high-terrace")?.slug).toBe("canal-house");
+    expect(nextResidence("canal-house")?.slug).toBe("garden-floor");
     expect(nextResidence("missing")).toBeUndefined();
   });
 });
 
 describe("projects", () => {
-  it("seeds four case studies", () => {
-    expect(projects).toHaveLength(4);
+  it("seeds five case studies", () => {
+    expect(projects).toHaveLength(5);
     expect(findProject("stair-house")?.market.name).toBe("Lisbon");
+    expect(findProject("mews-house")?.market.name).toBe("London");
   });
 
   it("wraps from the last project back to the first", () => {
-    expect(nextProject("stair-house")?.slug).toBe("laneway-house");
+    expect(nextProject("stair-house")?.slug).toBe("mews-house");
+    expect(nextProject("mews-house")?.slug).toBe("laneway-house");
     expect(nextProject("missing")).toBeUndefined();
   });
 });
@@ -169,12 +174,7 @@ describe("rates", () => {
 describe("studio", () => {
   it("names each team member's city", () => {
     expect(studio.team.map((person) => person.city)).toContain("Hudson Valley");
-  });
-
-  it("links every award to a real project", () => {
-    for (const { project } of studio.awards) {
-      expect(findProject(project.slug)?.name).toBe(project.name);
-    }
+    expect(studio.team.map((person) => person.city)).toContain("London");
   });
 });
 

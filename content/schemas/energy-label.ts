@@ -5,6 +5,7 @@ export const energySystems = [
   "HERS Index",
   "Energimærke",
   "Certificado Energético",
+  "EPC",
 ] as const;
 
 export const energimaerkeRatings = [
@@ -30,6 +31,8 @@ export const certificadoRatings = [
   "F",
 ] as const;
 
+export const epcRatings = ["A", "B", "C", "D", "E", "F", "G"] as const;
+
 export const energyLabelSchema = z.discriminatedUnion("system", [
   z.object({
     system: z.literal("EnerGuide"),
@@ -46,6 +49,11 @@ export const energyLabelSchema = z.discriminatedUnion("system", [
   z.object({
     system: z.literal("Certificado Energético"),
     rating: z.enum(certificadoRatings),
+  }),
+  z.object({
+    system: z.literal("EPC"),
+    rating: z.enum(epcRatings),
+    score: z.number().int().positive(),
   }),
 ]);
 

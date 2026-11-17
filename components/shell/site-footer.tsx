@@ -47,12 +47,15 @@ export function SiteFooter() {
         </p>
       </Container>
       <Container className="mt-10 flex flex-col gap-4 border-t border-rule py-8 md:flex-row md:items-baseline md:justify-between">
-        <p className="text-small text-muted">
-          {site.name} is a concept studio, designed and built by{" "}
+        <p className="max-w-2xl text-small text-muted">
+          Website by{" "}
           <a href={site.author.url} className="link-underline text-ink">
             {site.author.name}
           </a>
-          .
+          . Homes, prices and people shown are sample content.{" "}
+          <a href={site.author.url} className="link-underline text-ink">
+            Want a site like this?
+          </a>
         </p>
         <CityList />
       </Container>

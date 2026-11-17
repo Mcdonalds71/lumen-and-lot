@@ -30,9 +30,6 @@ export default function InteriorsPage() {
             or read the list below it, for the maker, the material and an
             indicative price.
           </p>
-          <p className="mt-4 text-small text-muted">
-            This is a concept studio, so the makers and prices are invented.
-          </p>
         </div>
       </Grid>
       <div className="mt-24 flex flex-col gap-32 md:mt-32 md:gap-48">

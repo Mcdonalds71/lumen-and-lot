@@ -39,7 +39,7 @@ describe("structured data", () => {
     expect(
       websiteData({
         name: "Lumen & Lot",
-        description: "A concept studio.",
+        description: "A design-build studio.",
         url: "https://example.com/",
         author,
       }),

@@ -3,6 +3,7 @@ import {
   certificadoRatings,
   type EnergyLabel,
   energimaerkeRatings,
+  epcRatings,
 } from "@/content/schemas/energy-label";
 import { cx } from "@/lib/cx";
 
@@ -39,6 +40,13 @@ export function describeEnergyLabel(label: EnergyLabel): EnergyReading {
         scale: { ratings: certificadoRatings, current: label.rating },
         explanation:
           "Portugal's energy certificate rates a home from A+, the most efficient, down to F.",
+      };
+    case "EPC":
+      return {
+        value: `${label.rating} (${label.score})`,
+        scale: { ratings: epcRatings, current: label.rating },
+        explanation:
+          "The UK's Energy Performance Certificate rates a home from A, the most efficient, down to G, with a score beside the band where higher is better.",
       };
   }
 }
