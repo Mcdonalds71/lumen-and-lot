@@ -14,8 +14,6 @@ export type Scene = (size: Size, tones: Tones) => string;
 const daylight = "#f5f1e8";
 const opening = "#2d2a26";
 const sky = "#e8e4dc";
-const paper = "#f4f1ea";
-const ink = "#161513";
 const lamplight = "#e8cb9c";
 const duskSky = "#2b2724";
 const duskWall = "#3b3631";
@@ -45,10 +43,6 @@ function rect(
 
 function polygon(points: string, fill: string, opacity = 1): string {
   return `<polygon points="${points}" fill="${fill}" fill-opacity="${opacity}"/>`;
-}
-
-function line(path: string): string {
-  return `<path d="${path}" fill="none" stroke="${ink}" stroke-width="6" vector-effect="non-scaling-stroke"/>`;
 }
 
 export function room(
@@ -87,16 +81,6 @@ export function detail(size: Size, tones: Tones): string {
     polygon("0,62 100,38 100,100 0,100", tones.floor),
     polygon("0,84 100,60 100,72 0,96", tones.stone),
     rect(70, 0, 2, 100, tones.metal),
-  ]);
-}
-
-export function drawing(size: Size): string {
-  return canvas(size, [
-    rect(0, 0, 100, 100, paper),
-    line("M12 14 H88 V86 H12 Z"),
-    line("M12 50 H44 M52 14 V40 M52 48 V86 M52 62 H88"),
-    line("M60 22 H82 M60 28 H82 M60 34 H82 M60 40 H82"),
-    line("M24 14 V10 M36 14 V10 M88 70 H92 M88 78 H92"),
   ]);
 }
 

@@ -9,6 +9,10 @@ const homeSchema = z.object({
   hero: z.object({
     lines: z.array(z.string().min(1)).min(2),
     image: imageSchema,
+    focus: z
+      .string()
+      .regex(/^\d{1,3}% \d{1,3}%$/, "Give the focus as x% y%.")
+      .default("50% 50%"),
   }),
   featuredResidence: slugSchema.transform((slug, ctx) => {
     const residence = findResidence(slug);
@@ -34,9 +38,10 @@ export const home = homeSchema.parse({
     lines: ["Homes built", "for the light", "we have"],
     image: image(
       "/images/home/hero.webp",
-      "A small apartment building at dusk, its windows lit",
+      "An apartment building at dusk, its windows lit against a deep blue sky",
       "wide",
     ),
+    focus: "75% 50%",
   },
   featuredResidence: "harbor-room",
   lookbook: "limewash-living-room",

@@ -19,9 +19,10 @@ export const canalHouse = {
   story:
     "A two-bedroom apartment above the Regent's Canal in De Beauvoir. The living room runs the full depth of the plan and opens south to the water, so the winter sun reaches the kitchen at the back.",
   gallery: residenceGallery(slug, {
-    exterior: "The brick front of the building above the canal towpath",
-    interior: "The living room, open to the canal on its south side",
-    detail: "Morning sun on a brick reveal and an oak sill",
+    exterior: "A brick apartment building with a roof garden, in late sun",
+    interior:
+      "Sun on a white wall above a wooden sideboard and an armchair, on a herringbone floor",
+    detail: "Morning sun falling across pale wooden floorboards",
   }),
   palettes: residencePalettes(slug, [
     { room: "living", label: "The living room and kitchen" },

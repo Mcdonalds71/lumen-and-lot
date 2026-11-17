@@ -19,9 +19,10 @@ export const harborRoom = {
   story:
     "An apartment on the water in Nordhavn. The kitchen and living room look west over the harbor toward the evening sun, and both bedrooms take the morning light from the east.",
   gallery: residenceGallery(slug, {
-    exterior: "The building on the harbor edge in Nordhavn",
-    interior: "The living room facing west over the water",
-    detail: "A floor-to-ceiling window frame",
+    exterior: "Brick apartment buildings on the harbor edge",
+    interior:
+      "A window over the water, with a moored boat and a plant on the sill",
+    detail: "The harbor and its cranes through a glass wall",
   }),
   palettes: residencePalettes(slug, [
     { room: "living", label: "The living room and kitchen" },

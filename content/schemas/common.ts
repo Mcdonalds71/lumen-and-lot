@@ -24,9 +24,6 @@ export const imageSchema = z.object({
   width: z.number().int().positive(),
   height: z.number().int().positive(),
   alt: z.string().min(1),
-  credit: z
-    .object({ name: z.string().min(1), url: z.url().optional() })
-    .optional(),
 });
 
 export type ImageAsset = z.infer<typeof imageSchema>;

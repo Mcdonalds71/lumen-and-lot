@@ -17,7 +17,7 @@ export const lanewayHouse = {
   cover: projectImage(
     slug,
     "cover",
-    "The laneway house at dusk, its windows lit",
+    "A small house at dusk, its doorway and windows lit",
     "wide",
   ),
   sections: [
@@ -29,7 +29,7 @@ export const lanewayHouse = {
       image: projectImage(
         slug,
         "section-1",
-        "The narrow lot between two garden walls",
+        "A narrow path between a brick wall and an ivy-covered wall",
         "landscape",
       ),
     },
@@ -41,19 +41,19 @@ export const lanewayHouse = {
       image: projectImage(
         slug,
         "section-2",
-        "Daylight falling down the stair from the skylight",
+        "A concrete stair rising to a long skylight",
         "portrait",
       ),
     },
     {
       title: "Small rooms, tall ceilings",
       body: [
-        "The rooms are small, so we made them tall. Ceilings rise to three meters on the ground floor, and built-in oak storage keeps the floors clear.",
+        "The rooms are small, so we made them tall. Ceilings rise to three meters on the ground floor, and built-in shelves keep the floors clear.",
       ],
       image: projectImage(
         slug,
         "section-3",
-        "Built-in oak shelving below a tall window",
+        "White built-in shelves below a row of windows",
         "square",
       ),
     },
@@ -79,11 +79,16 @@ export const lanewayHouse = {
     },
   ],
   beforeAfter: {
-    before: projectImage(slug, "before", "The garage lot in 2019", "landscape"),
+    before: projectImage(
+      slug,
+      "before",
+      "The lot in 2019: an old garage between two fences",
+      "landscape",
+    ),
     after: projectImage(
       slug,
       "after",
-      "The finished house in 2021",
+      "The finished house in 2021, between the same fences",
       "landscape",
     ),
     caption: "The garage lot in 2019, and the finished house in 2021.",

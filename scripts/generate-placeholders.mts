@@ -15,11 +15,12 @@ import {
   paletteIds,
   type SwatchRole,
 } from "@/content/schemas/palette";
+import { systemImages } from "@/content/system";
 
+import { plates } from "./drawings/plates";
 import {
   before,
   detail,
-  drawing,
   dusk,
   exterior,
   room,
@@ -53,19 +54,11 @@ function tonesOf(id: PaletteId): Tones {
 
 const systemJobs: Job[] = [
   {
-    target: {
-      src: "/images/placeholders/north-light.webp",
-      width: 1600,
-      height: 2000,
-    },
+    target: systemImages.window,
     render: (size) => room(size, tonesOf("limewash")),
   },
   {
-    target: {
-      src: "/images/placeholders/courtyard.webp",
-      width: 2400,
-      height: 1600,
-    },
+    target: systemImages.doorway,
     render: (size) => exterior(size, tonesOf("umber")),
   },
 ];
@@ -94,10 +87,6 @@ const projectJobs = projects.flatMap((project, index): Job[] => {
       target,
       render: (size: Size) => cyclic(sequence, position)(size, tones),
     })),
-    ...project.drawings.map(({ image: target }) => ({
-      target,
-      render: drawing,
-    })),
     { target: project.beforeAfter.before, render: before },
     { target: project.beforeAfter.after, render: (size) => room(size, tones) },
   ];
@@ -112,7 +101,6 @@ const homeJobs: Job[] = [{ target: home.hero.image, render: dusk }];
 
 const journalScenes: Readonly<Record<string, Scene>> = {
   northRoom: room,
-  section: drawing,
   wall: detail,
   visit: room,
 };
@@ -132,7 +120,7 @@ const jobs = [
   ...projectJobs,
   ...lookbookJobs,
   ...journalJobs,
-];
+].filter(({ target }) => !(target.src in plates));
 const publicDirectory = join(import.meta.dirname, "..", "public");
 let created = 0;
 

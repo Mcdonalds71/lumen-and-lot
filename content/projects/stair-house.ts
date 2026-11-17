@@ -17,7 +17,7 @@ export const stairHouse = {
   cover: projectImage(
     slug,
     "cover",
-    "The tiled front of the house on its steep street",
+    "A tiled front with two doors on a sloping cobbled street",
     "wide",
   ),
   sections: [
@@ -29,7 +29,7 @@ export const stairHouse = {
       image: projectImage(
         slug,
         "section-1",
-        "The narrow house between its neighbors",
+        "A tall, narrow yellow house between its tiled neighbors",
         "landscape",
       ),
     },
@@ -41,7 +41,7 @@ export const stairHouse = {
       image: projectImage(
         slug,
         "section-2",
-        "The stair under the roof lantern",
+        "A wooden stair winding up under the roof lantern",
         "portrait",
       ),
     },
@@ -53,7 +53,7 @@ export const stairHouse = {
       image: projectImage(
         slug,
         "section-3",
-        "Lime plaster meeting a pine floor",
+        "Wooden shutters on an old plastered wall, with palm shadows",
         "square",
       ),
     },
@@ -82,11 +82,16 @@ export const stairHouse = {
     before: projectImage(
       slug,
       "before",
-      "The house as we found it",
+      "The stair as we found it, its plaster cracked and peeling",
       "landscape",
     ),
-    after: projectImage(slug, "after", "The finished stair", "landscape"),
-    caption: "The house as we found it, and the finished stair.",
+    after: projectImage(
+      slug,
+      "after",
+      "The finished stair under the new roof lantern",
+      "landscape",
+    ),
+    caption: "The stair as we found it, and the finished stair.",
   },
   credits: studioCredits,
 } satisfies ProjectInput;

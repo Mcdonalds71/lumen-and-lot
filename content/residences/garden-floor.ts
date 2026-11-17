@@ -19,9 +19,9 @@ export const gardenFloor = {
   story:
     "A ground-floor home that opens onto a shared garden. The living room and the main bedroom both face south, so low winter sun reaches deep into the kitchen. The second bedroom sits on the quiet north side.",
   gallery: residenceGallery(slug, {
-    exterior: "The garden side of the building in Leslieville",
-    interior: "The living room, open to the garden",
-    detail: "Oak floor meeting a plaster wall",
+    exterior: "Gabled brick townhouses above a planted garden path",
+    interior: "The living room, open to a small patio through glazed doors",
+    detail: "Low sun across a plain wall and an oak floor",
   }),
   palettes: residencePalettes(slug, [
     { room: "living", label: "The living room and kitchen" },

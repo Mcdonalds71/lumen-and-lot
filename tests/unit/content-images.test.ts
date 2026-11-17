@@ -3,33 +3,9 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 
-import { home } from "@/content/home";
-import { journalMedia } from "@/content/journal/media";
-import { lookbooks } from "@/content/lookbooks";
-import { projects } from "@/content/projects";
-import { residences } from "@/content/residences";
-
-type ImageReference = { src: string; width: number; height: number };
+import { contentImages as images } from "@/content/images";
 
 const publicDirectory = new URL("../../public/", import.meta.url);
-
-function isImageReference(value: object): value is ImageReference {
-  return "src" in value && "width" in value && "height" in value;
-}
-
-function collectImages(value: unknown): ImageReference[] {
-  if (typeof value !== "object" || value === null) return [];
-  if (isImageReference(value)) return [value];
-  return Object.values(value).flatMap(collectImages);
-}
-
-const images = collectImages([
-  home.hero,
-  residences,
-  projects,
-  lookbooks,
-  journalMedia,
-]);
 
 describe("content images", () => {
   it("gives every image slot its own file", () => {

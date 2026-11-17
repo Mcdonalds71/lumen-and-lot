@@ -12,5 +12,4 @@ export function projectImage(
 export const studioCredits = [
   { role: "Architecture and interiors", name: "Lumen & Lot" },
   { role: "Construction", name: "Lumen & Lot" },
-  { role: "Photography", name: "Placeholder images" },
 ];

@@ -19,9 +19,9 @@ export const highTerrace = {
   story:
     "A top-floor apartment in Príncipe Real with a long terrace to the south. The living room and the main bedroom open onto it through tall glass doors, and the city falls away toward the river.",
   gallery: residenceGallery(slug, {
-    exterior: "The terrace on the top floor in Príncipe Real",
-    interior: "The living room opening onto the terrace",
-    detail: "Glazed tiles beside a tall glass door",
+    exterior: "Old Lisbon buildings, one with terraces on its roof",
+    interior: "An open glass door onto a balcony above red-tiled rooftops",
+    detail: "A blue door set in a wall of blue and white tiles",
   }),
   palettes: residencePalettes(slug, [
     { room: "living", label: "The living room and kitchen" },

@@ -24,4 +24,13 @@ test.describe("colophon", () => {
       page.getByRole("region", { name: "03 — Stack" }).getByRole("term"),
     ).toContainText(["Next.js", "React"]);
   });
+
+  test("credits the photographers and links to their work", async ({
+    page,
+  }) => {
+    const photographs = page.getByRole("region", { name: "04 — Photographs" });
+    await expect(
+      photographs.getByRole("link", { name: "Annie Spratt" }),
+    ).toHaveAttribute("href", "https://unsplash.com/@anniespratt");
+  });
 });

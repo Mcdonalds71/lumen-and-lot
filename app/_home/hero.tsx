@@ -8,7 +8,7 @@ import { cx } from "@/lib/cx";
 const lineOffsets = ["", "md:ml-[22%]", "md:text-right"];
 
 export function Hero() {
-  const { lines, image } = home.hero;
+  const { lines, image, focus } = home.hero;
 
   return (
     <div className="relative -mt-header h-svh min-h-[36rem] overflow-hidden bg-ink text-paper">
@@ -20,6 +20,7 @@ export function Hero() {
         sizes="100vw"
         preload
         className="absolute inset-0 size-full object-cover"
+        style={{ objectPosition: focus }}
       />
       <div
         aria-hidden

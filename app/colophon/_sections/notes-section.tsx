@@ -3,7 +3,7 @@ import { Section } from "@/components/ui/section";
 const notes = [
   {
     title: "Images",
-    body: "There are no photographs here. Every image is a flat-tone placeholder drawn by a script in the studio palettes, so no image needs a credit. The drawings are generated the same way.",
+    body: "The floor plans are drawn from each home's own data, so the daylight can move across them. Every image is served at the size your screen needs, in the smallest format your browser reads.",
   },
   {
     title: "Accessibility",

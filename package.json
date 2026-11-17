@@ -14,7 +14,9 @@
     "screenshots": "playwright test --project=screenshots",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "images": "tsx scripts/generate-placeholders.mts"
+    "images": "tsx scripts/generate-placeholders.mts",
+    "photos": "tsx scripts/import-photos.mts",
+    "drawings": "tsx scripts/draw-drawings.mts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

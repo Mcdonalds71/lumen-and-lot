@@ -24,8 +24,8 @@ export const lookbooks: readonly Lookbook[] = z
       hotspots: [
         {
           id: "sofa",
-          x: 30,
-          y: 66,
+          x: 22,
+          y: 56,
           item: "Three-seat sofa",
           maker: "Lowfield Upholstery",
           material: "Undyed linen over an oak frame",
@@ -34,8 +34,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "low-table",
-          x: 52,
-          y: 82,
+          x: 40,
+          y: 78,
           item: "Low table",
           maker: "Northbank Joinery",
           material: "Solid white oak",
@@ -44,8 +44,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "floor-lamp",
-          x: 74,
-          y: 46,
+          x: 64,
+          y: 24,
           item: "Floor lamp",
           maker: "Two Rivers Lighting",
           material: "Brushed steel with a paper shade",
@@ -54,8 +54,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "lounge-chair",
-          x: 86,
-          y: 70,
+          x: 84,
+          y: 66,
           item: "Lounge chair",
           maker: "Saltvand Studio",
           material: "Ash and boiled wool",
@@ -64,7 +64,7 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "rug",
-          x: 14,
+          x: 10,
           y: 88,
           item: "Wool rug",
           maker: "Hvid Textiles",
@@ -89,8 +89,8 @@ export const lookbooks: readonly Lookbook[] = z
       hotspots: [
         {
           id: "dining-table",
-          x: 46,
-          y: 70,
+          x: 48,
+          y: 58,
           item: "Dining table",
           maker: "Northbank Joinery",
           material: "Smoked oak",
@@ -99,8 +99,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "dining-chair",
-          x: 22,
-          y: 74,
+          x: 25,
+          y: 72,
           item: "Dining chair",
           maker: "Orchard Turned Wood",
           material: "Walnut and paper cord",
@@ -110,7 +110,7 @@ export const lookbooks: readonly Lookbook[] = z
         {
           id: "pendant",
           x: 46,
-          y: 22,
+          y: 19,
           item: "Pendant light",
           maker: "Two Rivers Lighting",
           material: "Aged brass",
@@ -119,8 +119,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "counter-stool",
-          x: 80,
-          y: 76,
+          x: 93,
+          y: 57,
           item: "Counter stool",
           maker: "Ferro Works",
           material: "Blackened steel and leather",
@@ -129,8 +129,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "serving-bowls",
-          x: 66,
-          y: 50,
+          x: 73,
+          y: 39,
           item: "Serving bowls",
           maker: "Kiln & Quay",
           material: "Glazed stoneware",
@@ -154,8 +154,8 @@ export const lookbooks: readonly Lookbook[] = z
       hotspots: [
         {
           id: "bed",
-          x: 46,
-          y: 70,
+          x: 50,
+          y: 56,
           item: "Bed",
           maker: "Northbank Joinery",
           material: "Ash with a wool headboard",
@@ -164,8 +164,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "bedside-table",
-          x: 72,
-          y: 76,
+          x: 69,
+          y: 54,
           item: "Bedside table",
           maker: "Orchard Turned Wood",
           material: "Ebonized ash",
@@ -174,8 +174,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "wall-light",
-          x: 72,
-          y: 40,
+          x: 66,
+          y: 29,
           item: "Wall light",
           maker: "Ferro Works",
           material: "Blackened steel",
@@ -184,8 +184,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "throw",
-          x: 22,
-          y: 84,
+          x: 14,
+          y: 70,
           item: "Wool throw",
           maker: "Hvid Textiles",
           material: "Boiled wool",
@@ -194,8 +194,8 @@ export const lookbooks: readonly Lookbook[] = z
         },
         {
           id: "reading-chair",
-          x: 90,
-          y: 60,
+          x: 91,
+          y: 55,
           item: "Reading chair",
           maker: "Saltvand Studio",
           material: "Ash and slate-gray wool",

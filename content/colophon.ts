@@ -35,7 +35,7 @@ export const colophon: Colophon = colophonSchema.parse({
       role: "The brief as a PDF",
       package: "@react-pdf/renderer",
     },
-    { name: "sharp", role: "Placeholder images", package: "sharp" },
+    { name: "sharp", role: "Image processing", package: "sharp" },
     { name: "Vitest", role: "Unit tests", package: "vitest" },
     { name: "Playwright", role: "Browser tests", package: "@playwright/test" },
     {

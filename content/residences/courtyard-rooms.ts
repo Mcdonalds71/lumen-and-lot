@@ -19,9 +19,9 @@ export const courtyardRooms = {
   story:
     "A large apartment in a Frederiksberg block, with tall windows to the street on one side and a planted courtyard on the other. Mornings start in the street-side rooms. Afternoons belong to the kitchen and the courtyard bedroom.",
   gallery: residenceGallery(slug, {
-    exterior: "The planted courtyard behind the block in Frederiksberg",
-    interior: "The living room behind its tall street windows",
-    detail: "A restored window and its old brass catch",
+    exterior: "A planted courtyard inside a red brick block",
+    interior: "Sun on a herringbone floor below two tall black windows",
+    detail: "An old brass catch on a curved wooden window frame",
   }),
   palettes: residencePalettes(slug, [
     { room: "living", label: "The living room" },

@@ -122,7 +122,9 @@ automatically.
 | `npm test`            | Run unit tests with Vitest                                    |
 | `npm run test:e2e`    | Run page, accessibility and layout tests with Playwright, axe |
 | `npm run screenshots` | Capture every page at 375, 768 and 1440 pixels wide           |
-| `npm run images`      | Draw a placeholder for every image the content references     |
+| `npm run photos`      | Download and crop the photographs listed in content/photos.ts |
+| `npm run drawings`    | Draw the project plans and sections                           |
+| `npm run images`      | Draw a placeholder for any image that is missing              |
 | `npm run format`      | Format with Prettier                                          |
 
 ## Project structure
@@ -135,6 +137,7 @@ components/features/  daylight, palette, shop-the-room, compare, brief
 content/              typed, validated data: residences, projects, lookbooks, rates
 content/journal/      MDX articles
 lib/                  pure logic, unit tested: sun, units, currency, brief…
+scripts/              photo import, drawings and placeholders
 tests/                Vitest units and Playwright suites
 docs/                 the build plan and the journal fact check
 ```
@@ -142,5 +145,12 @@ docs/                 the build plan and the journal fact check
 ## Credits
 
 Type: Instrument Serif by Instrument, Inter Tight by Rasmus Andersson and Geist Mono by Vercel,
-all under the SIL Open Font License. Every image is a flat-tone placeholder drawn by
-`npm run images`.
+all under the SIL Open Font License.
+
+Photographs: from Unsplash, under the Unsplash License. Each photographer is credited by name on
+the colophon page, and `content/photos.ts` lists every photo with its source. The palette rooms,
+the lookbooks and the before-and-after views are generated with Figma AI. The plans and sections
+are drawn in code.
+
+The Unsplash License does not allow the photos to be sold as they are. If you take this site on
+for your own studio, replace them with your own photographs at the same paths and sizes.

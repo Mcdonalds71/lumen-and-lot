@@ -5,8 +5,10 @@ import { Container } from "@/components/ui/container";
 import { Grid } from "@/components/ui/grid";
 import { Label } from "@/components/ui/label";
 import { colophon } from "@/content/colophon";
+import { photoCredits } from "@/content/photos";
 
 import { NotesSection } from "./_sections/notes-section";
+import { PhotographsSection } from "./_sections/photographs-section";
 import { StackSection } from "./_sections/stack-section";
 import { TypeSection } from "./_sections/type-section";
 import { WebsiteSection } from "./_sections/website-section";
@@ -26,8 +28,8 @@ export default function ColophonPage() {
           How this site was made
         </h1>
         <p className="col-span-12 text-lead md:col-span-8 lg:col-span-4 lg:col-start-9 lg:self-end">
-          The idea behind the studio, and the type, tools and images that make
-          up its website.
+          Who made this website, and the type, tools and photographs it is built
+          from.
         </p>
       </Grid>
 
@@ -35,7 +37,8 @@ export default function ColophonPage() {
         <WebsiteSection index={1} />
         <TypeSection index={2} fonts={colophon.fonts} />
         <StackSection index={3} tools={colophon.tools} />
-        <NotesSection index={4} />
+        <PhotographsSection index={4} credits={photoCredits} />
+        <NotesSection index={5} />
       </div>
     </Container>
   );

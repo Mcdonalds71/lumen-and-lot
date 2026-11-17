@@ -5,12 +5,12 @@ const folder = "/images/journal";
 export const daylightMedia = {
   cover: image(
     `${folder}/designing-for-daylight/cover.webp`,
-    "A small house in low winter sun, its south windows catching the light.",
+    "Bare branches casting shadows across a sunlit wall and shutter.",
     "wide",
   ),
   northRoom: image(
     `${folder}/designing-for-daylight/north-room.webp`,
-    "A north-facing workroom with even light and no direct sun.",
+    "An empty room in soft, even light from a wide window.",
     "landscape",
   ),
   section: image(
@@ -23,12 +23,12 @@ export const daylightMedia = {
 export const energyMedia = {
   cover: image(
     `${folder}/how-to-read-an-energy-certificate/cover.webp`,
-    "The street front of a small apartment building with deep window reveals.",
+    "An apartment front with blue window frames and small balconies.",
     "wide",
   ),
   wall: image(
     `${folder}/how-to-read-an-energy-certificate/wall.webp`,
-    "A close view of an insulated wall build-up before the plaster goes on.",
+    "A new room before plastering, its walls bare and its glazing fitted.",
     "landscape",
   ),
 };
@@ -36,12 +36,12 @@ export const energyMedia = {
 export const abroadMedia = {
   cover: image(
     `${folder}/buying-a-new-home-from-abroad/cover.webp`,
-    "A row of new homes at dusk with lights on in the windows.",
+    "New houses on a lake shore at dusk, their lights reflected in the water.",
     "wide",
   ),
   visit: image(
     `${folder}/buying-a-new-home-from-abroad/visit.webp`,
-    "An empty living room in a finished home, ready for a walk-through.",
+    "An empty living room in a finished home, with a glazed door to a balcony.",
     "landscape",
   ),
 };

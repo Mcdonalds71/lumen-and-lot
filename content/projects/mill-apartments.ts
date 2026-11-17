@@ -17,7 +17,7 @@ export const millApartments = {
   cover: projectImage(
     slug,
     "cover",
-    "The brick mill with its tall windows lit at dusk",
+    "A large brick mill with a tall chimney",
     "wide",
   ),
   sections: [
@@ -29,7 +29,7 @@ export const millApartments = {
       image: projectImage(
         slug,
         "section-1",
-        "Restored brick walls and timber posts",
+        "Old brick and a timber post and brace beside new plaster",
         "landscape",
       ),
     },
@@ -41,19 +41,19 @@ export const millApartments = {
       image: projectImage(
         slug,
         "section-2",
-        "A living room lit from both ends",
+        "A living room under a tall steel window",
         "portrait",
       ),
     },
     {
       title: "A shared garden",
       body: [
-        "The old loading yard became a garden for the residents, with raised beds and a long table under a pergola.",
+        "The old loading yard became a garden for the residents, with raised beds and paths between the old brick walls.",
       ],
       image: projectImage(
         slug,
         "section-3",
-        "Raised beds in the former loading yard",
+        "Planted beds and a path inside an old brick-walled yard",
         "square",
       ),
     },
@@ -82,10 +82,15 @@ export const millApartments = {
     before: projectImage(
       slug,
       "before",
-      "The mill before work began",
+      "The mill before work began, its windows broken and boarded",
       "landscape",
     ),
-    after: projectImage(slug, "after", "The restored mill", "landscape"),
+    after: projectImage(
+      slug,
+      "after",
+      "The restored mill, its yard planted with raised beds",
+      "landscape",
+    ),
     caption: "The mill before work began, and the restored building.",
   },
   credits: studioCredits,

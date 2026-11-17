@@ -3,8 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Marquee } from "@/components/ui/marquee";
 import { RevealImage } from "@/components/ui/reveal-image";
 import { Rule } from "@/components/ui/rule";
-import courtyard from "@/public/images/placeholders/courtyard.webp";
-import northLight from "@/public/images/placeholders/north-light.webp";
+import { systemImages } from "@/content/system";
 
 import { Chapter, type ChapterProps } from "./chapter";
 import { DrawerDemo } from "./drawer-demo";
@@ -104,18 +103,16 @@ export function ComponentsChapter({ meta }: ChapterProps) {
         <Plate
           number={6}
           title="Images"
-          caption="Each image is wiped in once as it enters the view, then scales slowly on hover. Both are placeholders until photography arrives."
+          caption="Each image is wiped in once as it enters the view, then scales slowly on hover."
         >
           <div className="grid grid-cols-12 items-end gap-x-gutter gap-y-10">
             <RevealImage
-              src={northLight}
-              alt="Placeholder: a tall window above an oak floor, with a patch of sun"
+              {...systemImages.window}
               sizes="(min-width: 64rem) 28vw, (min-width: 40rem) 45vw, 100vw"
               className="col-span-12 sm:col-span-5"
             />
             <RevealImage
-              src={courtyard}
-              alt="Placeholder: a shaded courtyard wall beside a dark doorway"
+              {...systemImages.doorway}
               sizes="(min-width: 64rem) 40vw, (min-width: 40rem) 60vw, 100vw"
               className="col-span-12 sm:col-span-7"
             />

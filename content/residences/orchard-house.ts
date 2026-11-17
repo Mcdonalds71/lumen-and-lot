@@ -19,9 +19,9 @@ export const orchardHouse = {
   story:
     "A single-story house set among old apple trees outside Hudson. Every bedroom faces south, and the long living room opens to the orchard on three sides.",
   gallery: residenceGallery(slug, {
-    exterior: "The long south side of the house among the apple trees",
-    interior: "The living room, open to the orchard on three sides",
-    detail: "A timber column against a tall window",
+    exterior: "A timber house with wide glass doors, among trees",
+    interior: "A round table and cane chairs by tall windows onto bare trees",
+    detail: "Timber-framed windows wrapping a corner, with trees beyond",
   }),
   palettes: residencePalettes(slug, [
     { room: "living", label: "The living room, kitchen and dining room" },

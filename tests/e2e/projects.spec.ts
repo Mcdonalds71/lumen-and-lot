@@ -83,7 +83,7 @@ test.describe("case study", () => {
     await expect(
       page.getByRole("heading", { level: 2, name: "Drawn to measure" }),
     ).toBeVisible();
-    await expect(page.getByRole("main")).toContainText("Placeholder images");
+    await expect(page.getByRole("main")).toContainText("Construction");
   });
 
   test("compares before and after with the arrow keys", async ({ page }) => {

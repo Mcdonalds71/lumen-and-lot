@@ -17,19 +17,19 @@ export const mewsHouse = {
   cover: projectImage(
     slug,
     "cover",
-    "The brick front of the mews house and its carriage doors",
+    "The brick mews house on its corner, with ivy over the front",
     "wide",
   ),
   sections: [
     {
       title: "One window wall",
       body: [
-        "The mews is narrow, and the house can only open to the cobbles at the front. We kept the old carriage doors and set glass behind them.",
+        "The mews is narrow, and the house can only open to the cobbles at the front. Where the carriage doors stood, we set a steel-framed glass wall into the brick opening.",
       ],
       image: projectImage(
         slug,
         "section-1",
-        "Glass behind the open carriage doors",
+        "A steel-framed glass wall set into the old brick front",
         "landscape",
       ),
     },
@@ -41,19 +41,19 @@ export const mewsHouse = {
       image: projectImage(
         slug,
         "section-2",
-        "The stair under the long rooflight",
+        "The timber-lined stair, looking up to the rooflight",
         "portrait",
       ),
     },
     {
       title: "Brick, oak and lime",
       body: [
-        "We cleaned the old London stock brick, laid oak on the floors and finished the new walls in lime plaster.",
+        "We kept the old brick wherever it showed, laid oak on the floors and finished the new walls in lime plaster.",
       ],
       image: projectImage(
         slug,
         "section-3",
-        "Lime plaster beside cleaned brick",
+        "Old brick showing through white lime plaster",
         "square",
       ),
     },
@@ -82,13 +82,13 @@ export const mewsHouse = {
     before: projectImage(
       slug,
       "before",
-      "The workshop as we found it",
+      "The workshop as we found it: sooty brick, broken roof panels and old workbenches",
       "landscape",
     ),
     after: projectImage(
       slug,
       "after",
-      "The finished living room under the rooflight",
+      "The finished living room under the long rooflight",
       "landscape",
     ),
     caption: "The workshop as we found it, and the finished living room.",

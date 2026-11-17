@@ -19,9 +19,9 @@ export const northLight = {
   story:
     "A top-floor apartment with tall north windows and a study that catches the morning sun. The light in the main room stays soft and even all day, which suits a desk, a piano or a wall of books.",
   gallery: residenceGallery(slug, {
-    exterior: "The top floor of the building in Roncesvalles",
-    interior: "The main room under its tall north windows",
-    detail: "A deep window reveal in soft north light",
+    exterior: "A row of gabled brick houses in the evening sun",
+    interior: "An empty white room under a tall steel-framed window",
+    detail: "Window light falling across a pale wall",
   }),
   palettes: residencePalettes(slug, [
     { room: "living", label: "The living room and kitchen" },

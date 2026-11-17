@@ -228,6 +228,8 @@ Interiors
   the markers (and the card from md) are positioned in, with explicit end lines; on phones the card
   sits in the row below the photo. From md the card opens beside its marker, on the side with more
   room. Escape, a click outside or focus leaving close it, and Escape returns focus to the marker.
+- Hotspot positions are percentages of the lookbook photo. Replacing a lookbook photo means
+  placing its markers again.
 - Every piece is also listed below its photo. The makers and prices are sample content, which the
   footer line covers.
 - The m²/ft² preference also switches furniture sizes between centimeters and inches.
@@ -331,10 +333,31 @@ Content and data
 - Neighborhood-level locations only, no street addresses. Shop the Room makers and prices are
   sample content. Project credits name only the studio.
 - Images use four formats from content/media.ts: portrait 1600×2000, landscape 2400×1600,
-  square 1800×1800, wide 2400×1350. `npm run images` (tsx, sharp) draws a flat-tone placeholder for
-  every image the content references and never overwrites an existing file. To use a real photo,
-  save it at the same path in the same format, or update its width and height. A unit test checks
-  every image exists at its stated size.
+  square 1800×1800, wide 2400×1350. content/images.ts collects every image the content uses. A unit
+  test checks every image exists at its stated size. `npm run images` draws a flat-tone placeholder
+  only for an image that is missing, and never overwrites a file.
+
+Images
+- Stock photos come from Unsplash. content/photos.ts lists each one: its slot, photo id,
+  photographer and an optional crop focus. Every entry must match a content image, which gives it
+  its size. `npm run photos [part of a path]` downloads each photo at the width its crop needs,
+  asks again wider when the first download is too small, crops around the focus (lib/crop.ts) and
+  writes WebP. The colophon thanks each photographer from the same list.
+- In Git Bash, pass filters without a leading slash (journal/, not /journal/), or Git Bash turns
+  them into Windows paths.
+- The palette rooms, the three lookbooks and the before-and-after pairs are generated with Figma
+  AI. Each trio or pair shares one description of the room and camera, and only the finishes or the
+  state change, so the switcher and the slider compare like with like. They are not in the photo
+  list. The colophon says they are generated.
+- The Unsplash License does not allow selling the photos unaltered. A buyer of the site replaces
+  them with their own, saved at the same paths and sizes.
+- Project drawings and the journal's daylight section are line drawings in code:
+  scripts/drawings/pen.ts holds the marks, plates.ts one plate per drawing slot, and
+  `npm run drawings` renders them. A unit test keeps the plates and the slots in step. The
+  placeholder script skips anything a plate draws.
+- The /system image plate reads its two photos from content/system.ts.
+- next start caches optimized images by URL in .next/cache/images. After replacing a file at the
+  same path, clear that folder before checking it locally.
 
 Design and accessibility
 - Clay (4.4:1 on paper) is for display type, graphics and sunlight only, never small text or

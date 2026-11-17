@@ -17,7 +17,7 @@ export const courtyardBlock = {
   cover: projectImage(
     slug,
     "cover",
-    "The courtyard side of the block with its new balconies",
+    "Balconies on every floor around the courtyard",
     "wide",
   ),
   sections: [
@@ -29,7 +29,7 @@ export const courtyardBlock = {
       image: projectImage(
         slug,
         "section-1",
-        "New balconies over the courtyard",
+        "Looking down into the shaded courtyard past the balconies",
         "landscape",
       ),
     },
@@ -41,7 +41,7 @@ export const courtyardBlock = {
       image: projectImage(
         slug,
         "section-2",
-        "A limewashed stairwell under a roof light",
+        "A white stairwell with oak treads under a round roof light",
         "portrait",
       ),
     },
@@ -53,7 +53,7 @@ export const courtyardBlock = {
       image: projectImage(
         slug,
         "section-3",
-        "A new window set into a deep wall",
+        "A small casement window open in a deep white wall",
         "square",
       ),
     },
@@ -82,10 +82,15 @@ export const courtyardBlock = {
     before: projectImage(
       slug,
       "before",
-      "The courtyard before the renovation",
+      "The courtyard before the renovation: bare asphalt and bins",
       "landscape",
     ),
-    after: projectImage(slug, "after", "The replanted courtyard", "landscape"),
+    after: projectImage(
+      slug,
+      "after",
+      "The replanted courtyard, with new balconies",
+      "landscape",
+    ),
     caption: "The courtyard before the renovation, and after replanting.",
   },
   credits: studioCredits,
