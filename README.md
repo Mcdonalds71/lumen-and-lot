@@ -90,13 +90,15 @@ The full list of decisions, phase by phase, is in [CLAUDE.md](CLAUDE.md).
 
   | Page                    | Performance | Accessibility | Best practices | SEO | LCP   | CLS |
   | ----------------------- | ----------- | ------------- | -------------- | --- | ----- | --- |
-  | Home                    | 92          | 100           | 100            | 100 | 0.8 s | 0   |
-  | Residence (Harbor Room) | 90          | 100           | 100            | 100 | 0.9 s | 0   |
-  | Project (Stair House)   | 95          | 100           | 100            | 100 | 0.8 s | 0   |
+  | Home                    | 87          | 100           | 100            | 100 | 0.9 s | 0   |
+  | Residence (Harbor Room) | 94          | 100           | 100            | 100 | 1.0 s | 0   |
+  | Project (Stair House)   | 94          | 100           | 100            | 100 | 0.8 s | 0   |
 
-  Performance moves between 88 and 96 from run to run. The rest is main-thread time while the
-  framework starts up. A near-static page like the colophon scores in the same range, so that
-  time is mostly the Next.js and React runtime rather than the site's own code.
+  Performance moves between 85 and 97 from run to run, with the real photographs in place. Each
+  photo reaches a phone as 14 to 26 KB, and blocking every image does not change the score. The
+  rest is main-thread time while the framework starts up. The colophon, which has almost no code of
+  its own and no photos, scores in the same range, so that time is mostly the Next.js and React
+  runtime rather than the site's own code.
 
 ## Getting started
 
